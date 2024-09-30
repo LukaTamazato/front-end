@@ -1,9 +1,9 @@
 import React from "react";
-import { AppBar, Toolbar, IconButton, Typography, Button, Box } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Typography, Box } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import SYButton from "../btn/SYButton";
+import Botao from "../btn/Botao";
 
-const SYNavbar = ({ toggleSidebar }) => {
+const Navbar = ({ toggleSidebar }) => {
     return (
         <AppBar position="static">
             <Toolbar>
@@ -21,12 +21,12 @@ const SYNavbar = ({ toggleSidebar }) => {
                 </Typography>
 
                 <Box sx={{ display: 'flex', gap: 2 }}>
-                    <SYButton txt="Entrar" />
-                    <SYButton txt="Cadastrar" />
+                    <Botao txt="Entrar" />
+                    <Botao txt="Cadastrar" />
                 </Box>
             </Toolbar>
         </AppBar>
     );
 };
 
-export default SYNavbar;
+export default Navbar;

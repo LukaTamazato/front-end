@@ -4,6 +4,7 @@ import App from './App';
 import { Box, createTheme, ThemeProvider } from '@mui/material';
 import '@fontsource/montserrat';
 import './index.css';
+import { ptBR } from '@mui/material/locale';
 
 const theme = createTheme({
   palette: {
@@ -40,6 +41,7 @@ const theme = createTheme({
       containerBackground: '#00000000',
     },
   },
+  ptBR
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

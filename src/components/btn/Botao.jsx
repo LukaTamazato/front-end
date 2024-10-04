@@ -1,9 +1,9 @@
 import { Button } from '@mui/material';
 import * as React from 'react';
 
-const Botao = ({ color = "secondary", variant = "contained", txt, onClick, style }) => {
+const Botao = ({ color = "secondary", variant = "contained", txt, onClick, sx }) => {
     return (
-        <Button sx={style} onClick={onClick} color={color} variant={variant}>
+        <Button sx={sx} onClick={onClick} color={color} variant={variant}>
             {txt}
         </Button>
     )

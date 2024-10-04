@@ -2,7 +2,7 @@ import { useTheme } from "@emotion/react";
 import React from "react";
 import { SubMenu, menuClasses } from "react-pro-sidebar";
 
-const CustomSubMenu = ({ children, icon, bgColor }) => {
+const CustomSubMenu = ({ children, icon, label }) => {
     const theme = useTheme();
 
     return (
@@ -14,7 +14,7 @@ const CustomSubMenu = ({ children, icon, bgColor }) => {
                     backgroundColor: theme.palette.primary.main
                 }
             }}
-            label="Eventos" icon={icon}>
+            label={label} icon={icon}>
             {children}
         </SubMenu>
     );

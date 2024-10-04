@@ -21,7 +21,6 @@ const Dialogo = () => {
     const handleClose = () => setOpen(false);
 
     const handleConfirm = () => {
-        console.log(dados);
         handleClose();
     };
 
@@ -55,7 +54,7 @@ const Dialogo = () => {
             <Modal open={open} onClose={handleClose}>
                 <Box sx={style}>
                     <Box display="flex" justifyContent="space-between" alignItems="center">
-                        <Typography id="modal-title" variant="h5" component="h2">
+                        <Typography id="modal-title" variant="h5" component="h5">
                             Título
                         </Typography>
                         <IconButton onClick={handleClose}>
@@ -87,7 +86,7 @@ const Dialogo = () => {
                                     handleChange={handleChange}
                                     regex={/^\(\d{2}\) \d{4}-\d{4}$/}
                                     mascara="telefone"
-                                    // errorMsg="Número inválido."
+                                    errorMsg="Número inválido."
                                     placeholder="(11) 9999-9999"
                                     required={true}
                                 />
@@ -118,7 +117,7 @@ const Dialogo = () => {
                                 />
                         </Grid>
                         <Box mt={3} display="flex" justifyContent="center">
-                            <Botao variant="outlined" color="primary" txt="Cancelar" onClick={handleCancel} style={{ marginRight: 2 }} />
+                            <Botao variant="outlined" color="primary" txt="Cancelar" onClick={handleCancel} sx={{ marginRight: 2 }} />
                             <Botao txt="Confirmar" onClick={handleConfirm} />
                         </Box>
                     </Box>

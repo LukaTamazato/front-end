@@ -44,12 +44,12 @@ const BarraLateral = ({ collapsed }) => {
                 }}
                 >
                     <Item onClick={() => handleMenuItemClick('i6')} active={activeItem === 'i6'} icon={<DashboardIcon />} linkTo="/dashboard" text="Dashboard" />
-                    <CustomSubMenu icon={<CelebrationOutlinedIcon />}>
+                    <CustomSubMenu label="Eventos" icon={<CelebrationOutlinedIcon />}>
                         <Item onClick={() => handleMenuItemClick('i0')} active={activeItem === 'i0'} theme={theme.palette.primary.lighter} linkTo="/eventos-abertos" icon={<CheckBoxOutlinedIcon />} text="Eventos abertos" />
                         <Item onClick={() => handleMenuItemClick('i1')} active={activeItem === 'i1'} theme={theme.palette.primary.lighter} linkTo="/eventos-fechados" icon={<DisabledByDefaultOutlinedIcon />} text="Eventos fechados" />
                         <Item onClick={() => handleMenuItemClick('i2')} active={activeItem === 'i2'} theme={theme.palette.primary.lighter} linkTo="/eventos" icon={<AddBoxOutlinedIcon />} text="Criar eventos" />
                     </CustomSubMenu>
-                    <CustomSubMenu icon={<GroupIcon />}>
+                    <CustomSubMenu label="Equipe" icon={<GroupIcon />}>
                         <Item onClick={() => handleMenuItemClick('i3')} active={activeItem === 'i3'} theme={theme.palette.primary.lighter} linkTo="/escala" icon={<EditCalendarOutlinedIcon />} text="Escala" />
                         <Item onClick={() => handleMenuItemClick('i4')} active={activeItem === 'i4'} theme={theme.palette.primary.lighter} linkTo="/formularios" icon={<ArticleOutlinedIcon />} text="Formulários" />
                         <Item onClick={() => handleMenuItemClick('i5')} active={activeItem === 'i5'} theme={theme.palette.primary.lighter} linkTo="/parceiros" icon={<ContactsOutlinedIcon />} text="Parceiros" />

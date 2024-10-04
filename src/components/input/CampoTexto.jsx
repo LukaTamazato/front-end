@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid2';
 import React, { useState } from "react";
 import { aplicarMascara } from "../../utils/formatarCampoUtil";
 
-const CampoTexto = ({handleChange, label, name, value, size={ sm: 12, md: 6 }, regex, mascara, placeholder, errorMsg="", required}) => {
+const CampoTexto = ({handleChange, label, name, value, size={ sm: 12, md: 6 }, regex, mascara, placeholder, errorMsg="", required, type="text"}) => {
 
     const [possuiErro, setErro] = useState(false);
 
@@ -21,6 +21,7 @@ const CampoTexto = ({handleChange, label, name, value, size={ sm: 12, md: 6 }, r
     return (
         <Grid size={size}>
             <TextField
+                type={type}
                 placeholder={placeholder}
                 fullWidth
                 margin="normal"

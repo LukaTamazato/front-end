@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 
-const Dashboard = ({setTitulo}) => {
+const Dashboard = ({setTitulo, setActions}) => {
 
     useEffect(() => {
         setTitulo("Dashboard");
+        setActions(null);
     })
 
     return (

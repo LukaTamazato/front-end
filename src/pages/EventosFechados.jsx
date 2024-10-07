@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 
-const EventosFechados = ({setTitulo}) => {
+const EventosFechados = ({setTitulo, setActions}) => {
 
     useEffect(() => {
         setTitulo("Eventos fechados");
+        setActions(null);
     })
 
     return (

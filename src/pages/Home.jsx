@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 
-const Home = ({setTitulo}) => {
+const Home = ({setTitulo, setActions}) => {
 
     useEffect(() => {
         setTitulo('Home');
+        setActions(null);
     });
 
     return (

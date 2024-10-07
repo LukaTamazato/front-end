@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 
-const Parceiros = ({setTitulo}) => {
+const Parceiros = ({setTitulo, setActions}) => {
 
     useEffect(() => {
         setTitulo("Parceiros");
+        setActions(null);
     })
 
     return (

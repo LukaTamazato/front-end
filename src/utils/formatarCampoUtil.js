@@ -41,6 +41,12 @@ export const aplicarMascara = (valor, mascara) => {
                     .replace(/(\d{3})(\d)/, '$1.$2')
                     .replace(/(\d{3})(\d{1})$/, '$1-$2');
             break;
+        case 'cep':
+                valorNovo = valorNovo
+                    .replace(/\D/g, '')
+                    .slice(0, 8)
+                    .replace(/(\d{5})(\d{3})/, '$1-$2');
+            break;
         case 'dataNascimento':
                 if (!valorNovo.includes('-')) break;
                 

@@ -14,6 +14,7 @@ import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import Home from "../pages/Home";
 import NotFound from "../pages/NotFound";
 import Botao from "../components/btn/Botao";
+import Login from "../pages/Login";
 
 const Layout = () => {
     const [collapsed, setCollapsed] = useState(false);
@@ -60,6 +61,7 @@ const Layout = () => {
                             <Route path="/escala" element={<Escala setTitulo={setTitulo} setActions={setActions} />} />
                             <Route path="/formularios" element={<Formularios setTitulo={setTitulo} setActions={setActions} />} />
                             <Route path="/parceiros" element={<Parceiros setTitulo={setTitulo} setActions={setActions} />} />
+                            <Route path="/login" element={<Login setTitulo={setTitulo} setActions={setActions} />} />
                             <Route path="*" element={<NotFound setTitulo={setTitulo} setActions={setActions} />} />
                         </Routes>
                     </Box>

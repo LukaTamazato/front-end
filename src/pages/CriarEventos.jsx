@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageModal from "../components/pageModal/PageModal";
-import { Box, FormControl, TextField, Typography } from "@mui/material";
+import { Box, FormControl, Typography } from "@mui/material";
 import CampoTexto from "../components/input/CampoTexto";
 import Botao from "../components/btn/Botao";
 import Grid from "@mui/material/Grid2";
@@ -10,7 +10,7 @@ import Picklist from "../components/input/Picklist";
 import { funcoesAlocacao } from "../utils/dataMockUtil";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { aplicarMascara } from "../utils/formatarCampoUtil";
+import DataHora from "../components/input/DataHora";
 
 
 
@@ -18,19 +18,20 @@ const CriarEventos = ({setTitulo, setActions}) => {
 
     const navigate = useNavigate();
 
-    const [fase, setFase] = useState(0);
-    const qtdFases = 4;
+    const [step, setStep] = useState(0);
+    const labels = ['Evento', 'Vagas', 'Colaborador', 'Inscrições'];
+    const qtdSteps = labels.length;
 
     const handleProximo = () => {
-        if (fase > (qtdFases-2)) return;
+        if (step > (qtdSteps-2)) return;
 
-        setFase(fase + 1);
+        setStep(step + 1);
     }
     
     const handleAnterior = () => {
-        if (fase <= 0) return;
+        if (step <= 0) return;
 
-        setFase(fase - 1);
+        setStep(step - 1);
     }
 
     const [vagas, setVagas] = useState([
@@ -85,8 +86,8 @@ const CriarEventos = ({setTitulo, setActions}) => {
     const [dadosEvento, setDadosEvento] = useState({
         nome: "",
         orcamento: "",
-        inicio: "",
-        fim: "",
+        inicio: null,
+        fim: null,
         local: "",
         cep: "",
         responsavel: ""
@@ -96,34 +97,21 @@ const CriarEventos = ({setTitulo, setActions}) => {
         setDadosEvento({ ...dadosEvento, [name]: e.target.value });
     };
 
+    const handleTimeChange = (e, name) => {
+        setDadosEvento({ ...dadosEvento, [name]: e.format() });
+    };
+
     useEffect(() => {
         setTitulo("");
         setActions(null);
     })
 
-    const [cepInvalido, setCepInvalido] = useState(false);
-
-    const handleViaCEP = async (e) => {
-
-        setDadosEvento((prevDadosEvento) => ({
-            ...prevDadosEvento,
-            local: '',
-        }));
-        
-        let cep = e.target.value;
-        cep = aplicarMascara(cep, 'cep');
-        setDadosEvento((prevDadosEvento) => ({
-            ...prevDadosEvento,
-            cep: cep,
-        }));
+    const handleViaCEP = async (e, name) => {
+        handleDadosChange(e, name)
       
-        if (cep.length !== 9) {
-            setCepInvalido(e.target.value.length !== 0);
-            return;
-        }
+        if (e.target.value.length !== 9) return;
         
-        const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
-        setCepInvalido(response.data.erro);
+        const response = await axios.get(`https://viacep.com.br/ws/${e.target.value}/json/`);
 
         if (response.data.erro) return;
 
@@ -142,28 +130,28 @@ const CriarEventos = ({setTitulo, setActions}) => {
                 <Box sx={{mt: 1}}>
                     <Grid container>
                         <Grid display={"flex"} justifyContent={"center"} size={12}>
-                            <Esteira setFase={setFase} fase={fase} qtdFases={qtdFases} />
+                            <Esteira setStep={setStep} step={step} labels={labels} />
                         </Grid>
-                            {(fase === 0 && (
+                            {(step === 0 && (
                                 <>
                                 <Grid display={"flex"} justifyContent={"center"} width="100%" size={12}>
                                     <Typography mb={2} mt={1} variant="h5" component="h5">Dados do Evento</Typography>
                                 </Grid>
                                 <Grid width="90%" margin="auto" container columnSpacing={2}>
-                                    <CampoTexto handleChange={handleDadosChange} value={dadosEvento.nome} name="nome" label="Nome"/>
-                                    <CampoTexto handleChange={handleDadosChange} value={dadosEvento.orcamento} name="orcamento" label="Orçamento"/>
-                                    <CampoTexto handleChange={handleDadosChange} value={dadosEvento.inicio} name="inicio" label="Início"/>
-                                    <CampoTexto handleChange={handleDadosChange} value={dadosEvento.fim} name="fim" label="Fim"/>
+                                    <CampoTexto size={12} handleChange={handleDadosChange} value={dadosEvento.nome} name="nome" label="Nome"/>
+                                    <DataHora handleChange={(e) => handleTimeChange(e, 'inicio')} name="inicio" label="Início"/>
+                                    <DataHora handleChange={(e) => handleTimeChange(e, 'fim')} name="fim" label="Fim"/>
                                     <CampoTexto handleChange={handleDadosChange} value={dadosEvento.local} name="local" label="Local"/>
-                                    <Grid size={{sm: 12, md: 6}}><TextField fullWidth margin="normal" onChange={handleViaCEP} value={dadosEvento.cep} error={cepInvalido} name="cep" label="CEP"/></Grid>
-                                    <CampoTexto handleChange={handleDadosChange} value={dadosEvento.responsavel} size={12} name="responsavel" label="Responsável"/>
+                                    <CampoTexto handleChange={handleViaCEP} value={dadosEvento.cep} regex={/^\d{5}-\d{3}$/} name="cep" label="CEP" mascara="cep"/>
+                                    <CampoTexto handleChange={handleDadosChange} startAdornment="R$" value={dadosEvento.orcamento} mascara="dinheiro" name="orcamento" label="Orçamento"/>
+                                    <CampoTexto handleChange={handleDadosChange} value={dadosEvento.responsavel} name="responsavel" label="Responsável"/>
                                 </Grid>
                                 </>
                             ))}
 
-                            {(fase === 1 && (
+                            {(step === 1 && (
                                 <>
-                                <Grid alignItems={"center"} container flexDirection={"column"} size={{sm: 12, md: 6}}>
+                                <Grid mt={4} alignItems={"center"} container flexDirection={"column"} size={{sm: 12, md: 6}}>
                                     <Typography mb={6} variant="h5" component="h5">Cadastrar Vaga</Typography>
                                     <FormControl sx={{width: '70%', display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
                                         <Picklist name={"funcao"} value={vagaAtual.funcao} handleChange={handleChange} items={funcoesAlocacao} />
@@ -173,9 +161,9 @@ const CriarEventos = ({setTitulo, setActions}) => {
                                         <Botao sx={{mt: 2}} txt="Inserir Vaga" onClick={() => {cadastrarVaga()}} />
                                     </FormControl>
                                 </Grid>
-                                <Grid size={{sm: 12, md: 6}}>
+                                <Grid mt={4} size={{sm: 12, md: 6}}>
                                     <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
-                                        {(fase === 1 && 
+                                        {(step === 1 && 
                                         <>
                                         <Typography mb={6} variant="h5" component="h5">Vagas Cadastradas</Typography>
                                         <PillContainer setVagas={setVagas} pills={vagas}/>
@@ -186,18 +174,18 @@ const CriarEventos = ({setTitulo, setActions}) => {
                                 </>
                             ))}
 
-                            {(fase === 2 && (
+                            {(step === 2 && (
                                 <Typography>c</Typography>
                             ))}
                             
-                            {(fase === 3 && (
+                            {(step === 3 && (
                                 <Typography>d</Typography>
                             ))}
                     </Grid>
                 </Box>
                 <Box sx={{mt: "auto", alignSelf: "center", display: "flex", gap: 1, width: "40%"}} >
-                    <Botao onClick={fase > 0 ? handleAnterior : (() => navigate(-1))} sx={{width: "100%", minWidth: 100}} variant={fase > 0 ? "outlined" : "contained"} color="primary" txt={fase > 0 ? "Anterior" : "Cancelar"} />
-                    <Botao onClick={handleProximo} sx={{width: "100%", minWidth: 100}} txt={fase < qtdFases-1 ? "Próximo" : "Concluir"} />
+                    <Botao onClick={step > 0 ? handleAnterior : (() => navigate(-1))} sx={{width: "100%", minWidth: 100}} variant={step > 0 ? "outlined" : "contained"} color="primary" txt={step > 0 ? "Anterior" : "Cancelar"} />
+                    <Botao onClick={handleProximo} sx={{width: "100%", minWidth: 100}} txt={step < qtdSteps-1 ? "Próximo" : "Concluir"} />
                 </Box>
             </PageModal>
         </>

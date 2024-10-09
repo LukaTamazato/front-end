@@ -1,16 +1,16 @@
 export const funcoesAlocacao = [
-        {id: 0, valor: "Atendentes de bar"},
-        {id: 1, valor: "Repositores"},
-        {id: 2, valor: "Carregadores"},
-        {id: 3, valor: "Vigia noturno"},
-        {id: 4, valor: "Limpeza"},
-        {id: 5, valor: "Garçom"},
-        {id: 6, valor: "Dosador"},
-        {id: 7, valor: "Barback"},
-        {id: 8, valor: "Líder de bar"},
-        {id: 9, valor: "Coordenador"},
-        {id: 10, valor: "RH"},
-        {id: 11, valor: "Apoio de RH"}
+        {id: 0, value: "Atendentes de bar"},
+        {id: 1, value: "Repositores"},
+        {id: 2, value: "Carregadores"},
+        {id: 3, value: "Vigia noturno"},
+        {id: 4, value: "Limpeza"},
+        {id: 5, value: "Garçom"},
+        {id: 6, value: "Dosador"},
+        {id: 7, value: "Barback"},
+        {id: 8, value: "Líder de bar"},
+        {id: 9, value: "Coordenador"},
+        {id: 10, value: "RH"},
+        {id: 11, value: "Apoio de RH"}
 ];
 
 export const colaboradores = [
@@ -25,3 +25,10 @@ export const colaboradores = [
     {id: 8, nome: "Senhor Nome da Silva8", celular: "199985273610", cpf: "10020030088", dataNascimento: "1994-02-09", cidade: "São Paulo", uf: "SP"},
     {id: 9, nome: "Senhor Nome da Silva9", celular: "199985273611", cpf: "10020030089", dataNascimento: "1994-02-10", cidade: "São Paulo", uf: "SP"}
 ];
+
+export const tiposContrato = [
+    {id: 0, value: "Freelancer"},
+    {id: 1, value: "Contrato intermitente"},
+    {id: 2, value: "Contrato temporário"},
+    {id: 3, value: "Terceirizado"}
+]

@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import PageModal from "../components/pageModal/PageModal";
-import { Box, FormControl, Typography } from "@mui/material";
+import { Autocomplete, Badge, Box, ButtonBase, Chip, FormControl, InputAdornment, TextField, Typography } from "@mui/material";
+import { funcoesAlocacao, tiposContrato } from "../utils/dataMockUtil";
 import CampoTexto from "../components/input/CampoTexto";
 import Botao from "../components/btn/Botao";
 import Grid from "@mui/material/Grid2";
 import Esteira from "../components/esteira/Esteira";
 import PillContainer from "../components/pill/Pill";
 import Picklist from "../components/input/Picklist";
-import { funcoesAlocacao } from "../utils/dataMockUtil";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import DataHora from "../components/input/DataHora";
+import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 
 
 
@@ -90,7 +91,9 @@ const CriarEventos = ({setTitulo, setActions}) => {
         fim: null,
         local: "",
         cep: "",
-        responsavel: ""
+        responsavel: "",
+        tipoContrato: "",
+        url: "https://www.serenity.com.br/eventos/ed2ab348-23d5-4d05-8553-96bcfec1a087"
     });
 
     const handleDadosChange = (e, name) => {
@@ -120,6 +123,33 @@ const CriarEventos = ({setTitulo, setActions}) => {
             local: response.data.logradouro,
         }));
     };
+
+    const [share, setShare] = useState([]);
+    const [shareAtual, setShareAtual] = useState(null);
+
+    const handleShareChange = (value) => {
+        if (value === null) return;
+
+        setShareAtual(value);
+        setShare([...share, value])
+        setShareAtual('');
+    }
+
+    const handleShareDelete = (id) => {
+        setShare(share.filter(item => item.id !== id));
+    }
+
+    const colaboradores = [
+        {id: 0, label: "AA João"},
+        {id: 1, label: "AB João"},
+        {id: 2, label: "AC João"},
+        {id: 3, label: "AD João"},
+        {id: 4, label: "BA João"},
+        {id: 5, label: "BB João"},
+        {id: 6, label: "BC João"},
+        {id: 7, label: "BD João"},
+        {id: 8, label: "BE João"}
+    ]
 
     return (
         <>
@@ -154,7 +184,7 @@ const CriarEventos = ({setTitulo, setActions}) => {
                                 <Grid mt={4} alignItems={"center"} container flexDirection={"column"} size={{sm: 12, md: 6}}>
                                     <Typography mb={6} variant="h5" component="h5">Cadastrar Vaga</Typography>
                                     <FormControl sx={{width: '70%', display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
-                                        <Picklist name={"funcao"} value={vagaAtual.funcao} handleChange={handleChange} items={funcoesAlocacao} />
+                                        <Picklist label={"Função"} name={"funcao"} value={vagaAtual.funcao} handleChange={handleChange} items={funcoesAlocacao} />
                                         <CampoTexto size={12} handleChange={handleChange} mascara="numeroPositivo" name="quantidade" value={vagaAtual.quantidade} label="Qtd Colaboradores"/>
                                         <CampoTexto size={12} label="Qtd Horas"/>
                                         <CampoTexto size={12} label="Valor"/>
@@ -175,11 +205,45 @@ const CriarEventos = ({setTitulo, setActions}) => {
                             ))}
 
                             {(step === 2 && (
-                                <Typography>c</Typography>
+                                <>
+                                <Grid display={"flex"} justifyContent={"center"} width="100%" size={12}>
+                                    <Typography mb={2} mt={2} variant="h5" component="h5">Dados Cadastrais</Typography>
+                                </Grid>
+                                <Grid width="90%" margin="auto" container columnSpacing={2}>
+                                    <Picklist label={"Tipo de Contrato"} name={"tipoContrato"} value={dadosEvento.tipoContrato} handleChange={handleDadosChange} items={tiposContrato} />
+                                </Grid>
+                                {/* TODO: Container para abrigar Checkboxes com documentos necessários */}
+                                </>
                             ))}
                             
                             {(step === 3 && (
-                                <Typography>d</Typography>
+                                <>
+                                <Grid display={"flex"} justifyContent={"center"} width="100%" size={12}>
+                                    <Typography mb={2} mt={2} variant="h5" component="h5">Abrir Inscrições</Typography>
+                                </Grid>
+                                <Box width={"80%"} display={"flex"} flexDirection={"column"} gap={5} margin={"auto"}>
+                                    <TextField 
+                                    label="Link para inscrição das vagas" 
+                                    fullWidth 
+                                    value={dadosEvento.url} 
+                                    disabled
+                                    slotProps={{
+                                        input: {
+                                            endAdornment: <InputAdornment position="start"><ButtonBase onClick={() => {navigator.clipboard.writeText(dadosEvento.url)}} sx={{borderRadius: "50%", p: 1}}><ContentPasteIcon sx={{fontSize: 25}}/></ButtonBase></InputAdornment>
+                                        }
+                                    }}/>
+                                    <Autocomplete onChange={(event, newValue) => {handleShareChange(newValue)}} disablePortal options={colaboradores} renderInput={(params) => <TextField {...params} label="Convidar colaboradores" />}/>
+                                    <Box display={"flex"} gap={1} flexWrap={"wrap"}>
+                                        {(share && (
+                                            share.map((item, index) => {
+                                                return (
+                                                    <Chip key={index} label={item.label} onDelete={() => handleShareDelete(item.id)}/>
+                                                );
+                                            })
+                                        ))}
+                                    </Box>
+                                </Box>
+                                </>
                             ))}
                     </Grid>
                 </Box>

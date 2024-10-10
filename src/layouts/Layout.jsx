@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Box, Button, ButtonGroup, CssBaseline, Typography } from "@mui/material";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "../components/navbar/Navbar";
@@ -13,7 +13,6 @@ import Parceiros from "../pages/Parceiros";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import Home from "../pages/Home";
 import NotFound from "../pages/NotFound";
-import Botao from "../components/btn/Botao";
 import Login from "../pages/Login";
 
 const Layout = () => {

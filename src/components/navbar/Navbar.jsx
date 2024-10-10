@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AppBar, Toolbar, IconButton, Typography, Box, Avatar, stringAvatar, ButtonBase, Menu, MenuItem, Divider } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Typography, Box, Avatar, ButtonBase, Menu, MenuItem, Divider } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Botao from "../btn/Botao";
 import { ArrowDropDown } from "@mui/icons-material";

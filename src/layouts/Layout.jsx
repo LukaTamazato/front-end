@@ -6,7 +6,7 @@ import BarraLateral from "../components/sidebar/BarraLateral";
 import EventosAbertos from "../pages/EventosAbertos";
 import EventosFechados from "../pages/EventosFechados";
 import Dashboard from "../pages/Dashboard";
-import CriarEventos from "../pages/CriarEventos";
+import CriarEventos from "../pages/criarEventos/CriarEventos";
 import Escala from "../pages/Escala";
 import Formularios from "../pages/Formularios";
 import Parceiros from "../pages/Parceiros";

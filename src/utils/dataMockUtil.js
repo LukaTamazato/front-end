@@ -27,8 +27,19 @@ export const colaboradores = [
 ];
 
 export const tiposContrato = [
-    {id: 0, value: "Freelancer"},
-    {id: 1, value: "Contrato intermitente"},
-    {id: 2, value: "Contrato temporário"},
-    {id: 3, value: "Terceirizado"}
+    {id: 0, value: "Freelancer", documentosObrigatorios: [0, 1, 5]},
+    {id: 1, value: "Contrato intermitente", documentosObrigatorios: [0, 5, 7, 3]},
+    {id: 2, value: "Contrato temporário", documentosObrigatorios: [0, 5, 7]},
+    {id: 3, value: "Terceirizado", documentosObrigatorios: [0, 5]}
+]
+
+export const documentos = [
+    {id: 0, value: "CPF"},
+    {id: 1, value: "RG"},
+    {id: 2, value: "CNH"},
+    {id: 3, value: "CTPS"},
+    {id: 4, value: "Comprovante Residência"},
+    {id: 5, value: "ASO"},
+    {id: 6, value: "Reservista"},
+    {id: 7, value: "Contrato"}
 ]

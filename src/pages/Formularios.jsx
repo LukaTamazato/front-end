@@ -1,4 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import Alerta from "../components/alerta/Alerta";
+import { Button, Snackbar } from "@mui/material";
 
 const Formularios = ({setTitulo, setActions}) => {
 
@@ -6,10 +8,10 @@ const Formularios = ({setTitulo, setActions}) => {
         setTitulo("Formulários");
         setActions(null);
     })
+
     
     return (
         <>
-            Formulários
         </>
     )
 }

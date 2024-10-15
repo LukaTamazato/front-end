@@ -1,11 +1,11 @@
 
 import { Box, Checkbox, FormControlLabel, FormGroup, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import Picklist from "../../components/input/Picklist";
-import { documentos, tiposContrato } from "../../utils/dataMockUtil";
+import Picklist from "../../../components/input/Picklist";
+import { documentos, tiposContrato } from "../../../utils/dataMockUtil";
 import { useState } from "react";
 
-const DadosCadastrais = ({dadosEvento, handleDadosChange}) => {
+const DadosCadastrais = ({dadosDemanda, handleDadosChange}) => {
 
     const [documentoAtual, setDocumentoAtual] = useState(
         {
@@ -36,7 +36,7 @@ const DadosCadastrais = ({dadosEvento, handleDadosChange}) => {
         </Grid>
         <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} width={"100%"} gap={5}>
             <Grid width="90%" margin="auto" container columnSpacing={2}>
-                <Picklist label={"Tipo de Contrato"} name={"tipoContrato"} value={dadosEvento.tipoContrato} handleChange={handleDocumentoChange} items={tiposContrato} />
+                <Picklist label={"Tipo de Contrato"} name={"tipoContrato"} value={dadosDemanda.tipoContrato} handleChange={handleDocumentoChange} items={tiposContrato} />
             </Grid>
             <FormGroup>
                 <Grid width="85%" margin="auto" container columnSpacing={2}>

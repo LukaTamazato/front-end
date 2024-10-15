@@ -1,14 +1,18 @@
 import { Box, FormControl, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import Picklist from "../../components/input/Picklist";
-import CampoTexto from "../../components/input/CampoTexto";
-import Botao from "../../components/btn/Botao";
-import PillContainer from "../../components/pill/Pill";
-import { documentos, funcoesAlocacao, tiposContrato } from "../../utils/dataMockUtil";
+import Picklist from "../../../components/input/Picklist";
+import CampoTexto from "../../../components/input/CampoTexto";
+import Botao from "../../../components/btn/Botao";
+import PillContainer from "../../../components/pill/Pill";
+import { documentos, funcoesAlocacao, tiposContrato } from "../../../utils/dataMockUtil";
 import { useState } from "react";
 
-const CadastrarVagas = ({vagas, setVagas}) => {
+const CadastrarVagas = ({dadosDemanda, setDadosDemanda, adicionarVaga}) => {
 
+
+    const setVagas = (vaga) => {
+        setDadosDemanda({...dadosDemanda, vagas: vaga});
+    }
 
     const [vagaAtual, setVagaAtual] = useState({
         funcao: "",
@@ -21,6 +25,8 @@ const CadastrarVagas = ({vagas, setVagas}) => {
 
     const cadastrarVaga = () => {
 
+        const vagas = dadosDemanda.vagas;
+
         const novaVaga = {
             id: vagas.length > 0 ? vagas[vagas.length - 1].id + 1 : 0,
             funcao: vagaAtual.funcao,
@@ -32,8 +38,8 @@ const CadastrarVagas = ({vagas, setVagas}) => {
         });
 
         if (campoVazio) return;
-
-        setVagas([...vagas, novaVaga]);
+        
+        adicionarVaga(novaVaga);
 
         setVagaAtual({
             funcao: "",
@@ -56,7 +62,7 @@ const CadastrarVagas = ({vagas, setVagas}) => {
         <Grid mt={4} size={{sm: 12, md: 6}}>
             <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
                 <Typography mb={6} variant="h5" component="h5">Vagas Cadastradas</Typography>
-                <PillContainer setVagas={setVagas} pills={vagas}/>
+                <PillContainer setPills={setVagas} pills={dadosDemanda.vagas}/>
             </Box>
         </Grid>
         </>

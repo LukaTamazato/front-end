@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const aplicarMascara = (valor, mascara) => {
     if (!mascara || typeof valor === 'number') return valor;
     
@@ -73,4 +75,54 @@ export const formatarObjetos = (objs) => {
             obj[key] = valorNovo;
         })
     });
+}
+
+export const formatarCardDemanda = (demandas) => {
+    const demandasFmt = [];
+
+    demandas.forEach((e) => {
+        const date = dayjs(e.fim);
+        demandasFmt.push({
+            id: e.id,
+            demanda: e.nome,
+            date: {
+                dia: date.date(),
+                mes: numToMes(date.month())
+            },
+            endereco: `${e.logradouro}, ${e.numero}`
+        })
+    })
+
+    return demandasFmt;
+}
+
+export const numToMes = (n) => {
+    switch (n) {
+        case 0:
+            return "JAN"
+        case 1:
+            return "FEV"
+        case 2:
+            return "MAR"
+        case 3:
+            return "ABR"
+        case 4:
+            return "MAI"
+        case 5:
+            return "JUN"
+        case 6:
+            return "JUL"
+        case 7:
+            return "AGO"
+        case 8:
+            return "SET"
+        case 9:
+            return "OUT"
+        case 10:
+            return "NOV"
+        case 11:
+            return "DEZ"
+        default:
+            break;
+    }
 }

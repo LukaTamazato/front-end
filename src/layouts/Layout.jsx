@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Button, ButtonGroup, CssBaseline, Typography } from "@mui/material";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "../components/navbar/Navbar";
 import BarraLateral from "../components/sidebar/BarraLateral";
-import EventosAbertos from "../pages/EventosAbertos";
-import EventosFechados from "../pages/EventosFechados";
+import DemandasAbertas from "../pages/demandas/Demandas";
+import DemandasFechadas from "../pages/demandas/DemandasFechadas";
 import Dashboard from "../pages/Dashboard";
-import CriarEventos from "../pages/criarEventos/CriarEventos";
+import CriarDemandas from "../pages/demandas/criarDemandas/CriarDemandas";
 import Escala from "../pages/Escala";
 import Formularios from "../pages/Formularios";
 import Parceiros from "../pages/Parceiros";
@@ -14,9 +14,21 @@ import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import Home from "../pages/Home";
 import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
+import Demandas from "../pages/demandas/Demandas";
+import Eventos from "../pages/eventos/Eventos";
+import EventosAbertos from "../pages/eventos/EventosAbertos";
+import EventosFechados from "../pages/eventos/EventosFechados";
 
 const Layout = () => {
-    const [collapsed, setCollapsed] = useState(false);
+
+    const [collapsed, setCollapsed] = useState(
+        JSON.parse(localStorage.getItem('sidebarCollapsed')) || false
+    );
+
+    useEffect(() => {
+        localStorage.setItem('sidebarCollapsed', JSON.stringify(collapsed));
+    }, [collapsed]);
+
     const [titulo, setTitulo] = useState("");
     const [actions, setActions] = useState([]);
 
@@ -24,7 +36,6 @@ const Layout = () => {
         setCollapsed(!collapsed);
     };
     
-
     return (
         <Router>
             <Box sx={{ display: "flex", height: "100vh", flexDirection: "column" }}>
@@ -32,7 +43,7 @@ const Layout = () => {
                 <Navbar toggleSidebar={toggleSidebar} />
                 <div className="app">
                     <BarraLateral collapsed={collapsed} />
-                    <Box style={{ left: `${collapsed ? 80 : 250}px`, width: `calc(100% - ${collapsed ? 80 : 250}px)`, bgcolor: '#f0f0f0', padding: '32px' }} className="content">
+                    <Box overflow={"scroll"} style={{ left: `${collapsed ? 80 : 260}px`, width: `calc(100% - ${collapsed ? 80 : 260}px)`, bgcolor: '#f0f0f0', padding: '32px' }} className="content">
                         {(titulo !== "" &&
                             <Box mb={4}>
                             <Box display={"flex"} justifyContent={"space-between"} alignItems={"flex-end"}>
@@ -54,9 +65,13 @@ const Layout = () => {
                         <Routes>
                             <Route path="/" element={<Home setTitulo={setTitulo} setActions={setActions} />} />
                             <Route path="/dashboard" element={<Dashboard setTitulo={setTitulo} setActions={setActions} />} />
+                            <Route path="/eventos" element={<Eventos setTitulo={setTitulo} setActions={setActions} />} />
                             <Route path="/eventos-abertos" element={<EventosAbertos setTitulo={setTitulo} setActions={setActions} />} />
                             <Route path="/eventos-fechados" element={<EventosFechados setTitulo={setTitulo} setActions={setActions} />} />
-                            <Route path="/eventos/criar" element={<CriarEventos setTitulo={setTitulo} setActions={setActions} />} />
+                            <Route path="/demandas" element={<Demandas setTitulo={setTitulo} setActions={setActions} />} />
+                            <Route path="/demandas/criar" element={<CriarDemandas setTitulo={setTitulo} setActions={setActions} />} />
+                            <Route path="/demandas-abertas" element={<DemandasAbertas setTitulo={setTitulo} setActions={setActions} />} />
+                            <Route path="/demandas-fechadas" element={<DemandasFechadas setTitulo={setTitulo} setActions={setActions} />} />
                             <Route path="/escala" element={<Escala setTitulo={setTitulo} setActions={setActions} />} />
                             <Route path="/formularios" element={<Formularios setTitulo={setTitulo} setActions={setActions} />} />
                             <Route path="/parceiros" element={<Parceiros setTitulo={setTitulo} setActions={setActions} />} />

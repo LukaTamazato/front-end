@@ -1,27 +1,37 @@
 import { useEffect, useState } from "react";
-import PageModal from "../../components/pageModal/PageModal";
+import PageModal from "../../../components/pageModal/PageModal";
 import { Box, Typography } from "@mui/material";
-import Botao from "../../components/btn/Botao";
+import Botao from "../../../components/btn/Botao";
 import Grid from "@mui/material/Grid2";
-import Esteira from "../../components/esteira/Esteira";
+import Esteira from "../../../components/esteira/Esteira";
 import { useNavigate } from "react-router-dom";
-import DadosEvento from "./DadosEvento";
+import DadosDemanda from "./DadosDemanda";
 import CadastrarVagas from "./CadastrarVagas";
 import DadosCadastrais from "./DadosCadastrais";
-import AbrirInscricoes from "./Abrir Inscrições";
+import AbrirInscricoes from "./AbrirInscricoes";
 
-const CriarEventos = ({setTitulo, setActions}) => {
+const CriarDemandas = ({setTitulo, setActions}) => {
 
     const navigate = useNavigate();
 
     const [step, setStep] = useState(0);
-    const labels = ['Evento', 'Vagas', 'Colaborador', 'Inscrições'];
+    const labels = ['Demanda', 'Vagas', 'Colaborador', 'Inscrições'];
     const qtdSteps = labels.length;
 
     const handleProximo = () => {
+        
+        if (step === qtdSteps-1) handleConcluir();
+
         if (step > (qtdSteps-2)) return;
 
         setStep(step + 1);
+    }
+
+    const handleConcluir = () => {
+        navigate('/demandas-abertas');
+
+        console.log(dadosDemanda);
+
     }
     
     const handleAnterior = () => {
@@ -30,7 +40,7 @@ const CriarEventos = ({setTitulo, setActions}) => {
         setStep(step - 1);
     }
 
-    const [dadosEvento, setDadosEvento] = useState({
+    const [dadosDemanda, setDadosDemanda] = useState({
         nome: "",
         orcamento: "",
         inicio: null,
@@ -39,13 +49,19 @@ const CriarEventos = ({setTitulo, setActions}) => {
         cep: "",
         responsavel: "",
         tipoContrato: "",
-        url: "https://www.serenity.com.br/eventos/ed2ab348-23d5-4d05-8553-96bcfec1a087"
+        url: "https://www.serenity.com.br/demandas/ed2ab348-23d5-4d05-8553-96bcfec1a087",
+        vagas: []
     });
 
-    const [vagas, setVagas] = useState([]);
+    const adicionarVaga = (novaVaga) => {
+        setDadosDemanda((prevState) => ({
+            ...prevState,
+            vagas: [...prevState.vagas, novaVaga]
+        }));
+    };
 
     const handleDadosChange = (e, name) => {
-        setDadosEvento({ ...dadosEvento, [name]: e.target.value });
+        setDadosDemanda({ ...dadosDemanda, [name]: e.target.value });
     };
 
     useEffect(() => {
@@ -57,7 +73,7 @@ const CriarEventos = ({setTitulo, setActions}) => {
         <>
             <PageModal>
                 <Typography variant="h4" component="h4">
-                    Criar Evento
+                    Criar Demanda
                 </Typography>
                 <Box sx={{mt: 1}}>
                     <Grid container>
@@ -65,19 +81,19 @@ const CriarEventos = ({setTitulo, setActions}) => {
                             <Esteira setStep={setStep} step={step} labels={labels} />
                         </Grid>
                             {(step === 0 && (
-                                <DadosEvento handleDadosChange={handleDadosChange} dadosEvento={dadosEvento} setDadosEvento={setDadosEvento}/>
+                                <DadosDemanda handleDadosChange={handleDadosChange} dadosDemanda={dadosDemanda} setDadosDemanda={setDadosDemanda}/>
                             ))}
 
                             {(step === 1 && (
-                                <CadastrarVagas vagas={vagas} setVagas={setVagas}/>
+                                <CadastrarVagas dadosDemanda={dadosDemanda} setDadosDemanda={setDadosDemanda} adicionarVaga={adicionarVaga}/>
                             ))}
 
                             {(step === 2 && (
-                                <DadosCadastrais dadosEvento={dadosEvento} handleDadosChange={handleDadosChange}/>
+                                <DadosCadastrais dadosDemanda={dadosDemanda} handleDadosChange={handleDadosChange}/>
                             ))}
                             
                             {(step === 3 && (
-                                <AbrirInscricoes dadosEvento={dadosEvento}/>
+                                <AbrirInscricoes dadosDemanda={dadosDemanda}/>
                             ))}
                     </Grid>
                 </Box>
@@ -90,4 +106,4 @@ const CriarEventos = ({setTitulo, setActions}) => {
     )
 }
 
-export default CriarEventos;
+export default CriarDemandas;

@@ -12,13 +12,15 @@ import GroupIcon from '@mui/icons-material/Group';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import Item from "./items/Item";
 import CustomSubMenu from "./items/SubMenu";
+import HomeIcon from '@mui/icons-material/Home';
+import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined';
 
 const BarraLateral = ({ collapsed }) => {
     const theme = useTheme();
 
     const [activeItem, setActiveItem] = useState(null);
 
-    const handleMenuItemClick = (item) => {
+    const handleActivateItem = (item) => {
         setActiveItem(item);
     };
 
@@ -29,6 +31,8 @@ const BarraLateral = ({ collapsed }) => {
                     [`.${sidebarClasses.container}`]: {
                         backgroundColor: theme.palette.primary.main,
                         color: "white",
+                        width: collapsed ? '80px' : '260px',
+                        transition: '300ms'
                     },
                 }}
             >
@@ -43,16 +47,22 @@ const BarraLateral = ({ collapsed }) => {
                     }
                 }}
                 >
-                    <Item onClick={() => handleMenuItemClick('i6')} active={activeItem === 'i6'} icon={<DashboardIcon />} linkTo="/dashboard" text="Dashboard" />
-                    <CustomSubMenu label="Eventos" icon={<CelebrationOutlinedIcon />}>
-                        <Item onClick={() => handleMenuItemClick('i0')} active={activeItem === 'i0'} theme={theme.palette.primary.lighter} linkTo="/eventos-abertos" icon={<CheckBoxOutlinedIcon />} text="Eventos abertos" />
-                        <Item onClick={() => handleMenuItemClick('i1')} active={activeItem === 'i1'} theme={theme.palette.primary.lighter} linkTo="/eventos-fechados" icon={<DisabledByDefaultOutlinedIcon />} text="Eventos fechados" />
-                        <Item onClick={() => handleMenuItemClick('i2')} active={activeItem === 'i2'} theme={theme.palette.primary.lighter} linkTo="/eventos/criar" icon={<AddBoxOutlinedIcon />} text="Criar eventos" />
+                    <Item sx={{mt: 2}} smallText={false} onClick={() => handleActivateItem('i0')} active={activeItem === 'i0'} icon={<HomeIcon />} linkTo="/" text="Home" />
+                    <Item smallText={false} onClick={() => handleActivateItem('i1')} active={activeItem === 'i1'} icon={<DashboardIcon />} linkTo="/dashboard" text="Dashboard" />
+                    <CustomSubMenu label="Eventos" icon={<ConfirmationNumberOutlinedIcon />}>
+                        <Item onClick={() => handleActivateItem('i2')} active={activeItem === 'i2'} theme={theme.palette.primary.lighter} linkTo="/eventos" icon={<AddBoxOutlinedIcon />} text="Eventos totais" />
+                        <Item onClick={() => handleActivateItem('i3')} active={activeItem === 'i3'} theme={theme.palette.primary.lighter} linkTo="/eventos-abertos" icon={<CheckBoxOutlinedIcon />} text="Eventos abertos" />
+                        <Item onClick={() => handleActivateItem('i4')} active={activeItem === 'i4'} theme={theme.palette.primary.lighter} linkTo="/eventos-fechados" icon={<DisabledByDefaultOutlinedIcon />} text="Eventos fechados" />
+                        </CustomSubMenu>
+                    <CustomSubMenu label="Demandas" icon={<CelebrationOutlinedIcon />}>
+                        <Item onClick={() => handleActivateItem('i5')} active={activeItem === 'i5'} theme={theme.palette.primary.lighter} linkTo="/demandas" icon={<AddBoxOutlinedIcon />} text="Demandas totais" />
+                        <Item onClick={() => handleActivateItem('i6')} active={activeItem === 'i6'} theme={theme.palette.primary.lighter} linkTo="/demandas-abertas" icon={<CheckBoxOutlinedIcon />} text="Demandas abertas" />
+                        <Item onClick={() => handleActivateItem('i7')} active={activeItem === 'i7'} theme={theme.palette.primary.lighter} linkTo="/demandas-fechadas" icon={<DisabledByDefaultOutlinedIcon />} text="Demandas fechadas" />
                     </CustomSubMenu>
                     <CustomSubMenu label="Equipe" icon={<GroupIcon />}>
-                        <Item onClick={() => handleMenuItemClick('i3')} active={activeItem === 'i3'} theme={theme.palette.primary.lighter} linkTo="/escala" icon={<EditCalendarOutlinedIcon />} text="Escala" />
-                        <Item onClick={() => handleMenuItemClick('i4')} active={activeItem === 'i4'} theme={theme.palette.primary.lighter} linkTo="/formularios" icon={<ArticleOutlinedIcon />} text="Formulários" />
-                        <Item onClick={() => handleMenuItemClick('i5')} active={activeItem === 'i5'} theme={theme.palette.primary.lighter} linkTo="/parceiros" icon={<ContactsOutlinedIcon />} text="Parceiros" />
+                        <Item onClick={() => handleActivateItem('i8')} active={activeItem === 'i8'} theme={theme.palette.primary.lighter} linkTo="/escala" icon={<EditCalendarOutlinedIcon />} text="Escala" />
+                        <Item onClick={() => handleActivateItem('i9')} active={activeItem === 'i9'} theme={theme.palette.primary.lighter} linkTo="/formularios" icon={<ArticleOutlinedIcon />} text="Formulários" />
+                        <Item onClick={() => handleActivateItem('i10')} active={activeItem === 'i10'} theme={theme.palette.primary.lighter} linkTo="/parceiros" icon={<ContactsOutlinedIcon />} text="Parceiros" />
                     </CustomSubMenu>
                 </Menu>
             </Sidebar>

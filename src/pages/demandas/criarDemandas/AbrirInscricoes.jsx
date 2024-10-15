@@ -2,10 +2,10 @@ import { Autocomplete, Box, ButtonBase, Chip, InputAdornment, TextField, Typogra
 import Grid from "@mui/material/Grid2";
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import { useState } from "react";
-import Alerta from "../../components/alerta/Alerta";
+import Alerta from "../../../components/alerta/Alerta";
 import CheckIcon from '@mui/icons-material/Check';
 
-const AbrirInscricoes = ({dadosEvento}) => {
+const AbrirInscricoes = ({dadosDemanda}) => {
 
     const [share, setShare] = useState([]);
     const [shareAtual, setShareAtual] = useState(null);
@@ -43,11 +43,11 @@ const AbrirInscricoes = ({dadosEvento}) => {
             <TextField
             label="Link para inscrição das vagas" 
             fullWidth 
-            value={dadosEvento.url} 
+            value={dadosDemanda.url} 
             disabled
             slotProps={{
                 input: {
-                    endAdornment: <InputAdornment position="start"><ButtonBase onClick={() => {navigator.clipboard.writeText(dadosEvento.url); setAlertaOpen(true)}} sx={{borderRadius: "50%", p: 1}}><ContentPasteIcon sx={{fontSize: 25}}/></ButtonBase></InputAdornment>
+                    endAdornment: <InputAdornment position="start"><ButtonBase onClick={() => {navigator.clipboard.writeText(dadosDemanda.url); setAlertaOpen(true)}} sx={{borderRadius: "50%", p: 1}}><ContentPasteIcon sx={{fontSize: 25}}/></ButtonBase></InputAdornment>
                 }
             }}/>
             <Autocomplete onChange={(event, newValue) => {handleShareChange(newValue)}} disablePortal options={colaboradores} renderInput={(params) => <TextField {...params} label="Convidar colaboradores" />}/>

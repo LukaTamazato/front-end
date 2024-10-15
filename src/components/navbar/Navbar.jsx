@@ -5,24 +5,25 @@ import Botao from "../btn/Botao";
 import { ArrowDropDown } from "@mui/icons-material";
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
+import logo from '/logo.png';
 
 const Navbar = ({ toggleSidebar }) => {
 
     return (
         <AppBar position="static">
-            <Toolbar>
-                <IconButton
-                    edge="start"
-                    color="inherit"
-                    aria-label="menu"
-                    sx={{ mr: 2 }}
-                    onClick={toggleSidebar}
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                    Serenity
-                </Typography>
+            <Toolbar display="flex" sx={{justifyContent: "space-between"}}>
+                <Box display="flex" alignItems={"center"}>
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        sx={{ mr: 2 }}
+                        onClick={toggleSidebar}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Box component={"img"} src={logo} height={"48px"} />
+                </Box>
 
                 <MenuPerfil/>
             </Toolbar>

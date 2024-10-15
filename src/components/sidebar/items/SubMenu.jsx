@@ -11,7 +11,7 @@ const CustomSubMenu = ({ children, icon, label }) => {
             rootStyles={{
                 ['.' + menuClasses.subMenuContent]: {
                     width: 'auto',
-                    backgroundColor: theme.palette.primary.main
+                    backgroundColor: theme.palette.primary.main,
                 }
             }}
             label={label} icon={icon}>

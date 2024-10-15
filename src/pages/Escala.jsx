@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Tabela from "../components/tabela/Tabela";
 import { colaboradores } from "../utils/dataMockUtil";
-import { formatarObjetos } from "../utils/formatarCampoUtil";
+import { formatarObjetos } from "../utils/formatarUtil";
 import EditIcon from "@mui/icons-material/Edit";
 import { Box, Button, ButtonBase } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";

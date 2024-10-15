@@ -1,7 +1,7 @@
 import { InputAdornment, TextField } from "@mui/material";
 import Grid from '@mui/material/Grid2';
 import React, { useState } from "react";
-import { aplicarMascara } from "../../utils/formatarCampoUtil";
+import { aplicarMascara } from "../../utils/formatarUtil";
 
 const CampoTexto = ({handleChange, label, name, value, size={ sm: 12, md: 6 }, regex, mascara, placeholder, errorMsg="", required, type="text", startAdornment=""}) => {
 

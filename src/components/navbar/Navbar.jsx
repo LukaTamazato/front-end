@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { AppBar, Toolbar, IconButton, Typography, Box, Avatar, ButtonBase, Menu, MenuItem, Divider } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Typography, Box, Avatar, ButtonBase, Menu, MenuItem, Divider, Tooltip } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Botao from "../btn/Botao";
-import { ArrowDropDown } from "@mui/icons-material";
+import { ArrowDropDown, Circle } from "@mui/icons-material";
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import logo from '/logo.png';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { useTheme } from "@emotion/react";
 
 const Navbar = ({ toggleSidebar }) => {
 
@@ -25,7 +27,10 @@ const Navbar = ({ toggleSidebar }) => {
                     <Box component={"img"} src={logo} height={"48px"} />
                 </Box>
 
-                <MenuPerfil/>
+                <Box display={"flex"} gap={2}>
+                    <Notificacoes/>
+                    <MenuPerfil/>
+                </Box>
             </Toolbar>
         </AppBar>
     );
@@ -48,9 +53,11 @@ const MenuPerfil = () => {
 
     return (
         <Box sx={{ display: 'flex', gap: 0, alignItems: "flex-end" }}>
+            <Tooltip title="Perfil">
             <ButtonBase centerRipple onClick={handleClick} sx={{borderRadius: "50%"}}>
-                <Avatar>L</Avatar>
-            </ButtonBase>
+                    <Avatar>L</Avatar>
+                </ButtonBase>
+            </Tooltip>
             <Menu
                 anchorEl={anchorEl}
                 open={open}
@@ -65,6 +72,53 @@ const MenuPerfil = () => {
                 <MenuItem id="item6" onClick={handleClose}><SettingsIcon sx={{fontSize: 20}}/><Typography ml={1} mr={2}>Configurações</Typography></MenuItem>
                 <Divider/>
                 <MenuItem id="item7" onClick={handleClose}><LogoutIcon sx={{fontSize: 20}}/><Typography ml={1} mr={2}>Sair</Typography></MenuItem>
+            </Menu>
+        </Box>
+    );
+}
+
+const Notificacoes = () => {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const theme = useTheme();
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    
+    const handleClose = (e) => {
+        console.log(e.target.id);
+        setAnchorEl(null);
+    };
+
+    return (
+        <Box sx={{ display: 'flex', gap: 0, alignItems: "flex-end" }}>
+            <Tooltip title="Notificações">
+            <ButtonBase centerRipple onClick={handleClick} sx={{borderRadius: "50%"}}>
+                <Box sx={{width: 40, height: 40, display: "flex", alignItems: "center", justifyContent: "center"}} color={theme.palette.paper.dark}>
+                    <NotificationsIcon sx={{fontSize: 30}}/>
+                </Box>
+            </ButtonBase>
+            </Tooltip>
+            <Menu
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                sx={{
+                    width: 450,
+                    "& .MuiMenu-list": { 
+                        pb: 0
+                    }
+                }}
+            >
+                <Typography fontSize={17} ml={2} mb={1}>Notificações</Typography>
+                <Divider/>
+                <Box sx={{bgcolor: theme.palette.paper.main, width: 500, pb: 1, pt: 1}}>
+                <MenuItem id="item2" onClick={handleClose}><Typography ml={1} mr={2}>Notificação 1</Typography></MenuItem>
+                <MenuItem id="item3" onClick={handleClose}><Typography ml={1} mr={2}>Notificação 2</Typography></MenuItem>
+                <MenuItem id="item4" onClick={handleClose}><Typography ml={1} mr={2}>Notificação 3</Typography></MenuItem>
+                <MenuItem id="item5" onClick={handleClose}><Typography ml={1} mr={2}>Notificação 4</Typography></MenuItem>
+                </Box>
             </Menu>
         </Box>
     );

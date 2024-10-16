@@ -1,8 +1,10 @@
-import { Typography } from "@mui/material";
+import { Typography, FormControl, Box } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import CampoTexto from "../../../components/input/CampoTexto";
 import DataHora from "../../../components/input/DataHora";
 import axios from "axios";
+import Picklist from "../../../components/input/Picklist";
+import dayjs from "dayjs";
 
 const DadosDemanda = ({handleDadosChange, dadosDemanda, setDadosDemanda}) => {
 
@@ -10,34 +12,26 @@ const DadosDemanda = ({handleDadosChange, dadosDemanda, setDadosDemanda}) => {
         setDadosDemanda({ ...dadosDemanda, [name]: e.format() });
     };
 
-    const handleViaCEP = async (e, name) => {
-        handleDadosChange(e, name)
-      
-        if (e.target.value.length !== 9) return;
-        
-        const response = await axios.get(`https://viacep.com.br/ws/${e.target.value}/json/`);
-
-        if (response.data.erro) return;
-
-        setDadosDemanda((prevDadosDemanda) => ({
-            ...prevDadosDemanda,
-            local: response.data.logradouro,
-        }));
-    };
+    const eventos = [
+        {id: "321312", value: "Evento A"},
+        {id: "321313", value: "Evento B"},
+        {id: "321314", value: "Evento C"},
+        {id: "321315", value: "Evento D"},
+        {id: "321316", value: "Evento E"},
+        {id: "321317", value: "Evento F"}
+    ]
 
     return (
         <>
-            <Grid display={"flex"} justifyContent={"center"} width="100%" size={12}>
-                <Typography mb={2} mt={4} variant="h5" component="h5">Dados da Demanda</Typography>
+            <Grid mb={2} mt={6} display={"flex"} justifyContent={"center"} width="100%" size={12}>
+                <Typography variant="h5" component="h5">Dados da Demanda</Typography>
             </Grid>
-            <Grid width="90%" margin="auto" container columnSpacing={2}>
+            <Grid width="80%" margin="auto" container columnSpacing={2}>
                 <CampoTexto size={12} handleChange={handleDadosChange} value={dadosDemanda.nome} name="nome" label="Nome"/>
-                <DataHora handleChange={(e) => handleTimeChange(e, 'inicio')} name="inicio" label="Início"/>
-                <DataHora handleChange={(e) => handleTimeChange(e, 'fim')} name="fim" label="Fim"/>
-                <CampoTexto handleChange={handleDadosChange} value={dadosDemanda.local} name="local" label="Local"/>
-                <CampoTexto handleChange={handleViaCEP} value={dadosDemanda.cep} regex={/^\d{5}-\d{3}$/} name="cep" label="CEP" mascara="cep"/>
-                <CampoTexto handleChange={handleDadosChange} startAdornment="R$" value={dadosDemanda.orcamento} mascara="dinheiro" name="orcamento" label="Orçamento"/>
+                <DataHora handleChange={(e) => handleTimeChange(e, 'inicio')} value={dadosDemanda.inicio != "" ? dayjs(dadosDemanda.inicio) : null} name="inicio" label="Início"/>
+                <DataHora handleChange={(e) => handleTimeChange(e, 'fim')} value={dadosDemanda.fim != "" ? dayjs(dadosDemanda.fim) : null} name="fim" label="Fim"/>
                 <CampoTexto handleChange={handleDadosChange} value={dadosDemanda.responsavel} name="responsavel" label="Responsável"/>
+                <Picklist items={eventos} name="evento" label={"Evento"} handleChange={handleDadosChange} value={dadosDemanda.evento}/>
             </Grid>
         </>
     );

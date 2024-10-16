@@ -29,11 +29,11 @@ const PillContainer = ({pills, setPills}) => {
     }
 
     return (
-            <Box width={400} sx={{bgColor: "green"}} flexWrap={"wrap"} display={"flex"} gap={2}>
+            <Box sx={{bgColor: "green"}} flexWrap={"wrap"} display={"flex"} gap={2}>
             {(
                 pills && (
                     pills.map((pill) => {
-                        return <Pill handleClick={() => {}} handleDelete={handleDelete} key={pill.id} idFunc={pill.id} num={pill.quantidade} label={pill.funcao} />
+                        return <Pill handleClick={() => {}} handleDelete={handleDelete} key={pill.id} idFunc={pill.id} num={pill.qtdColaborador} label={pill.funcao.value} />
                     })
                 )
             )}

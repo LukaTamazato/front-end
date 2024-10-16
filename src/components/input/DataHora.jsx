@@ -2,7 +2,7 @@ import Grid from "@mui/material/Grid2";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import React from "react";
 
-const DataHora = ({handleChange, name, label}) => {
+const DataHora = ({handleChange, name, label, value}) => {
     return (
         <Grid size={6}>
             <DateTimePicker
@@ -10,6 +10,7 @@ const DataHora = ({handleChange, name, label}) => {
                 onChange={handleChange} 
                 name={name}
                 label={label}
+                value={value}
                 sx={{width: "100%", mt: 2}}
             />
         </Grid>

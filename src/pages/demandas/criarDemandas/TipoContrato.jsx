@@ -5,11 +5,11 @@ import Picklist from "../../../components/input/Picklist";
 import { documentos, tiposContrato } from "../../../utils/dataMockUtil";
 import { useState } from "react";
 
-const DadosCadastrais = ({dadosDemanda, handleDadosChange}) => {
+const TipoContrato = ({dadosDemanda, handleDadosChange}) => {
 
     const [documentoAtual, setDocumentoAtual] = useState(
         {
-            id: null,
+            id: "",
             value: "",
             documentosObrigatorios: []
         }
@@ -18,7 +18,10 @@ const DadosCadastrais = ({dadosDemanda, handleDadosChange}) => {
     const [checked, setChecked] = useState({});
 
     const handleDocumentoChange = (e, name) => {
-        setDocumentoAtual(tiposContrato.filter(contrato => contrato.value === e.target.value)[0]);
+        const documentoAtual = tiposContrato.filter(contrato => contrato.id === e.target.value)[0];
+        setDocumentoAtual(documentoAtual);
+
+        e.target.value = documentoAtual;
         handleDadosChange(e, name);
     }
 
@@ -36,7 +39,7 @@ const DadosCadastrais = ({dadosDemanda, handleDadosChange}) => {
         </Grid>
         <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} width={"100%"} gap={5}>
             <Grid width="90%" margin="auto" container columnSpacing={2}>
-                <Picklist label={"Tipo de Contrato"} name={"tipoContrato"} value={dadosDemanda.tipoContrato} handleChange={handleDocumentoChange} items={tiposContrato} />
+                <Picklist size={12} label={"Tipo de Contrato"} name={"tipoContrato"} value={dadosDemanda.tipoContrato} handleChange={handleDocumentoChange} items={tiposContrato} />
             </Grid>
             <FormGroup>
                 <Grid width="85%" margin="auto" container columnSpacing={2}>
@@ -70,4 +73,4 @@ const DadosCadastrais = ({dadosDemanda, handleDadosChange}) => {
     );
 }
 
-export default DadosCadastrais;
+export default TipoContrato;

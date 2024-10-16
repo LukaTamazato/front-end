@@ -1,30 +1,31 @@
-import { InputLabel, MenuItem, Select } from "@mui/material";
+import { FormControl, Grid2, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { useState } from "react";
 
-const Picklist = ({items, handleChange, value, name, label}) => {
+const Picklist = ({items, handleChange, value, name, label, size={ sm: 12, md: 6 }}) => {
     return (
-        <>
-        <InputLabel id={`${name}-select`}>{label}</InputLabel>
-        <Select
-        // onChange={(event) => params.api.setEditCellValue({ id: params.id, field: 'function', value: event.target.value })}
-        onChange={((e) => handleChange(e, name))}
-        fullWidth
-        name={name}
-        label={label}
-        value={value}
-        labelId={`${name}-select`}
-        >
-            {
-                items && (
-                    items.map((item, index) => {
+        <Grid2 size={size}>
+            <FormControl sx={{width: "100%", mt: 2}}>
+                <InputLabel id={`${name}-select`}>{label}</InputLabel>
+                <Select
+                // onChange={(event) => params.api.setEditCellValue({ id: params.id, field: 'function', value: event.target.value })}
+                onChange={((e) => handleChange(e, name))}
+                fullWidth
+                name={name}
+                label={label}
+                value={value}
+                labelId={`${name}-select`}
+                >
+                { items && (
+                    items.map((item ) => {
                         return (
-                            <MenuItem key={index} value={item.value}>{item.value}</MenuItem>
+                            <MenuItem key={item.id} value={item.id}>{item.value}</MenuItem>
                         )
                     })
                 )
-            }
-        </Select>
-        </>
+                }
+                </Select>
+            </FormControl>
+        </Grid2>
     );
 }
 

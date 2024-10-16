@@ -7,15 +7,15 @@ import Esteira from "../../../components/esteira/Esteira";
 import { useNavigate } from "react-router-dom";
 import DadosDemanda from "./DadosDemanda";
 import CadastrarVagas from "./CadastrarVagas";
-import DadosCadastrais from "./DadosCadastrais";
-import AbrirInscricoes from "./AbrirInscricoes";
+import TipoContrato from "./TipoContrato";
+import Finalizar from "./Finalizar";
 
 const CriarDemandas = ({setTitulo, setActions}) => {
 
     const navigate = useNavigate();
 
     const [step, setStep] = useState(0);
-    const labels = ['Demanda', 'Vagas', 'Colaborador', 'Inscrições'];
+    const labels = ['Demanda', 'Vagas', 'Contrato', 'Finalizar'];
     const qtdSteps = labels.length;
 
     const handleProximo = () => {
@@ -42,14 +42,12 @@ const CriarDemandas = ({setTitulo, setActions}) => {
 
     const [dadosDemanda, setDadosDemanda] = useState({
         nome: "",
-        orcamento: "",
-        inicio: null,
-        fim: null,
-        local: "",
-        cep: "",
+        inicio: "",
+        fim: "",
+        custoTotal: 0,
         responsavel: "",
-        tipoContrato: "",
-        url: "https://www.serenity.com.br/demandas/ed2ab348-23d5-4d05-8553-96bcfec1a087",
+        tipoContrato: {},
+        evento: "",
         vagas: []
     });
 
@@ -76,7 +74,7 @@ const CriarDemandas = ({setTitulo, setActions}) => {
                     Criar Demanda
                 </Typography>
                 <Box sx={{mt: 1}}>
-                    <Grid container>
+                    <Grid container width="80%" margin="auto" columnSpacing={10}>
                         <Grid display={"flex"} justifyContent={"center"} size={12}>
                             <Esteira setStep={setStep} step={step} labels={labels} />
                         </Grid>
@@ -85,15 +83,15 @@ const CriarDemandas = ({setTitulo, setActions}) => {
                             ))}
 
                             {(step === 1 && (
-                                <CadastrarVagas dadosDemanda={dadosDemanda} setDadosDemanda={setDadosDemanda} adicionarVaga={adicionarVaga}/>
+                                <CadastrarVagas dadosDemanda={dadosDemanda} adicionarVaga={adicionarVaga}/>
                             ))}
 
                             {(step === 2 && (
-                                <DadosCadastrais dadosDemanda={dadosDemanda} handleDadosChange={handleDadosChange}/>
+                                <TipoContrato dadosDemanda={dadosDemanda} handleDadosChange={handleDadosChange}/>
                             ))}
-                            
+
                             {(step === 3 && (
-                                <AbrirInscricoes dadosDemanda={dadosDemanda}/>
+                                <Finalizar dadosDemanda={dadosDemanda} setDadosDemanda={setDadosDemanda}/>
                             ))}
                     </Grid>
                 </Box>

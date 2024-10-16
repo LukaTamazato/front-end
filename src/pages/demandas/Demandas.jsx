@@ -18,7 +18,6 @@ const Demandas = ({setTitulo, setActions}) => {
     const listarDemandas = async () => {
         const demandas = await buscarDemandas();
         setDemandas(formatarCardDemanda(demandas));
-        
     }
 
     const navigate = useNavigate();

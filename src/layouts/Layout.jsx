@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Box, Button, ButtonGroup, CssBaseline, Typography } from "@mui/material";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "../components/navbar/Navbar";
 import BarraLateral from "../components/sidebar/BarraLateral";
 import DemandasAbertas from "../pages/demandas/DemandasAbertas";
@@ -23,8 +23,14 @@ import Alerta from "../components/alerta/Alerta";
 import CheckIcon from '@mui/icons-material/Check';
 import RegistroEvento from "../pages/eventos/RegistroEvento";
 import ConfirmDialog from "../components/dialogo/ConfirmDialog";
+import ProtectedRoute from "./ProtectedRoute ";
+import EventosConfirmados from "../pages/colaborador/Confirmados";
+import EventosPendentes from "../pages/colaborador/Pendentes";
+import Convites from "../pages/colaborador/Convites";
+import BuscarEventos from "../pages/colaborador/BuscarEventos";
+import Configuracoes from "../pages/Configuracoes";
 
-const Layout = () => {
+const   Layout = () => {
 
     const [collapsed, setCollapsed] = useState(
         JSON.parse(localStorage.getItem('sidebarCollapsed')) || false
@@ -33,6 +39,10 @@ const Layout = () => {
     useEffect(() => {
         localStorage.setItem('sidebarCollapsed', JSON.stringify(collapsed));
     }, [collapsed]);
+
+    const location = useLocation();
+
+    useEffect(() => {}, [location]);
 
     const [titulo, setTitulo] = useState("");
     const [actions, setActions] = useState([]);
@@ -48,7 +58,6 @@ const Layout = () => {
         setAlertaSeverity(severity);
         setAlertaOpen(true);
     }
-
     
     const [openDialog, setOpenDialog] = useState(false);
     const [dialogContent, setDialogContent] = useState({});
@@ -63,15 +72,15 @@ const Layout = () => {
     };
     
     return (
-        <Router>
+        <>
             <Alerta setAlertaOpen={setAlertaOpen} severity={alertaSeverity} open={alertaOpen} label={alertaLabel} icon={alertaIcon}/>
             <ConfirmDialog action={dialogAction} content={dialogContent} open={openDialog} toggleDialog={toggleDialog}/>
             <Box sx={{ display: "flex", height: "100vh", flexDirection: "column" }}>
                 <CssBaseline />
-                <Navbar toggleSidebar={toggleSidebar} />
+                { location.pathname !== '/login' && <Navbar toggleSidebar={toggleSidebar} />}
                 <div className="app">
-                    <BarraLateral collapsed={collapsed} />
-                    <Box overflow={"scroll"} p={2} style={{ left: `${collapsed ? 80 : 260}px`, width: `calc(100% - ${collapsed ? 80 : 260}px)`, bgcolor: '#f0f0f0' }} className="content">
+                    { location.pathname !== '/login' && <BarraLateral collapsed={collapsed} />}
+                    <Box overflow={"scroll"} p={2} style={{ left: `${location.pathname !== '/login' ? (collapsed ? 80 : 260) : 0}px`, width: `calc(100% - ${location.pathname !== '/login' ? (collapsed ? 80 : 260) : 0}px)`, bgcolor: '#f0f0f0' }} className="content">
                         {(titulo !== "" &&
                             <Box mb={4}>
                             <Box display={"flex"} justifyContent={"space-between"} alignItems={"flex-end"}>
@@ -91,27 +100,42 @@ const Layout = () => {
                             <Breadcrumb/>
                         </Box>)}
                         <Routes>
-                            <Route path="/" element={<Home setTitulo={setTitulo} setActions={setActions} />} />
-                            <Route path="/dashboard" element={<Dashboard setTitulo={setTitulo} setActions={setActions} />} />
-                            <Route path="/eventos" element={<Eventos setTitulo={setTitulo} setActions={setActions} />} />
-                            <Route path="/eventos/:eventId" element={<RegistroEvento toggleDialog={toggleDialog} setDialogAction={setDialogAction} setDialogContent={setDialogContent} showToast={showToast} setTitulo={setTitulo} setActions={setActions} />} />
-                            <Route path="/eventos/criar" element={<CriarEvento showToast={showToast} setTitulo={setTitulo} setActions={setActions} />} />
-                            <Route path="/eventos-abertos" element={<EventosAbertos setTitulo={setTitulo} setActions={setActions} />} />
-                            <Route path="/eventos-fechados" element={<EventosFechados setTitulo={setTitulo} setActions={setActions} />} />
-                            <Route path="/demandas" element={<Demandas setTitulo={setTitulo} setActions={setActions} />} />
-                            <Route path="/demandas/criar" element={<CriarDemandas setTitulo={setTitulo} setActions={setActions} />} />
-                            <Route path="/demandas-abertas" element={<DemandasAbertas setTitulo={setTitulo} setActions={setActions} />} />
-                            <Route path="/demandas-fechadas" element={<DemandasFechadas setTitulo={setTitulo} setActions={setActions} />} />
-                            <Route path="/escala" element={<Escala setTitulo={setTitulo} setActions={setActions} />} />
-                            <Route path="/formularios" element={<Formularios setTitulo={setTitulo} setActions={setActions} showToast={showToast} />} />
-                            <Route path="/parceiros" element={<Parceiros setTitulo={setTitulo} setActions={setActions} />} />
                             <Route path="/login" element={<Login setTitulo={setTitulo} setActions={setActions} />} />
-                            <Route path="*" element={<NotFound setTitulo={setTitulo} setActions={setActions} />} />
+
+                            <Route element={<ProtectedRoute allowedTypes={['parceiro', 'colaborador']} />}>
+                                <Route path="/" element={<Home setTitulo={setTitulo} setActions={setActions} />} />
+                                <Route path="/configuracoes" element={<Configuracoes setTitulo={setTitulo} setActions={setActions} />} />
+                            </Route>
+
+                            <Route element={<ProtectedRoute allowedTypes={['parceiro']} />}>
+                                <Route path="/" element={<Home setTitulo={setTitulo} setActions={setActions} />} />
+                                <Route path="/dashboard" element={<Dashboard setTitulo={setTitulo} setActions={setActions} />} />
+                                <Route path="/eventos" element={<Eventos setTitulo={setTitulo} setActions={setActions} />} />
+                                <Route path="/eventos/:eventId" element={<RegistroEvento toggleDialog={toggleDialog} setDialogAction={setDialogAction} setDialogContent={setDialogContent} showToast={showToast} setTitulo={setTitulo} setActions={setActions} />} />
+                                <Route path="/eventos/criar" element={<CriarEvento showToast={showToast} setTitulo={setTitulo} setActions={setActions} />} />
+                                <Route path="/eventos-abertos" element={<EventosAbertos setTitulo={setTitulo} setActions={setActions} />} />
+                                <Route path="/eventos-fechados" element={<EventosFechados setTitulo={setTitulo} setActions={setActions} />} />
+                                <Route path="/demandas" element={<Demandas setTitulo={setTitulo} setActions={setActions} />} />
+                                <Route path="/demandas/criar" element={<CriarDemandas setTitulo={setTitulo} setActions={setActions} />} />
+                                <Route path="/demandas-abertas" element={<DemandasAbertas setTitulo={setTitulo} setActions={setActions} />} />
+                                <Route path="/demandas-fechadas" element={<DemandasFechadas setTitulo={setTitulo} setActions={setActions} />} />
+                                <Route path="/escala" element={<Escala setTitulo={setTitulo} setActions={setActions} />} />
+                                <Route path="/formularios" element={<Formularios setTitulo={setTitulo} setActions={setActions} showToast={showToast} />} />
+                                <Route path="/parceiros" element={<Parceiros setTitulo={setTitulo} setActions={setActions} />} />
+                                <Route path="*" element={<NotFound setTitulo={setTitulo} setActions={setActions} />} />
+                            </Route>
+
+                            <Route element={<ProtectedRoute allowedTypes={['colaborador']} />}>
+                                <Route path="/eventos-confirmados" element={<EventosConfirmados setTitulo={setTitulo} setActions={setActions} />} />
+                                <Route path="/eventos-pendentes" element={<EventosPendentes setTitulo={setTitulo} setActions={setActions} />} />
+                                <Route path="/eventos/buscar" element={<BuscarEventos setTitulo={setTitulo} setActions={setActions} />} />
+                                <Route path="/convites" element={<Convites setTitulo={setTitulo} setActions={setActions} />} />
+                            </Route>
                         </Routes>
                     </Box>
                 </div>
             </Box>
-        </Router>
+        </>
     );
 };
 

@@ -4,12 +4,12 @@ import img from "../../assets/evento-card-bg.png"
 import { useTheme } from "@emotion/react";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
-const CardEvento = ({date, endereco, titulo, handleClick}) => {
+const CardEvento = ({date, endereco, titulo, handleClick, url=img}) => {
     const theme = useTheme();
 
     return (
             <ButtonBase onClick={handleClick} sx={{ width: { sm: "100%", md: 300 }, borderRadius: 2}}>
-                <Box sx={{width: { sm: "100%", md: 300 }, maxWidth: "100%", background: `linear-gradient(to top, #000000ff, #00000033), url(${img})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', borderRadius: 2, boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px;"}}>
+                <Box sx={{width: { sm: "100%", md: 300 }, maxWidth: "100%", background: `linear-gradient(to top, #000000ff, #00000033), url(${url})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', borderRadius: 2, boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px;"}}>
                     <Box display={"flex"} flexDirection={"column"} height={200}>
                         <Box p={2} display={"flex"} height={"70%"}>
                             <Typography color={"white"} sx={{wordBreak: "break-word"}} textAlign={"left"} alignSelf={"flex-end"} variant="h5">{titulo}</Typography>

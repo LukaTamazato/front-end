@@ -6,7 +6,9 @@ import Botao from "../../components/btn/Botao";
 import CreateIcon from '@mui/icons-material/Create';
 import { useNavigate } from "react-router-dom";
 import { buscarEventos } from "../../services/EventoService";
-import { formatarCardEvento } from "../../utils/formatarUtil";
+import { numToMes } from "../../utils/formatarUtil";
+import dayjs from "dayjs";
+import defaultimg from "../../assets/evento-card-bg.png"
 
 const Eventos = ({setTitulo, setActions}) => {
 
@@ -36,12 +38,32 @@ const Eventos = ({setTitulo, setActions}) => {
         <Box display={"flex"} flexWrap={"wrap"} gap={2}>
             {(eventos && eventos.map((evento, index) => {
                 return (
-                    <CardEvento handleClick={() => navigate(`/eventos/${evento.id}`)} key={index} titulo={evento.evento} date={evento.date} endereco={evento.endereco} />
+                    <CardEvento handleClick={() => navigate(`/eventos/${evento.id}`)} key={index} titulo={evento.evento} date={evento.date} endereco={evento.endereco} url={evento.url} />
                 );
             }))}
         </Box>
         </Box>
     )
+}
+
+const formatarCardEvento = (eventos) => {
+    const eventosFmt = [];
+
+    eventos.forEach((e) => {
+        const date = dayjs(e.fim);
+        eventosFmt.push({
+            id: e.id,
+            evento: e.nome,
+            date: {
+                dia: date.date(),
+                mes: numToMes(date.month())
+            },
+            endereco: `${e.logradouro}, ${e.numero}`,
+            url: e.imagem != null ? e.imagem : defaultimg
+        })
+    })
+
+    return eventosFmt;
 }
 
 export default Eventos;

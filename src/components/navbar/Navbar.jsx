@@ -8,6 +8,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import logo from '/logo.png';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useTheme } from "@emotion/react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = ({ toggleSidebar }) => {
 
@@ -24,7 +25,9 @@ const Navbar = ({ toggleSidebar }) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Box component={"img"} src={logo} height={"48px"} />
+                    <ButtonBase component={Link} to="/" disableRipple>
+                        <Box component={"img"} src={logo} height={"48px"} />
+                    </ButtonBase>
                 </Box>
 
                 <Box display={"flex"} gap={2}>
@@ -42,6 +45,8 @@ const MenuPerfil = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
+    const navigate = useNavigate();
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -50,6 +55,14 @@ const MenuPerfil = () => {
         console.log(e.target.id);
         setAnchorEl(null);
     };
+
+    const handleLogout = (e) => {
+        handleClose(e);
+
+        sessionStorage.clear();
+
+        navigate('/login');
+    }
 
     return (
         <Box sx={{ display: 'flex', gap: 0, alignItems: "flex-end" }}>
@@ -69,9 +82,9 @@ const MenuPerfil = () => {
                 <MenuItem id="item3" onClick={handleClose}><Avatar sx={{width: 25, height: 25}}></Avatar> <Typography ml={1} mr={2}>Coisa 2</Typography></MenuItem>
                 <MenuItem id="item4" onClick={handleClose}><Avatar sx={{width: 25, height: 25}}></Avatar> <Typography ml={1} mr={2}>Coisa 3</Typography></MenuItem>
                 <MenuItem id="item5" onClick={handleClose}><Avatar sx={{width: 25, height: 25}}></Avatar> <Typography ml={1} mr={2}>Coisa 4</Typography></MenuItem>
-                <MenuItem id="item6" onClick={handleClose}><SettingsIcon sx={{fontSize: 20}}/><Typography ml={1} mr={2}>Configurações</Typography></MenuItem>
+                <MenuItem id="item6" component={Link} to="/configuracoes" onClick={handleClose}><SettingsIcon sx={{fontSize: 20}}/><Typography ml={1} mr={2}>Configurações</Typography></MenuItem>
                 <Divider/>
-                <MenuItem id="item7" onClick={handleClose}><LogoutIcon sx={{fontSize: 20}}/><Typography ml={1} mr={2}>Sair</Typography></MenuItem>
+                <MenuItem id="item7" onClick={handleLogout}><LogoutIcon sx={{fontSize: 20}}/><Typography ml={1} mr={2}>Sair</Typography></MenuItem>
             </Menu>
         </Box>
     );

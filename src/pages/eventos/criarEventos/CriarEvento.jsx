@@ -12,6 +12,7 @@ import Finalizar from "./Finalizar";
 import { getFormularios } from "../../../utils/dataMockUtil";
 import { postEvento } from "../../../services/EventoService";
 import BlockIcon from '@mui/icons-material/Block';
+import axios from "axios";
 
 const CriarEvento = ({setTitulo, setActions, showToast}) => {
     const navigate = useNavigate();
@@ -29,20 +30,20 @@ const CriarEvento = ({setTitulo, setActions, showToast}) => {
         setStep(step + 1);
     }
 
-    const  handleConcluir = async () => {
+    const handleConcluir = async () => {
 
         const request = {...dadosEvento};
 
         request.orcamento = request.orcamento.replaceAll('.','').replaceAll(',','.');
+
+        // TODO: trazer idFormulario dinamicamente
         request.idFormulario = '53f71c74-a2c0-41bc-b712-980f6d90bff0';
+
+        const formData = new FormData();
+        formData.append('img', imagem);
         
         try {
-            const response = await postEvento(request);
-
-            // if (response.status !== 200) {
-            //     showToast("Não foi possível criar evento", "error", <BlockIcon/>);
-            //     return;
-            // }
+            const response = await postEvento(request, formData);
 
             showToast("Evento criado com sucesso");
             navigate('/eventos');

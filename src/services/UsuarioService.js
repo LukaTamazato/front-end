@@ -9,8 +9,14 @@ export const logar = async (dados) => {
 
         if (response.status !== 200) return;
     
-        sessionStorage.TOKEN = response.data.token;
-        sessionStorage.ID = response.data.id;
+        const { token, id, tipoUsuario } = response.data;
+
+        sessionStorage.setItem('TOKEN', token);
+        sessionStorage.setItem('ID', id);
+        sessionStorage.setItem('tipoUsuario', tipoUsuario);
+
+        return response.data;
+
     } catch (err) {
         console.log(err.response.status);
     }

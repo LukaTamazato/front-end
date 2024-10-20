@@ -36,7 +36,6 @@ const CriarDemandas = ({setTitulo, setActions}) => {
         navigate('/demandas-abertas');
 
         console.log(dadosDemanda);
-
     }
     
     const handleAnterior = () => {

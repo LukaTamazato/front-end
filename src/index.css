@@ -10,16 +10,38 @@
 #root,
 .app,
 .content {
-height: 100%;
-width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 .content {
-position: absolute;
-transition: 0.3s;
+  position: absolute;
+  transition: 0.3s;
 }
 
 .app {
-display: flex;
-position: relative;
+  display: flex;
+  position: relative;
+}
+
+.flexRowCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexRowBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.flexRowWrap {
+  display: flex;
+  flex-wrap: wrap;
 }

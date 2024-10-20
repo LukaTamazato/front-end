@@ -100,6 +100,25 @@ export const formatarCardDemanda = (demandas) => {
     return demandasFmt;
 }
 
+export const formatarCardEvento = (eventos) => {
+    const eventosFmt = [];
+
+    eventos.forEach((e) => {
+        const date = dayjs(e.fim);
+        eventosFmt.push({
+            id: e.id,
+            evento: e.nome,
+            date: {
+                dia: date.date(),
+                mes: numToMes(date.month())
+            },
+            endereco: `${e.logradouro}, ${e.numero}`
+        })
+    })
+
+    return eventosFmt;
+}
+
 export const numToMes = (n) => {
     switch (n) {
         case 0:

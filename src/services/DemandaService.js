@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const buscarDemandas = async () => {
     try {
-        const response = await axios.get("http://localhost:8080/eventos", {
+        const response = await axios.get("http://localhost:8080/demandas", {
             headers: {
               'Authorization': `Bearer ${sessionStorage.TOKEN}`
             }

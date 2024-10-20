@@ -11,8 +11,8 @@ const Alerta = ({label, icon, severity="success", variant="filled", open, setAle
       };
     
     return (
-        <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={6000} onClose={handleClose}>
-            <Alert icon={icon} severity={severity} variant={variant}>
+        <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={3000} onClose={handleClose}>
+            <Alert icon={icon} severity={severity} variant={variant} onClose={() => setAlertaOpen(false)}>
                 {label}
             </Alert>
         </Snackbar>

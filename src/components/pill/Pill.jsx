@@ -1,10 +1,6 @@
-import { useTheme } from "@emotion/react";
-import { Avatar, Box, Chip, Paper } from "@mui/material";
-import React, { useState } from "react";
+import { Avatar, Box, Chip } from "@mui/material";
 
 const Pill = ({num, label, idFunc, handleClick, handleDelete}) => {
-
-    const theme = useTheme();
 
     return (
         <Chip

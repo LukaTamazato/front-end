@@ -12,7 +12,7 @@ import { useTheme } from "@emotion/react";
 const Navbar = ({ toggleSidebar }) => {
 
     return (
-        <AppBar position="static">
+        <AppBar elevation={4} position="static">
             <Toolbar display="flex" sx={{justifyContent: "space-between"}}>
                 <Box display="flex" alignItems={"center"}>
                     <IconButton

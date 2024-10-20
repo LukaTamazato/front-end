@@ -43,3 +43,36 @@ export const documentos = [
     {id: 6, value: "Reservista"},
     {id: 7, value: "Contrato"}
 ]
+
+export const eventos = [
+    {id: "0", value: "Evento A"},
+    {id: "1", value: "Evento B"},
+    {id: "2", value: "Evento C"},
+    {id: "3", value: "Evento D"},
+    {id: "4", value: "Evento E"},
+    {id: "5", value: "Evento F"}
+]
+
+export const getFormularios = [
+    {id: "0", nome: "Formulário A", url: "https://forms.com/0"},
+    {id: "1", nome: "Formulário B", url: "https://forms.com/1"},
+    {id: "2", nome: "Formulário C", url: "https://forms.com/2"},
+    {id: "3", nome: "Formulário D", url: "https://forms.com/3"},
+    {id: "4", nome: "Formulário E", url: "https://forms.com/4"},
+    {id: "5", nome: "Formulário F", url: "https://forms.com/5"}
+]
+
+export const getUsuarios = [
+    {id: "055da5e3-b29a-4a29-a83f-b54f543d196f", nome: "Usuário 1", avaliacao: 4.5, idade: 31, local: "Itaquera"},
+    {id: "000000000000000000000000000000000055", nome: "Usuário 2", avaliacao: 5, idade: 34, local: "Itaquera"},
+    {id: "000000000000000000000000000000000056", nome: "Usuário 3", avaliacao: 2.5, idade: 23, local: "Itaquera"},
+    {id: "000000000000000000000000000000000057", nome: "Usuário 4", avaliacao: 3.5, idade: 50, local: "Itaquera"},
+    {id: "000000000000000000000000000000000058", nome: "Usuário 5", avaliacao: 4, idade: 20, local: "Itaquera"},
+    {id: "000000000000000000000000000000000059", nome: "Usuário 6", avaliacao: 3, idade: 37, local: "Itaquera"},
+    {id: "000000000000000000000000000000000060", nome: "Usuário 7", avaliacao: 4.5, idade: 31, local: "Itaquera"},
+    {id: "000000000000000000000000000000000061", nome: "Usuário 8", avaliacao: 5, idade: 34, local: "Itaquera"},
+    {id: "000000000000000000000000000000000062", nome: "Usuário 9", avaliacao: 2.5, idade: 23, local: "Itaquera"},
+    {id: "000000000000000000000000000000000063", nome: "Usuário 10", avaliacao: 3.5, idade: 50, local: "Itaquera"},
+    {id: "000000000000000000000000000000000064", nome: "Usuário 11", avaliacao: 4, idade: 20, local: "Itaquera"},
+    {id: "000000000000000000000000000000000065", nome: "Usuário 12", avaliacao: 3, idade: 37, local: "Itaquera"}
+];

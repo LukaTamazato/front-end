@@ -4,15 +4,20 @@ import { Box, Typography } from "@mui/material";
 import Botao from "../../../components/btn/Botao";
 import Grid from "@mui/material/Grid2";
 import Esteira from "../../../components/esteira/Esteira";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import DadosDemanda from "./DadosDemanda";
 import CadastrarVagas from "./CadastrarVagas";
 import TipoContrato from "./TipoContrato";
 import Finalizar from "./Finalizar";
+import { eventos } from "../../../utils/dataMockUtil";
 
 const CriarDemandas = ({setTitulo, setActions}) => {
 
     const navigate = useNavigate();
+
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const eventId = queryParams.get('eventId');
 
     const [step, setStep] = useState(0);
     const labels = ['Demanda', 'Vagas', 'Contrato', 'Finalizar'];
@@ -46,8 +51,16 @@ const CriarDemandas = ({setTitulo, setActions}) => {
         fim: "",
         custoTotal: 0,
         responsavel: "",
-        tipoContrato: {},
-        evento: "",
+        tipoContrato: {
+            id: "",
+            value: "",
+            documentosObrigatorios: []
+        },
+        documentosAdicionados: [],
+        evento: {
+            id: "",
+            value: ""
+        },
         vagas: []
     });
 
@@ -67,6 +80,12 @@ const CriarDemandas = ({setTitulo, setActions}) => {
         setActions(null);
     })
 
+    useEffect(() => {
+        if (!eventId) return;
+        
+        setDadosDemanda(prevState => ({ ...prevState, evento: eventos.find(evento => evento.id === eventId) }));
+      }, [eventId]);
+
     return (
         <>
             <PageModal>
@@ -79,11 +98,11 @@ const CriarDemandas = ({setTitulo, setActions}) => {
                             <Esteira setStep={setStep} step={step} labels={labels} />
                         </Grid>
                             {(step === 0 && (
-                                <DadosDemanda handleDadosChange={handleDadosChange} dadosDemanda={dadosDemanda} setDadosDemanda={setDadosDemanda}/>
+                                <DadosDemanda hasParams={eventId != null} handleDadosChange={handleDadosChange} dadosDemanda={dadosDemanda} setDadosDemanda={setDadosDemanda}/>
                             ))}
 
                             {(step === 1 && (
-                                <CadastrarVagas dadosDemanda={dadosDemanda} adicionarVaga={adicionarVaga}/>
+                                <CadastrarVagas setDadosDemanda={setDadosDemanda} dadosDemanda={dadosDemanda} adicionarVaga={adicionarVaga}/>
                             ))}
 
                             {(step === 2 && (

@@ -80,7 +80,7 @@ const CadastrarVagas = ({dadosDemanda, setDadosDemanda, adicionarVaga}) => {
         </Grid>
         <Grid mt={4} size={{sm: 12, md: 6}}>
             <Box sx={{borderColor: theme.palette.paper.dark, p: 2, borderRadius: 4}} border={1}>
-                <Typography mb={6} variant="h5" component="h5">Vagas Cadastradas</Typography>
+                <Typography width={"100%"} textAlign={"center"} mb={6} variant="h5" component="h5">Vagas Cadastradas</Typography>
                 <PillContainer setPills={setVagas} pills={dadosDemanda.vagas}/>
             </Box>
         </Grid>

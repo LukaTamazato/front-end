@@ -32,6 +32,7 @@ const CampoTexto = ({handleChange, label, name, value, size={ sm: 12, md: 6 }, r
                 error={possuiErro}
                 helperText={possuiErro ? errorMsg : ""}
                 required={required}
+                variant="outlined"
                 slotProps={{
                     input: {
                         startAdornment: startAdornment ? <InputAdornment position="start">{startAdornment}</InputAdornment> : null

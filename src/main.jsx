@@ -10,6 +10,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import {ptBR} from '@mui/x-date-pickers/locales'
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
+import 'leaflet/dist/leaflet.css';
+
 dayjs.locale('pt-br');
 
 const theme = createTheme({

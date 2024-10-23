@@ -93,7 +93,7 @@ export const formatarCardDemanda = (demandas) => {
                 dia: date.date(),
                 mes: numToMes(date.month())
             },
-            endereco: `${e.logradouro}, ${e.numero}`
+            evento: e.evento
         })
     })
 

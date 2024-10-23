@@ -76,3 +76,106 @@ export const getUsuarios = [
     {id: "000000000000000000000000000000000064", nome: "Usuário 11", avaliacao: 4, idade: 20, local: "Itaquera"},
     {id: "000000000000000000000000000000000065", nome: "Usuário 12", avaliacao: 3, idade: 37, local: "Itaquera"}
 ];
+
+
+
+
+export const getDemandas = [
+    {
+        id: 0,
+        nome: "Demanda A",
+        inicio: "2024-10-11",
+        fim: "2024-10-21",
+        custoTotal: 20000.00,
+        tipoContrato: "Freelancer",
+        evento: "Evento A"
+    },
+    {
+        id: 1,
+        nome: "Demanda B",
+        inicio: "2024-10-12",
+        fim: "2024-10-22",
+        custoTotal: 30000.00,
+        tipoContrato: "Contrato intermitente",
+        evento: "Evento A"
+    },
+    {
+        id: 2,
+        nome: "Demanda C",
+        inicio: "2024-10-13",
+        fim: "2024-10-23",
+        custoTotal: 40000.00,
+        tipoContrato: "Contrato temporário",
+        evento: "Evento B"
+    },
+    {
+        id: 3,
+        nome: "Demanda D",
+        inicio: "2024-10-14",
+        fim: "2024-10-24",
+        custoTotal: 50000.00,
+        tipoContrato: "Terceirizado",
+        evento: "Evento B"
+    },
+    {
+        id: 4,
+        nome: "Demanda E",
+        inicio: "2024-10-15",
+        fim: "2024-10-25",
+        custoTotal: 60000.00,
+        tipoContrato: "Freelancer",
+        evento: "Evento B"
+    },
+    {
+        id: 5,
+        nome: "Demanda F",
+        inicio: "2024-10-16",
+        fim: "2024-10-26",
+        custoTotal: 70000.00,
+        tipoContrato: "Contrato temporário",
+        evento: "Evento C"
+    },
+]
+
+export const getEventos = [
+    {
+        id: 0,
+        nome: "Evento A",
+        inicio: "01/05/2024",
+        fim: "01/06/2020",
+        orcamento: 10000.0,
+        logradouro: "Avenida das Ameixeiras"
+    },
+    {
+        id: 1,
+        nome: "Evento B",
+        inicio: "01/06/2024",
+        fim: "01/07/2020",
+        orcamento: 20000.0,
+        logradouro: "Avenida das Ameixeiras"
+    },
+    {
+        id: 2,
+        nome: "Evento C",
+        inicio: "01/07/2024",
+        fim: "01/08/2020",
+        orcamento: 30000.0,
+        logradouro: "Avenida das Ameixeiras"
+    },
+    {
+        id: 3,
+        nome: "Evento D",
+        inicio: "01/08/2024",
+        fim: "01/09/2020",
+        orcamento: 40000.0,
+        logradouro: "Avenida das Ameixeiras"
+    },
+    {
+        id: 4,
+        nome: "Evento E",
+        inicio: "01/09/2024",
+        fim: "01/010/2020",
+        orcamento: 50000.0,
+        logradouro: "Avenida das Ameixeiras"
+    },
+]

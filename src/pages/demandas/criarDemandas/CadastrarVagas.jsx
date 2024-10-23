@@ -7,6 +7,7 @@ import PillContainer from "../../../components/pill/Pill";
 import { documentos, funcoesAlocacao, tiposContrato } from "../../../utils/dataMockUtil";
 import { useState } from "react";
 import { useTheme } from "@emotion/react";
+import OutlinedBox from "../../../components/box/OutlinedBox";
 
 const CadastrarVagas = ({dadosDemanda, setDadosDemanda, adicionarVaga}) => {
 
@@ -79,10 +80,10 @@ const CadastrarVagas = ({dadosDemanda, setDadosDemanda, adicionarVaga}) => {
             </FormControl>
         </Grid>
         <Grid mt={4} size={{sm: 12, md: 6}}>
-            <Box sx={{borderColor: theme.palette.paper.dark, p: 2, borderRadius: 4}} border={1}>
+            <OutlinedBox>
                 <Typography width={"100%"} textAlign={"center"} mb={6} variant="h5" component="h5">Vagas Cadastradas</Typography>
                 <PillContainer setPills={setVagas} pills={dadosDemanda.vagas}/>
-            </Box>
+            </OutlinedBox>
         </Grid>
         </>
     );

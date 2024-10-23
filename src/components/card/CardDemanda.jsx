@@ -4,7 +4,7 @@ import img from "../../assets/evento-card-bg.png"
 import { useTheme } from "@emotion/react";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
-const CardDemanda = ({date, endereco, titulo}) => {
+const CardDemanda = ({date, evento, titulo}) => {
     const theme = useTheme();
 
     return (
@@ -15,7 +15,7 @@ const CardDemanda = ({date, endereco, titulo}) => {
                             <Typography color={"white"} sx={{wordBreak: "break-word"}} textAlign={"left"} alignSelf={"flex-end"} variant="h5">{titulo}</Typography>
                         </Box>
                         <Box sx={{borderBottomLeftRadius: 6, borderBottomRightRadius: 6}} p={2} display={"flex"} alignItems={"center"} justifyContent={"space-between"} bgcolor={theme.palette.white.main} height={"30%"}>
-                            <Typography fontSize={12}>{endereco}</Typography>
+                            <Typography fontSize={12}>{evento}</Typography>
                             <Box p={0.7} justifySelf={"flex-end"} borderRadius={3} bgcolor={theme.palette.secondary.main} display={"flex"} gap={0.7} justifyContent={"center"} alignItems={"center"}>
                                 <CalendarMonthIcon fontSize={"small"} color="white"/>
                                 <Typography color={"white"} fontSize={12}>{date.dia}</Typography>

@@ -9,10 +9,12 @@ import DadosDemanda from "./DadosDemanda";
 import CadastrarEscalas from "./CadastrarEscalas";
 import TipoContrato from "./TipoContrato";
 import Finalizar from "./Finalizar";
-import { fetchData } from "../../../services/DataService";
+import { fetchData, postData } from "../../../services/DataService";
+import { useAlerta } from "../../../context/AlertaContext";
 
 const CriarDemandas = ({ setTitulo, setActions }) => {
   const navigate = useNavigate();
+  const { showAlerta } = useAlerta();
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -30,10 +32,22 @@ const CriarDemandas = ({ setTitulo, setActions }) => {
     setStep(step + 1);
   };
 
-  const handleConcluir = () => {
-    navigate("/demandas-abertas");
+  const handleConcluir = async () => {
+    const request = {
+      ...dadosDemanda,
+      idEvento: dadosDemanda.evento.id,
+      idResponsavel: dadosDemanda.responsavel.id,
+      tipoContrato: dadosDemanda.tipoContrato.id,
+    };
 
-    console.log(dadosDemanda);
+    const { data, status } = await postData("demandas", request);
+
+    if (status !== 201) {
+      console.error(data);
+      return;
+    }
+
+    navigate("/demandas");
   };
 
   const handleAnterior = () => {
@@ -65,6 +79,11 @@ const CriarDemandas = ({ setTitulo, setActions }) => {
   });
 
   const adicionarEscala = (novaEscala) => {
+    novaEscala = {
+      ...novaEscala,
+      valor: Number(novaEscala.valor.replaceAll(".", "").replace(",", ".")),
+    };
+
     setDadosDemanda((prevState) => ({
       ...prevState,
       escalas: [...prevState.escalas, novaEscala],
@@ -88,7 +107,7 @@ const CriarDemandas = ({ setTitulo, setActions }) => {
         setEventos(data);
       } catch (err) {
         console.log("Erro ao buscar evento: " + err);
-        // showToast("Erro ao buscar evento", "error", <BlockIcon/>)
+        showAlerta("Erro ao buscar evento", "error");
       }
     };
 
@@ -107,7 +126,7 @@ const CriarDemandas = ({ setTitulo, setActions }) => {
         );
       } catch (err) {
         console.log("Erro ao buscar evento: " + err);
-        // showToast("Erro ao buscar evento", "error", <BlockIcon/>)
+        showAlerta("Erro ao buscar evento", "error");
       }
     };
 

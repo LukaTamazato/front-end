@@ -14,9 +14,11 @@ import { postEvento } from "../../../services/EventoService";
 import BlockIcon from "@mui/icons-material/Block";
 import axios from "axios";
 import { fetchData } from "../../../services/DataService";
+import { useAlerta } from "../../../context/AlertaContext";
 
-const CriarEvento = ({ setTitulo, setActions, showToast }) => {
+const CriarEvento = ({ setTitulo, setActions }) => {
   const navigate = useNavigate();
+  const { showAlerta } = useAlerta();
 
   const [step, setStep] = useState(0);
   const labels = ["Evento", "Endereço", "Finalizar"];
@@ -44,14 +46,14 @@ const CriarEvento = ({ setTitulo, setActions, showToast }) => {
       const { status } = await postEvento(request, formData);
 
       if (status !== 201) {
-        showToast("Não foi possível criar evento", "error", <BlockIcon />);
+        showAlerta("Não foi possível criar evento", "error");
         return;
       }
 
-      showToast("Evento criado com sucesso");
+      showAlerta("Evento criado com sucesso");
       navigate("/eventos");
     } catch (err) {
-      showToast("Não foi possível criar evento", "error", <BlockIcon />);
+      showAlerta("Não foi possível criar evento", "error");
       console.log("Erro ao criar evento: " + err);
     }
   };
@@ -131,7 +133,7 @@ const CriarEvento = ({ setTitulo, setActions, showToast }) => {
       setFormularios(data);
     } catch (err) {
       console.log("Erro ao buscar formulários: " + err);
-      // showToast("Erro ao buscar formulários", "error", <BlockIcon/>)
+      showAlerta("Erro ao buscar formulários", "error");
     }
   };
 
@@ -148,7 +150,7 @@ const CriarEvento = ({ setTitulo, setActions, showToast }) => {
         );
       } catch (err) {
         console.log("Erro ao buscar evento: " + err);
-        // showToast("Erro ao buscar evento", "error", <BlockIcon/>)
+        showAlerta("Erro ao buscar evento", "error");
       }
     };
     buscarFormularios();
@@ -207,7 +209,6 @@ const CriarEvento = ({ setTitulo, setActions, showToast }) => {
                 responsaveis={responsaveis}
                 imagem={imagem}
                 setImagem={setImagem}
-                showToast={showToast}
                 handleFormularioChange={handleFormularioChange}
                 handleResponsavelChange={handleResponsavelChange}
                 handleDadosChange={handleDadosChange}
@@ -227,12 +228,7 @@ const CriarEvento = ({ setTitulo, setActions, showToast }) => {
 
             {step === 2 && <Finalizar dadosEvento={dadosEvento} />}
 
-            {step === 3 && (
-              <AbrirInscricoes
-                showToast={showToast}
-                dadosEvento={dadosEvento}
-              />
-            )}
+            {step === 3 && <AbrirInscricoes dadosEvento={dadosEvento} />}
           </Grid>
         </Box>
         <Box

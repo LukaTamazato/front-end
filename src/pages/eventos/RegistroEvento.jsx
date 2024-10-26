@@ -28,7 +28,6 @@ import Registro from "../../layouts/Registro";
 const RegistroEvento = ({
   setTitulo,
   setActions,
-  showToast,
   toggleDialog,
   setDialogContent,
   setDialogAction,
@@ -38,7 +37,6 @@ const RegistroEvento = ({
     <Registro
       setTitulo={setTitulo}
       setActions={setActions}
-      showToast={showToast}
       toggleDialog={toggleDialog}
       setDialogContent={setDialogContent}
       setDialogAction={setDialogAction}

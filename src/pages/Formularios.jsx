@@ -23,9 +23,11 @@ import { getFormularios } from "../utils/dataMockUtil";
 import Botao from "../components/btn/Botao";
 import { useNavigate } from "react-router-dom";
 import { fetchData, postData, putData } from "../services/DataService";
+import { useAlerta } from "../context/AlertaContext";
 
-const Formularios = ({ setTitulo, setActions, showToast }) => {
+const Formularios = ({ setTitulo, setActions }) => {
   const theme = useTheme();
+  const { showAlerta } = useAlerta();
 
   useEffect(() => {
     setTitulo("Formulários");
@@ -59,7 +61,7 @@ const Formularios = ({ setTitulo, setActions, showToast }) => {
       setFormularios(data);
     } catch (err) {
       console.log("Erro ao buscar formulários: " + err);
-      // showToast("Erro ao buscar formulários", "error", <BlockIcon/>)
+      showAlerta("Erro ao buscar formulários", "error");
     }
   };
 
@@ -137,7 +139,6 @@ const Formularios = ({ setTitulo, setActions, showToast }) => {
               <CardFormulario
                 key={index}
                 theme={theme}
-                showToast={showToast}
                 formulario={formulario}
                 openEditarDialog={openEditarDialog}
               />
@@ -148,10 +149,12 @@ const Formularios = ({ setTitulo, setActions, showToast }) => {
   );
 };
 
-const CardFormulario = ({ formulario, theme, showToast, openEditarDialog }) => {
+const CardFormulario = ({ formulario, theme, openEditarDialog }) => {
+  const { showAlerta } = useAlerta();
+
   const handleCopyClick = (formulario) => {
     navigator.clipboard.writeText(formulario.url);
-    showToast(
+    showAlerta(
       `Link para formulário ${formulario.nome} copiado para área de transferência`
     );
   };

@@ -10,10 +10,11 @@ import {
 import Grid from "@mui/material/Grid2";
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import { useState } from "react";
-import Alerta from "../../../components/alerta/Alerta";
-import CheckIcon from "@mui/icons-material/Check";
+import { useAlerta } from "../../../context/AlertaContext";
 
 const AbrirInscricoes = ({ dadosEvento }) => {
+  const { showAlerta } = useAlerta();
+
   const [share, setShare] = useState([]);
   const [shareAtual, setShareAtual] = useState(null);
 
@@ -24,7 +25,6 @@ const AbrirInscricoes = ({ dadosEvento }) => {
     setShare([...share, value]);
     setShareAtual("");
   };
-  const [alertaOpen, setAlertaOpen] = useState(false);
 
   const handleShareDelete = (id) => {
     setShare(share.filter((item) => item.id !== id));
@@ -67,7 +67,7 @@ const AbrirInscricoes = ({ dadosEvento }) => {
                   <ButtonBase
                     onClick={() => {
                       navigator.clipboard.writeText(dadosEvento.url);
-                      setAlertaOpen(true);
+                      showAlerta("Copiado para a área de transferência");
                     }}
                     sx={{ borderRadius: "50%", p: 1 }}
                   >
@@ -101,12 +101,6 @@ const AbrirInscricoes = ({ dadosEvento }) => {
             })}
         </Box>
       </Box>
-      <Alerta
-        setAlertaOpen={setAlertaOpen}
-        open={alertaOpen}
-        label={"Copiado para a área de transferência"}
-        icon={<CheckIcon />}
-      />
     </>
   );
 };

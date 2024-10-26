@@ -8,34 +8,19 @@ import {
 import Grid from "@mui/material/Grid2";
 import Picklist from "../../../components/input/Picklist";
 import { documentos, tiposContrato } from "../../../utils/dataMockUtil";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const TipoContrato = ({ dadosDemanda, handleDadosChange }) => {
-  const [documentoAtual, setDocumentoAtual] = useState({
-    id: "",
-    value: "",
-    documentosObrigatorios: [],
-  });
-
-  const [documentosAdicionados, setDocumentosAdicionados] = useState([]);
-
   const handleDocumentoChange = (e, name) => {
     const documento = tiposContrato.find(
       (contrato) => contrato.id === e.target.value
     );
-    setDocumentoAtual(documento);
 
     e.target.value = documento;
     handleDadosChange(e, name);
   };
 
   const adicionarDocumento = (idDocumento) => {
-    setDocumentosAdicionados((prevState) => {
-      return prevState.includes(idDocumento)
-        ? prevState.filter((doc) => doc !== idDocumento)
-        : [...prevState, idDocumento];
-    });
-
     const documentos = dadosDemanda.documentosAdicionados.includes(idDocumento)
       ? dadosDemanda.documentosAdicionados.filter((doc) => doc !== idDocumento)
       : [...dadosDemanda.documentosAdicionados, idDocumento];
@@ -64,7 +49,7 @@ const TipoContrato = ({ dadosDemanda, handleDadosChange }) => {
             size={12}
             label={"Tipo de Contrato"}
             name={"tipoContrato"}
-            value={documentoAtual.id}
+            value={dadosDemanda.tipoContrato.id}
             handleChange={handleDocumentoChange}
             items={tiposContrato}
           />
@@ -78,7 +63,9 @@ const TipoContrato = ({ dadosDemanda, handleDadosChange }) => {
               documentos.map((item, index) => {
                 return (
                   <Grid size={{ sm: 12, md: 6, lg: 4 }} key={index}>
-                    {documentoAtual.documentosObrigatorios.includes(item.id) ? (
+                    {dadosDemanda.tipoContrato.documentosObrigatorios.includes(
+                      item.id
+                    ) ? (
                       <FormControlLabel
                         control={<Checkbox disabled checked />}
                         label={item.value}
@@ -88,7 +75,9 @@ const TipoContrato = ({ dadosDemanda, handleDadosChange }) => {
                         control={
                           <Checkbox
                             checked={
-                              documentosAdicionados.includes(item.id) || false
+                              dadosDemanda.documentosAdicionados.includes(
+                                item.id
+                              ) || false
                             }
                             onChange={() => adicionarDocumento(item.id)}
                           />

@@ -29,11 +29,11 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { deleteEvento, putEvento } from "../services/EventoService";
 import DataHora from "../components/input/DataHora";
 import FloatingBotao from "../components/btn/FloatingBotao";
+import { useAlerta } from "../context/AlertaContext";
 
 const Registro = ({
   setTitulo,
   setActions,
-  showToast,
   toggleDialog,
   setDialogContent,
   setDialogAction,
@@ -45,6 +45,7 @@ const Registro = ({
 
   const { eventId } = useParams();
   const navigate = useNavigate();
+  const { showAlerta } = useAlerta();
 
   const [evento, setEvento] = useState(null);
   const [eventoEditado, setEventoEditado] = useState(null);
@@ -151,13 +152,13 @@ const Registro = ({
     const response = await putEvento(eventoEditado, evento.id);
 
     if (!response) {
-      showToast("Erro ao atualizar evento", "error", <BlockIcon />);
+      showAlerta("Erro ao atualizar evento", "error");
       return;
     }
 
     setEvento({ ...response });
     setEditando(false);
-    showToast(`Evento ${response.nome} atualizado com sucesso`);
+    showAlerta(`Evento ${response.nome} atualizado com sucesso`);
   };
 
   const handleCancelar = () => {
@@ -186,7 +187,7 @@ const Registro = ({
         setEventoEditado(data);
       } catch (err) {
         console.log("Erro ao buscar evento: " + err);
-        showToast("Erro ao buscar evento", "error", <BlockIcon />);
+        showAlerta("Erro ao buscar evento", "error");
       }
     };
 
@@ -207,11 +208,11 @@ const Registro = ({
       const { status } = await deleteEvento(evento.id);
 
       if (status !== 204) {
-        showToast("Erro ao excluir evento", "error", <BlockIcon />);
+        showAlerta("Erro ao excluir evento", "error");
         return;
       }
 
-      showToast("Evento excluido com sucesso");
+      showAlerta("Evento excluido com sucesso");
 
       navigate("/eventos");
     });

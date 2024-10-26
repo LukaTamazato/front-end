@@ -16,7 +16,10 @@ const DadosDemanda = ({
   hasParams,
 }) => {
   const handleTimeChange = (e, name) => {
-    setDadosDemanda({ ...dadosDemanda, [name]: e.format() });
+    setDadosDemanda({
+      ...dadosDemanda,
+      [name]: e.format("YYYY-MM-DDTHH:mm:ss"),
+    });
   };
 
   const handleEventoChange = (e, name) => {

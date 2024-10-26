@@ -31,7 +31,6 @@ import EventosAbertos from "../pages/eventos/EventosAbertos";
 import EventosFechados from "../pages/eventos/EventosFechados";
 import CriarEvento from "../pages/eventos/criarEventos/CriarEvento";
 import Alerta from "../components/alerta/Alerta";
-import CheckIcon from "@mui/icons-material/Check";
 import RegistroEvento from "../pages/eventos/RegistroEvento";
 import ConfirmDialog from "../components/dialogo/ConfirmDialog";
 import ProtectedRoute from "./ProtectedRoute ";
@@ -58,18 +57,6 @@ const Layout = () => {
   const [titulo, setTitulo] = useState("");
   const [actions, setActions] = useState([]);
 
-  const [alertaOpen, setAlertaOpen] = useState(false);
-  const [alertaLabel, setAlertaLabel] = useState("");
-  const [alertaSeverity, setAlertaSeverity] = useState("");
-  const [alertaIcon, setAlertaIcon] = useState(null);
-
-  const showToast = (label, severity = "success", icon = <CheckIcon />) => {
-    setAlertaLabel(label);
-    setAlertaIcon(icon);
-    setAlertaSeverity(severity);
-    setAlertaOpen(true);
-  };
-
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogContent, setDialogContent] = useState({});
   const [dialogAction, setDialogAction] = useState(null);
@@ -82,13 +69,6 @@ const Layout = () => {
 
   return (
     <>
-      <Alerta
-        setAlertaOpen={setAlertaOpen}
-        severity={alertaSeverity}
-        open={alertaOpen}
-        label={alertaLabel}
-        icon={alertaIcon}
-      />
       <ConfirmDialog
         action={dialogAction}
         content={dialogContent}
@@ -198,7 +178,6 @@ const Layout = () => {
                       toggleDialog={toggleDialog}
                       setDialogAction={setDialogAction}
                       setDialogContent={setDialogContent}
-                      showToast={showToast}
                       setTitulo={setTitulo}
                       setActions={setActions}
                     />
@@ -208,7 +187,6 @@ const Layout = () => {
                   path="/eventos/criar"
                   element={
                     <CriarEvento
-                      showToast={showToast}
                       setTitulo={setTitulo}
                       setActions={setActions}
                     />
@@ -277,7 +255,6 @@ const Layout = () => {
                     <Formularios
                       setTitulo={setTitulo}
                       setActions={setActions}
-                      showToast={showToast}
                     />
                   }
                 />

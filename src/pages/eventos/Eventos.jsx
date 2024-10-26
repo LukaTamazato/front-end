@@ -34,12 +34,18 @@ const Eventos = ({ setTitulo, setActions }) => {
       field: "inicio",
       headerName: "Início",
       type: "text",
+      valueFormatter: (params) => {
+        return dayjs(params.value).format("MM/DD/YYYY HH:mm");
+      },
       flex: 1,
     },
     {
       field: "fim",
       headerName: "Fim",
       type: "text",
+      valueFormatter: (params) => {
+        return dayjs(params.value).format("MM/DD/YYYY HH:mm");
+      },
       flex: 1,
     },
     {
@@ -52,6 +58,12 @@ const Eventos = ({ setTitulo, setActions }) => {
       field: "orcamento",
       headerName: "Orçamento",
       type: "text",
+      valueFormatter: (params) => {
+        return new Intl.NumberFormat("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }).format(params);
+      },
       flex: 1,
     },
     {
@@ -73,7 +85,7 @@ const Eventos = ({ setTitulo, setActions }) => {
           <ButtonBase
             key={`view-${params.id}`}
             sx={{ marginRight: 0.5, borderRadius: 2 }}
-            onClick={() => handleViewClick(params.id)}
+            onClick={() => navigate(params.id)}
           >
             <Box
               display={"flex"}
@@ -84,20 +96,6 @@ const Eventos = ({ setTitulo, setActions }) => {
               <VisibilityIcon sx={{ color: "#515151" }} />
             </Box>
           </ButtonBase>
-          <ButtonBase
-            key={`edit-${params.id}`}
-            sx={{ borderRadius: 2 }}
-            onClick={() => handleEditClick(params.id)}
-          >
-            <Box
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              width={39}
-            >
-              <EditIcon sx={{ color: "#515151" }} />
-            </Box>
-          </ButtonBase>
         </span>
       ),
     },
@@ -106,18 +104,31 @@ const Eventos = ({ setTitulo, setActions }) => {
   const [visualizacao, setVisualizacao] = useState("cards");
   const [filtroStatus, setFiltroStatus] = useState("");
   const [eventos, setEventos] = useState([]);
+  const [dataEventos, setDataEventos] = useState([]);
 
   useEffect(() => {
     setTitulo("Eventos");
   }, [setTitulo]);
 
   const listarEventos = async () => {
-    const eventosa = await buscarEventos();
+    const data = await buscarEventos();
 
     setEventos(
       formatarCardEvento(
-        eventosa.filter((evento) => evento.status.includes(filtroStatus))
+        data.filter((evento) => evento.status.includes(filtroStatus))
       )
+    );
+
+    setDataEventos(
+      data
+        .filter((evento) => evento.status.includes(filtroStatus))
+        .map((evento) => ({
+          ...evento,
+          logradouro: evento.endereco.logradouro,
+          numero: evento.endereco.numero,
+          cidade: evento.endereco.cidade,
+          uf: evento.endereco.uf,
+        }))
     );
   };
 
@@ -165,7 +176,7 @@ const Eventos = ({ setTitulo, setActions }) => {
       )}
 
       {visualizacao === "lista" && (
-        <Tabela columns={columns} rows={getEventos} />
+        <Tabela columns={columns} rows={dataEventos} />
       )}
     </Box>
   );

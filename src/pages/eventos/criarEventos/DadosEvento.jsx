@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import { getUsuarios } from "../../../utils/dataMockUtil";
 import InputFile from "../../../components/input/InputFile";
 import BlockIcon from "@mui/icons-material/Block";
+import { useAlerta } from "../../../context/AlertaContext";
 
 const DadosEvento = ({
   responsaveis,
@@ -17,7 +18,6 @@ const DadosEvento = ({
   setDadosEvento,
   handleFormularioChange,
   handleResponsavelChange,
-  showToast,
   imagem,
   setImagem,
 }) => {
@@ -25,22 +25,20 @@ const DadosEvento = ({
     setDadosEvento({ ...dadosEvento, [name]: e.format("YYYY-MM-DDTHH:mm:ss") });
   };
 
+  const { showAlerta } = useAlerta();
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
 
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      showToast(`Arquivo ${file.name} não permitido`, "error", <BlockIcon />);
+      showAlerta(`Arquivo ${file.name} não permitido`, "error");
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      showToast(
-        `Arquivo muito grande. Tamanho máximo: 5MB`,
-        "error",
-        <BlockIcon />
-      );
+      showAlerta(`Arquivo muito grande. Tamanho máximo: 5MB`, "error");
       return;
     }
 
@@ -113,7 +111,6 @@ const DadosEvento = ({
           handleFileChange={handleFileChange}
           handleDelete={handleDelete}
           imagem={imagem}
-          showToast={showToast}
         />
       </Grid>
     </>

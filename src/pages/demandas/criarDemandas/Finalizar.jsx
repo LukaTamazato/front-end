@@ -7,11 +7,12 @@ const Finalizar = ({ dadosDemanda, setDadosDemanda }) => {
   const calcularTotal = () => {
     let total = 0;
     dadosDemanda.escalas.forEach((escala) => {
-      total +=
-        Number(escala.valor.replace(".", "").replace(",", ".")) *
-        escala.qtdColaborador;
+      total += Number(escala.valor) * escala.qtdColaborador;
     });
-    setDadosDemanda((prevDados) => ({ ...prevDados, custoTotal: total }));
+    setDadosDemanda((prevDados) => ({
+      ...prevDados,
+      custoTotal: total.toFixed(2),
+    }));
   };
 
   useEffect(() => {
@@ -39,12 +40,12 @@ const Finalizar = ({ dadosDemanda, setDadosDemanda }) => {
         startAdornment="R$"
         value={(dadosDemanda.custoTotal + "").replace(".", ",")}
       />
-      <CampoTexto label="Responsável" value={dadosDemanda.responsavel} />
+      <CampoTexto label="Responsável" value={dadosDemanda.responsavel.nome} />
       <CampoTexto
         label="Tipo de Contrato"
         value={dadosDemanda.tipoContrato.value}
       />
-      <CampoTexto label="Evento" value={dadosDemanda.evento.value} />
+      <CampoTexto label="Evento" value={dadosDemanda.evento.nome} />
     </Grid>
   );
 };

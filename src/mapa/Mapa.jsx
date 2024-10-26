@@ -40,7 +40,7 @@ const Mapa = ({logradouro, cidade, uf, popup}) => {
   }, [logradouro, cidade, uf]);
 
   return (
-    <Box className="flexRowCenter" sx={{ width: '300px', height: '300px', boxShadow: 3, borderRadius: 4, overflow: 'hidden', m: 2 }}>
+    <Box className="flexRowCenter" sx={{ width: '500px', margin: 'auto', height: '300px', boxShadow: 3, borderRadius: 4, overflow: 'hidden', m: 2 }}>
         { coords ? (
           <MapContainer center={[coords.latitude, coords.longitude]} zoom={13} style={{ height: '100%', width: '100%' }}>
             <TileLayer

@@ -52,9 +52,16 @@ export const aplicarMascara = (valor, mascara) => {
         case 'dinheiro':
 
             valorNovo = valorNovo.replace(/\D/g, '');
-            valorNovo = ((valorNovo/100).toFixed(2) + '')
-                                .replace(".", ",")
-                                .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+            valorNovo = ((valorNovo/100).toFixed(2))
+                                        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+                                        .split('')
+                                        .reverse()
+                                        .join('')
+                                        .replace(".", ",")
+                                        .split('')
+                                        .reverse()
+                                        .join('');
+                                        /* :( */
 
             break;
         case 'dataNascimento': {

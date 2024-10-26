@@ -19,6 +19,7 @@ export const buscarEventos = async () => {
 
 // TODO: Otimizar a criação do evento em um único post
 export const postEvento = async (request, imgRequest) => {
+    request.orcamento = request.orcamento.replaceAll('.','').replace(',','.');
     try {
         const response = await axios.post(urlData + 'eventos', request, {
             headers: {
@@ -28,7 +29,7 @@ export const postEvento = async (request, imgRequest) => {
 
         await patchImgEvento(imgRequest, response.data.id);
 
-        return response.data;
+        return response;
     } catch (err) {
         console.log(err.response.status);
     }
@@ -47,5 +48,35 @@ export const patchImgEvento = async (request, id) => {
         return response.data;
     } catch (err) {
         console.log(err.response.status);
+    }
+}
+
+export const putEvento = async (request, id) => {
+    console.log(request)
+    if (!(typeof request.orcamento === 'number')) request.orcamento = request.orcamento.replaceAll('.','').replace(',','.');
+    try {
+        const response = await axios.put(urlData + 'eventos/' + id, request, {
+            headers: {
+              'Authorization': `Bearer ${sessionStorage.TOKEN}`
+            }
+        })
+
+        return response.data;
+    } catch (err) {
+        console.error('Erro ao atualizar: ', err);
+    }
+}
+
+export const deleteEvento = async (id) => {
+    try {
+        const response = await axios.delete(urlData + 'eventos/' + id, {
+            headers: {
+              'Authorization': `Bearer ${sessionStorage.TOKEN}`
+            }
+        })
+
+        return response;
+    } catch (err) {
+        console.error('Erro ao deletar: ', err);
     }
 }

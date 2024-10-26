@@ -34,8 +34,6 @@ const CriarEvento = ({setTitulo, setActions, showToast}) => {
 
         const request = {...dadosEvento};
 
-        request.orcamento = request.orcamento.replaceAll('.','').replaceAll(',','.');
-
         // TODO: trazer idFormulario dinamicamente
         request.idFormulario = '53f71c74-a2c0-41bc-b712-980f6d90bff0';
 
@@ -43,7 +41,12 @@ const CriarEvento = ({setTitulo, setActions, showToast}) => {
         formData.append('img', imagem);
         
         try {
-            const response = await postEvento(request, formData);
+            const { status } = await postEvento(request, formData);
+
+            if (status !== 201) {
+                showToast("Não foi possível criar evento", "error", <BlockIcon/>);
+                return;
+            }
 
             showToast("Evento criado com sucesso");
             navigate('/eventos');

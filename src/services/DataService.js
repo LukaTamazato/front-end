@@ -18,15 +18,13 @@ export const fetchData = async (resource) => {
 
 export const postData = async (resource, request) => {
     try {
-        const response = await axios.post(urlData + resource, request, {
+        const {response} = await axios.post(urlData + resource, request, {
             headers: {
               'Authorization': `Bearer ${sessionStorage.TOKEN}`
             }
         })
 
-        // if (response.status !== 200) return;
-
-        return response.data;
+        return response;
     } catch (err) {
         console.log(err.response.status);
     }

@@ -45,12 +45,12 @@ export const documentos = [
 ]
 
 export const eventos = [
-    {id: "0", value: "Evento A"},
-    {id: "1", value: "Evento B"},
-    {id: "2", value: "Evento C"},
-    {id: "3", value: "Evento D"},
-    {id: "4", value: "Evento E"},
-    {id: "5", value: "Evento F"}
+    {id: "0", nome: "Evento A"},
+    {id: "1", nome: "Evento B"},
+    {id: "2", nome: "Evento C"},
+    {id: "3", nome: "Evento D"},
+    {id: "4", nome: "Evento E"},
+    {id: "5", nome: "Evento F"}
 ]
 
 export const getFormularios = [

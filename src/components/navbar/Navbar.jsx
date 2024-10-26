@@ -9,8 +9,11 @@ import logo from '/logo.png';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useTheme } from "@emotion/react";
 import { Link, useNavigate } from "react-router-dom";
+import { useCollapsed } from "../../context/CollapsedContext";
 
-const Navbar = ({ toggleSidebar }) => {
+const Navbar = () => {
+
+    const { toggleCollapsed } = useCollapsed();
 
     return (
         <AppBar elevation={4} position="static">
@@ -21,7 +24,7 @@ const Navbar = ({ toggleSidebar }) => {
                         color="inherit"
                         aria-label="menu"
                         sx={{ mr: 2 }}
-                        onClick={toggleSidebar}
+                        onClick={toggleCollapsed}
                     >
                         <MenuIcon />
                     </IconButton>

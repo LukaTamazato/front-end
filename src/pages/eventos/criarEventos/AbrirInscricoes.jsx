@@ -41,7 +41,7 @@ const AbrirInscricoes = ({dadosEvento}) => {
         </Grid>
         <Box width={"80%"} display={"flex"} flexDirection={"column"} gap={5} margin={"auto"}>
             <TextField
-            label="Link para inscrição das vagas" 
+            label="Link para inscrição das escalas" 
             fullWidth 
             value={dadosEvento.url} 
             disabled

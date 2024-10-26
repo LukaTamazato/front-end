@@ -18,8 +18,9 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import MailIcon from '@mui/icons-material/Mail';
 import SearchIcon from '@mui/icons-material/Search';
 import { useUser } from "../../context/UserContext";
+import { useCollapsed } from "../../context/CollapsedContext";
 
-const BarraLateral = ({ collapsed }) => {
+const BarraLateral = () => {
     const theme = useTheme();
     const { tipoUsuario } = useUser();
 
@@ -29,6 +30,8 @@ const BarraLateral = ({ collapsed }) => {
         setActiveItem(item);
     };
 
+    const { collapsed } = useCollapsed();
+
     return (
             <Sidebar
                 collapsed={collapsed}
@@ -37,7 +40,8 @@ const BarraLateral = ({ collapsed }) => {
                         backgroundColor: theme.palette.primary.main,
                         color: "white",
                         width: collapsed ? '80px' : '260px',
-                        transition: '300ms'
+                        transition: '300ms',
+                        zIndex: 9999
                     },
                 }}
             >
@@ -67,7 +71,7 @@ const BarraLateral = ({ collapsed }) => {
                             <Item onClick={() => handleActivateItem('i6')} active={activeItem === 'i6'} theme={theme.palette.primary.lighter} linkTo="/demandas-abertas" icon={<CheckBoxOutlinedIcon />} text="Demandas abertas" />
                         </CustomSubMenu>
                         <CustomSubMenu label="Equipe" icon={<GroupIcon />}>
-                            <Item onClick={() => handleActivateItem('i8')} active={activeItem === 'i8'} theme={theme.palette.primary.lighter} linkTo="/escala" icon={<EditCalendarOutlinedIcon />} text="Escala" />
+                            {/* <Item onClick={() => handleActivateItem('i8')} active={activeItem === 'i8'} theme={theme.palette.primary.lighter} linkTo="/escala" icon={<EditCalendarOutlinedIcon />} text="Escala" /> */}
                             <Item onClick={() => handleActivateItem('i9')} active={activeItem === 'i9'} theme={theme.palette.primary.lighter} linkTo="/formularios" icon={<ArticleOutlinedIcon />} text="Formulários" />
                             <Item onClick={() => handleActivateItem('i10')} active={activeItem === 'i10'} theme={theme.palette.primary.lighter} linkTo="/parceiros" icon={<ContactsOutlinedIcon />} text="Colaboradores" />
                         </CustomSubMenu>

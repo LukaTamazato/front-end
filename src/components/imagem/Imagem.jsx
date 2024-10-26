@@ -13,7 +13,7 @@ const Imagem = ({imagem, placeholder}) => {
                 margin: 3
             }}
 
-            src={imagem ? imagem : placeholder}
+            src={imagem ? imagem.url : placeholder}
         />
     );
 }

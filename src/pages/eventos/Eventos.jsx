@@ -87,17 +87,24 @@ const Eventos = ({setTitulo, setActions}) => {
           },
     ]
 
-    useEffect(() => {
-        setTitulo("Eventos");
-        listarEventos();
-    },[])
+    // useEffect(() => {
+    //     setTitulo("Eventos");
+    //     listarEventos();
+    // },[])
 
     const [visualizacao, setVisualizacao] = useState('cards');
+    const [ filtroStatus, setFiltroStatus] = useState('')
+    const [eventos, setEventos] = useState([]);
 
-    const listarEventos = async () => {
-        const eventos = await buscarEventos();
-        setEventos(formatarCardEvento(eventos));
-    }
+    useEffect(() => {
+      setTitulo("Eventos");
+      const listarEventos = async () => {
+          const eventosa = await buscarEventos();
+
+          setEventos(formatarCardEvento(eventosa.filter(evento => evento.status.includes(filtroStatus))));
+      }
+      listarEventos();
+    }, [filtroStatus, eventos, setTitulo])
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -108,11 +115,9 @@ const Eventos = ({setTitulo, setActions}) => {
         setActions(actions);
     }, [setActions, navigate])
 
-    const [eventos, setEventos] = useState([]);
-
     return (
         <Box>
-            <MudarVisualizacao setVisualizacao={setVisualizacao} opcoesFiltro={['Abertos', 'Fechados', 'Totais']}/>
+            <MudarVisualizacao setVisualizacao={setVisualizacao} setFiltroStatus={setFiltroStatus} opcoesFiltro={['Não iniciado', 'Em andamento', 'Finalizado', 'Todos']}/>
         { visualizacao === 'cards' &&
             <Box display={"flex"} flexWrap={"wrap"} gap={2}>
                 {(eventos && eventos.map((evento, index) => {
@@ -120,6 +125,7 @@ const Eventos = ({setTitulo, setActions}) => {
                         <CardEvento handleClick={() => navigate(`/eventos/${evento.id}`)} key={index} titulo={evento.evento} date={evento.date} endereco={evento.endereco} url={evento.url} />
                     );
                 }))}
+                {eventos && eventos.length === 0 && <>Nenhum evento cadastrado</>}
             </Box>
         }
 
@@ -142,8 +148,8 @@ const formatarCardEvento = (eventos) => {
                 dia: date.date(),
                 mes: numToMes(date.month())
             },
-            endereco: `${e.logradouro}, ${e.numero}`,
-            url: e.imagem != null ? e.imagem : defaultimg
+            endereco: `${e.endereco.logradouro}, ${e.endereco.numero}`,
+            url: e.imagem != null ? e.imagem.url : defaultimg
         })
     })
 

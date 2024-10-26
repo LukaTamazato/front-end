@@ -7,8 +7,8 @@ const Finalizar = ({dadosDemanda, setDadosDemanda}) => {
         
     const calcularTotal = () => {
         let total = 0;
-        dadosDemanda.vagas.forEach(vaga => {
-            total += Number(vaga.valor.replace('.','').replace(',','.')) * vaga.qtdColaborador;
+        dadosDemanda.escalas.forEach(escala => {
+            total += Number(escala.valor.replace('.','').replace(',','.')) * escala.qtdColaborador;
         });
         setDadosDemanda(prevDados => ({ ...prevDados, custoTotal: total }));
     }

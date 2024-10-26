@@ -5,19 +5,24 @@ import DataHora from "../../../components/input/DataHora";
 import axios from "axios";
 import Picklist from "../../../components/input/Picklist";
 import dayjs from "dayjs";
-import { eventos } from "../../../utils/dataMockUtil";
+import { useState, useEffect } from "react";
 
-const DadosDemanda = ({handleDadosChange, dadosDemanda, setDadosDemanda, hasParams}) => {
+const DadosDemanda = ({responsaveis, eventos, handleDadosChange, dadosDemanda, setDadosDemanda, hasParams}) => {
 
     const handleTimeChange = (e, name) => {
         setDadosDemanda({ ...dadosDemanda, [name]: e.format() });
     };
 
-    const handleEventoChange = (e) => {
+    const handleEventoChange = (e, name) => {
         e.target.value = eventos.find(f => f.id === e.target.value);
-        handleDadosChange(e, 'evento');
+        handleDadosChange(e, name);
     }
 
+    const handleResponsavelChange = (e, name) => {
+        e.target.value = responsaveis.find(f => f.id === e.target.value);
+        handleDadosChange(e, name);
+    }
+    
     return (
         <>
             <Grid mb={2} mt={6} display={"flex"} justifyContent={"center"} width="100%" size={12}>
@@ -27,8 +32,8 @@ const DadosDemanda = ({handleDadosChange, dadosDemanda, setDadosDemanda, hasPara
                 <CampoTexto size={12} handleChange={handleDadosChange} value={dadosDemanda.nome} name="nome" label="Nome"/>
                 <DataHora handleChange={(e) => handleTimeChange(e, 'inicio')} value={dadosDemanda.inicio != "" ? dayjs(dadosDemanda.inicio) : null} name="inicio" label="Início"/>
                 <DataHora handleChange={(e) => handleTimeChange(e, 'fim')} value={dadosDemanda.fim != "" ? dayjs(dadosDemanda.fim) : null} name="fim" label="Fim"/>
-                <CampoTexto handleChange={handleDadosChange} value={dadosDemanda.responsavel} name="responsavel" label="Responsável"/>
-                <Picklist disabled={hasParams} items={eventos} name="evento" label={"Evento"} handleChange={handleEventoChange} value={dadosDemanda.evento.id}/>
+                <Picklist itemParam='nome' disabled={hasParams} items={eventos} name="evento" label={"Evento"} handleChange={handleEventoChange} value={dadosDemanda.evento.id}/>
+                <Picklist itemParam='nome' disabled={hasParams} items={responsaveis} name="responsavel" label={"Responsável"} handleChange={handleResponsavelChange} value={dadosDemanda.responsavel.id}/>
             </Grid>
         </>
     );

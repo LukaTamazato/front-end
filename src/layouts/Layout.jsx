@@ -29,16 +29,17 @@ import EventosPendentes from "../pages/colaborador/Pendentes";
 import Convites from "../pages/colaborador/Convites";
 import BuscarEventos from "../pages/colaborador/BuscarEventos";
 import Configuracoes from "../pages/Configuracoes";
+import { CollapsedProvider, useCollapsed } from "../context/CollapsedContext";
 
-const   Layout = () => {
+const Layout = () => {
 
-    const [collapsed, setCollapsed] = useState(
-        JSON.parse(localStorage.getItem('sidebarCollapsed')) || false
-    );
+    // const [collapsed, setCollapsed] = useState(
+    //     JSON.parse(localStorage.getItem('sidebarCollapsed')) || false
+    // );
 
-    useEffect(() => {
-        localStorage.setItem('sidebarCollapsed', JSON.stringify(collapsed));
-    }, [collapsed]);
+    // useEffect(() => {
+    //     localStorage.setItem('sidebarCollapsed', JSON.stringify(collapsed));
+    // }, [collapsed]);
 
     const location = useLocation();
 
@@ -67,9 +68,7 @@ const   Layout = () => {
         setOpenDialog(!openDialog);
     };
 
-    const toggleSidebar = () => {   
-        setCollapsed(!collapsed);
-    };
+    const { collapsed } = useCollapsed();
     
     return (
         <>
@@ -77,9 +76,9 @@ const   Layout = () => {
             <ConfirmDialog action={dialogAction} content={dialogContent} open={openDialog} toggleDialog={toggleDialog}/>
             <Box sx={{ display: "flex", height: "100vh", flexDirection: "column" }}>
                 <CssBaseline />
-                { location.pathname !== '/login' && <Navbar toggleSidebar={toggleSidebar} />}
+                { location.pathname !== '/login' && <Navbar/>}
                 <div className="app">
-                    { location.pathname !== '/login' && <BarraLateral collapsed={collapsed} />}
+                    { location.pathname !== '/login' && <BarraLateral />}
                     <Box overflow={"scroll"} p={2} style={{ left: `${location.pathname !== '/login' ? (collapsed ? 80 : 260) : 0}px`, width: `calc(100% - ${location.pathname !== '/login' ? (collapsed ? 80 : 260) : 0}px)`, bgcolor: '#f0f0f0' }} className="content">
                         {(titulo !== "" &&
                             <Box mb={4}>

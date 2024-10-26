@@ -4,7 +4,7 @@ import BorderAllIcon from '@mui/icons-material/BorderAll';
 import { useState } from "react";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
-const MudarVisualizacao = ({opcoesFiltro, visualiacaoPadrao='cards', setVisualizacao}) => {
+const MudarVisualizacao = ({opcoesFiltro, visualiacaoPadrao='cards', setVisualizacao, setFiltroStatus}) => {
 
     const [selecionado, setSelecionado] = useState(visualiacaoPadrao);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -14,7 +14,8 @@ const MudarVisualizacao = ({opcoesFiltro, visualiacaoPadrao='cards', setVisualiz
         setAnchorEl(e.currentTarget);
     };
 
-    const handleClose = () => {
+    const handleClose = (filtro, index) => {
+        setFiltroStatus(index === (opcoesFiltro.length-1) ? '' : filtro);
         setAnchorEl(null);
     };
 
@@ -49,8 +50,8 @@ const MudarVisualizacao = ({opcoesFiltro, visualiacaoPadrao='cards', setVisualiz
                 open={open} 
                 onClose={handleClose}
             >
-                {opcoesFiltro && opcoesFiltro.map((item, index) => {
-                    return <MenuItem key={index} onClick={handleClose}>{item}</MenuItem>
+                {opcoesFiltro && opcoesFiltro.map((filtro, index) => {
+                    return <MenuItem key={index} onClick={() => handleClose(filtro, index)}>{filtro}</MenuItem>
                 })}
             </Menu>
         </Box>

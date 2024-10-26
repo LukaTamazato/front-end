@@ -18,7 +18,8 @@ const Demandas = ({setTitulo, setActions}) => {
     useEffect(() => {
         setTitulo("Demandas");
         // listarDemandas();
-        setDemandas(formatarCardDemanda(getDemandas));
+        // setDemandas(formatarCardDemanda(getDemandas));
+        listarDemandas();
     },[])
 
     const listarDemandas = async () => {

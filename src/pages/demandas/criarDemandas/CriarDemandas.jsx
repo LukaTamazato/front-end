@@ -6,10 +6,10 @@ import Grid from "@mui/material/Grid2";
 import Esteira from "../../../components/esteira/Esteira";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import DadosDemanda from "./DadosDemanda";
-import CadastrarVagas from "./CadastrarVagas";
+import CadastrarEscalas from "./CadastrarEscalas";
 import TipoContrato from "./TipoContrato";
 import Finalizar from "./Finalizar";
-import { eventos } from "../../../utils/dataMockUtil";
+import { fetchData } from "../../../services/DataService";
 
 const CriarDemandas = ({setTitulo, setActions}) => {
 
@@ -20,7 +20,7 @@ const CriarDemandas = ({setTitulo, setActions}) => {
     const eventId = queryParams.get('eventId');
 
     const [step, setStep] = useState(0);
-    const labels = ['Demanda', 'Vagas', 'Contrato', 'Finalizar'];
+    const labels = ['Demanda', 'Escalas', 'Contrato', 'Finalizar'];
     const qtdSteps = labels.length;
 
     const handleProximo = () => {
@@ -49,7 +49,10 @@ const CriarDemandas = ({setTitulo, setActions}) => {
         inicio: "",
         fim: "",
         custoTotal: 0,
-        responsavel: "",
+        responsavel: {
+            id: "",
+            nome: ""
+        },
         tipoContrato: {
             id: "",
             value: "",
@@ -60,13 +63,13 @@ const CriarDemandas = ({setTitulo, setActions}) => {
             id: "",
             value: ""
         },
-        vagas: []
+        escalas: []
     });
 
-    const adicionarVaga = (novaVaga) => {
+    const adicionarEscala = (novaEscala) => {
         setDadosDemanda((prevState) => ({
             ...prevState,
-            vagas: [...prevState.vagas, novaVaga]
+            escalas: [...prevState.escalas, novaEscala]
         }));
     };
 
@@ -79,11 +82,41 @@ const CriarDemandas = ({setTitulo, setActions}) => {
         setActions(null);
     })
 
+    const [eventos, setEventos] = useState([]);
+    useEffect(() => {
+        const buscarEvento = async () => {
+            try {
+                const data = await fetchData(`eventos`);
+                setEventos(data);
+            } catch (err) {
+                console.log("Erro ao buscar evento: " + err);
+                // showToast("Erro ao buscar evento", "error", <BlockIcon/>)
+            }
+        }
+
+        buscarEvento();
+    }, [])
+
+    const [responsaveis, setResponsaveis] = useState([]);
+    useEffect(() => {
+        const buscarEvento = async () => {
+            try {
+                const data = await fetchData(`usuarios`);
+                setResponsaveis(data.filter(user => user.contato !== null).map(user => ({...user.contato, id: user.id})));
+            } catch (err) {
+                console.log("Erro ao buscar evento: " + err);
+                // showToast("Erro ao buscar evento", "error", <BlockIcon/>)
+            }
+        }
+
+        buscarEvento();
+    }, [])
+
     useEffect(() => {
         if (!eventId) return;
         
         setDadosDemanda(prevState => ({ ...prevState, evento: eventos.find(evento => evento.id === eventId) }));
-      }, [eventId]);
+      }, [eventId, eventos]);
 
     return (
         <>
@@ -97,11 +130,11 @@ const CriarDemandas = ({setTitulo, setActions}) => {
                             <Esteira setStep={setStep} step={step} labels={labels} />
                         </Grid>
                             {(step === 0 && (
-                                <DadosDemanda hasParams={eventId != null} handleDadosChange={handleDadosChange} dadosDemanda={dadosDemanda} setDadosDemanda={setDadosDemanda}/>
+                                <DadosDemanda responsaveis={responsaveis} eventos={eventos} hasParams={eventId != null} handleDadosChange={handleDadosChange} dadosDemanda={dadosDemanda} setDadosDemanda={setDadosDemanda}/>
                             ))}
 
                             {(step === 1 && (
-                                <CadastrarVagas setDadosDemanda={setDadosDemanda} dadosDemanda={dadosDemanda} adicionarVaga={adicionarVaga}/>
+                                <CadastrarEscalas setDadosDemanda={setDadosDemanda} dadosDemanda={dadosDemanda} adicionarEscala={adicionarEscala}/>
                             ))}
 
                             {(step === 2 && (

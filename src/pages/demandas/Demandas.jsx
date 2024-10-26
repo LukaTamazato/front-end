@@ -5,22 +5,29 @@ import { Box, ButtonBase } from "@mui/material";
 import Botao from "../../components/btn/Botao";
 import CreateIcon from "@mui/icons-material/Create";
 import { useNavigate } from "react-router-dom";
-import { buscarDemandas } from "../../services/DemandaService";
 import { formatarCardDemanda } from "../../utils/formatarUtil";
 import { getDemandas } from "../../utils/dataMockUtil";
 import MudarVisualizacao from "../../components/mudarVisualizacao/MudarVisualizacao";
 import EditIcon from "@mui/icons-material/Edit";
 import Tabela from "../../components/tabela/Tabela";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { fetchData } from "../../services/DataService";
 
 const Demandas = ({ setTitulo, setActions }) => {
+  const [demandas, setDemandas] = useState([]);
+  const [dataDemandas, setDataDemandas] = useState([]);
+
   useEffect(() => {
     setTitulo("Demandas");
     listarDemandas();
   }, []);
 
   const listarDemandas = async () => {
-    const demandas = await buscarDemandas();
+    const demandas = await fetchData("demandas");
+
+    setDataDemandas(
+      demandas.map((demanda) => ({ ...demanda, evento: demanda.evento.nome }))
+    );
     setDemandas(formatarCardDemanda(demandas));
   };
 
@@ -68,6 +75,12 @@ const Demandas = ({ setTitulo, setActions }) => {
       field: "custoTotal",
       headerName: "Custo Total",
       type: "text",
+      valueFormatter: (params) => {
+        return new Intl.NumberFormat("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }).format(params);
+      },
       flex: 1,
     },
     {
@@ -89,7 +102,7 @@ const Demandas = ({ setTitulo, setActions }) => {
           <ButtonBase
             key={`view-${params.id}`}
             sx={{ marginRight: 0.5, borderRadius: 2 }}
-            onClick={() => handleViewClick(params.id)}
+            onClick={() => navigate("demandas/" + params.id)}
           >
             <Box
               display={"flex"}
@@ -98,20 +111,6 @@ const Demandas = ({ setTitulo, setActions }) => {
               width={39}
             >
               <VisibilityIcon sx={{ color: "#515151" }} />
-            </Box>
-          </ButtonBase>
-          <ButtonBase
-            key={`edit-${params.id}`}
-            sx={{ borderRadius: 2 }}
-            onClick={() => handleEditClick(params.id)}
-          >
-            <Box
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              width={39}
-            >
-              <EditIcon sx={{ color: "#515151" }} />
             </Box>
           </ButtonBase>
         </span>
@@ -131,8 +130,6 @@ const Demandas = ({ setTitulo, setActions }) => {
 
     setActions(actions);
   }, [setActions, navigate]);
-
-  const [demandas, setDemandas] = useState([]);
 
   return (
     <Box>
@@ -156,7 +153,7 @@ const Demandas = ({ setTitulo, setActions }) => {
         </Box>
       )}
       {visualizacao === "lista" && (
-        <Tabela columns={columns} rows={getDemandas} />
+        <Tabela columns={columns} rows={dataDemandas} />
       )}
     </Box>
   );

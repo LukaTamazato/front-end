@@ -13,7 +13,9 @@ const CardDemanda = ({ date, evento, titulo }) => {
         sx={{
           width: { sm: "100%", md: 300 },
           maxWidth: "100%",
-          background: `linear-gradient(to top, #000000ff, #00000033), url(${img})`,
+          background: `linear-gradient(to top, #000000ff, #00000033), url(${
+            evento.imagem ? evento.imagem.url : img
+          })`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

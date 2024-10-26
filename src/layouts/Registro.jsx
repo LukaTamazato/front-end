@@ -74,9 +74,12 @@ const Registro = ({
       flex: 1,
     },
     {
-      field: "evento",
-      headerName: "Evento",
+      field: "responsavel",
+      headerName: "Responsável",
       type: "text",
+      valueGetter: (params) => {
+        return params?.contato?.nome || "";
+      },
       flex: 2,
     },
     {
@@ -110,7 +113,7 @@ const Registro = ({
           <ButtonBase
             key={`view-${params.id}`}
             sx={{ marginRight: 0.5, borderRadius: 2 }}
-            onClick={() => console.log(params.id)}
+            onClick={() => navigate("/demandas/" + params.id)}
           >
             <Box
               display={"flex"}
@@ -119,20 +122,6 @@ const Registro = ({
               width={39}
             >
               <VisibilityIcon sx={{ color: "#515151" }} />
-            </Box>
-          </ButtonBase>
-          <ButtonBase
-            key={`edit-${params.id}`}
-            sx={{ borderRadius: 2 }}
-            onClick={() => console.log(params.id)}
-          >
-            <Box
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              width={39}
-            >
-              <EditIcon sx={{ color: "#515151" }} />
             </Box>
           </ButtonBase>
         </span>
@@ -478,7 +467,7 @@ const Registro = ({
             )}
             {guia === guias[1] && (
               <>
-                <Tabela columns={columns} rows={getDemandas} />
+                <Tabela columns={columns} rows={evento.demandas} />
               </>
             )}
             {guia === guias[2] && (

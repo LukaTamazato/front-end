@@ -98,7 +98,7 @@ export const formatarCardDemanda = (demandas) => {
         dia: date.date(),
         mes: numToMes(date.month()),
       },
-      evento: e.evento,
+      evento: e.evento
     });
   });
 

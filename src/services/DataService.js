@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useAlerta } from "../context/AlertaContext";
 
 export const fetchData = async (resource) => {
   try {
@@ -8,15 +9,19 @@ export const fetchData = async (resource) => {
       },
     });
 
-    if (response.status !== 200) return;
-
     return response.data;
   } catch (err) {
-    console.error(err.response.data);
+    return {
+      error: true,
+      message: err.response.data.message,
+      data: err.response.data,
+      status: err.response.status
+    }
   }
 };
 
 export const postData = async (resource, request) => {
+
   try {
     const response = await axios.post(urlData + resource, request, {
       headers: {
@@ -24,9 +29,14 @@ export const postData = async (resource, request) => {
       },
     });
 
-    return response;
+    return response.data;
   } catch (err) {
-    console.error(err.response.data);
+    return {
+      error: true,
+      message: err.response.data.message,
+      data: err.response.data,
+      status: err.response.status
+    }
   }
 };
 

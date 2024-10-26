@@ -40,13 +40,15 @@ const CriarDemandas = ({ setTitulo, setActions }) => {
       tipoContrato: dadosDemanda.tipoContrato.id,
     };
 
-    const { data, status } = await postData("demandas", request);
+    const response = await postData("demandas", request);
 
-    if (status !== 201) {
-      console.error(data);
+    if (response.error) {
+      console.error(response.data);
+      showAlerta("Não foi possível criar demanda.", "error");
       return;
     }
 
+    showAlerta(`Demanda ${response.nome} criada com sucesso`);
     navigate("/demandas");
   };
 
@@ -131,7 +133,7 @@ const CriarDemandas = ({ setTitulo, setActions }) => {
     };
 
     buscarResponsaveis();
-  }, []);
+  }, [showAlerta]);
 
   useEffect(() => {
     if (!eventId) return;

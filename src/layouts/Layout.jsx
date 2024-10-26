@@ -30,7 +30,6 @@ import Eventos from "../pages/eventos/Eventos";
 import EventosAbertos from "../pages/eventos/EventosAbertos";
 import EventosFechados from "../pages/eventos/EventosFechados";
 import CriarEvento from "../pages/eventos/criarEventos/CriarEvento";
-import Alerta from "../components/alerta/Alerta";
 import RegistroEvento from "../pages/eventos/RegistroEvento";
 import ConfirmDialog from "../components/dialogo/ConfirmDialog";
 import ProtectedRoute from "./ProtectedRoute ";
@@ -39,7 +38,7 @@ import EventosPendentes from "../pages/colaborador/Pendentes";
 import Convites from "../pages/colaborador/Convites";
 import BuscarEventos from "../pages/colaborador/BuscarEventos";
 import Configuracoes from "../pages/Configuracoes";
-import { CollapsedProvider, useCollapsed } from "../context/CollapsedContext";
+import { useCollapsed } from "../context/CollapsedContext";
 
 const Layout = () => {
   // const [collapsed, setCollapsed] = useState(

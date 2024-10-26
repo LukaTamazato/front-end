@@ -16,7 +16,7 @@ const Tabela = ({ columns, rows }) => {
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 5,
+              pageSize: 20,
             },
           },
         }}

@@ -1,16 +1,12 @@
 import { useEffect } from "react";
 
 const Convites = ({ setTitulo, setActions }) => {
+  useEffect(() => {
+    setTitulo("Convites");
+    setActions(null);
+  });
 
-    useEffect(() => {
-        setTitulo("Convites");
-        setActions(null);
-    })
-
-    return (
-        <>
-        </>
-    );
-}
+  return <></>;
+};
 
 export default Convites;

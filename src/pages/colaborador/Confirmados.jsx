@@ -1,16 +1,12 @@
 import { useEffect } from "react";
 
 const EventosConfirmados = ({ setTitulo, setActions }) => {
+  useEffect(() => {
+    setTitulo("Eventos confirmados");
+    setActions(null);
+  });
 
-    useEffect(() => {
-        setTitulo("Eventos confirmados");
-        setActions(null);
-    })
-
-    return (
-        <>
-        </>
-    );
-}
+  return <></>;
+};
 
 export default EventosConfirmados;

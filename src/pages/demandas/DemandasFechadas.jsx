@@ -1,17 +1,12 @@
 import React, { useEffect } from "react";
 
-const DemandasFechadas = ({setTitulo, setActions}) => {
+const DemandasFechadas = ({ setTitulo, setActions }) => {
+  useEffect(() => {
+    setTitulo("Demandas fechadas");
+    setActions(null);
+  });
 
-    useEffect(() => {
-        setTitulo("Demandas fechadas");
-        setActions(null);
-    })
-
-    return (
-        <>
-            Demandas fechadas
-        </>
-    )
-}
+  return <>Demandas fechadas</>;
+};
 
 export default DemandasFechadas;

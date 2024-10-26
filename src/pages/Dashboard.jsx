@@ -1,17 +1,12 @@
 import React, { useEffect } from "react";
 
-const Dashboard = ({setTitulo, setActions}) => {
+const Dashboard = ({ setTitulo, setActions }) => {
+  useEffect(() => {
+    setTitulo("Dashboard");
+    setActions(null);
+  });
 
-    useEffect(() => {
-        setTitulo("Dashboard");
-        setActions(null);
-    })
-
-    return (
-        <>
-            auhauh
-        </>
-    )
-}
+  return <>auhauh</>;
+};
 
 export default Dashboard;

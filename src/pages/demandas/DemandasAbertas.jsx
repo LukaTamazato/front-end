@@ -1,17 +1,12 @@
 import React, { useEffect } from "react";
 
-const DemandasAbertas = ({setTitulo, setActions}) => {
+const DemandasAbertas = ({ setTitulo, setActions }) => {
+  useEffect(() => {
+    setTitulo("Demandas abertas");
+    setActions(null);
+  });
 
-    useEffect(() => {
-        setTitulo("Demandas abertas");
-        setActions(null);
-    })
-
-    return (
-        <>
-            Demandas abertas
-        </>
-    )
-}
+  return <>Demandas abertas</>;
+};
 
 export default DemandasAbertas;

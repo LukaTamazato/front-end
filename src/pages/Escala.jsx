@@ -6,14 +6,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Box, Button, ButtonBase } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Circle } from "@mui/icons-material";
-import { DataGrid, GRID_CHECKBOX_SELECTION_COL_DEF } from '@mui/x-data-grid';
+import { DataGrid, GRID_CHECKBOX_SELECTION_COL_DEF } from "@mui/x-data-grid";
 
 const Escala = ({ setTitulo }) => {
-
   const handleEditClick = (id) => {
     console.log(id);
   };
-  
+
   const handleViewClick = (id) => {
     console.log(id);
   };
@@ -65,33 +64,61 @@ const Escala = ({ setTitulo }) => {
       width: 90,
       sortable: false,
       filterable: false,
-      renderCell: () => <span style={{display: "flex", height: "100%", justifyContent: "center", alignItems: "center"}}><Circle sx={{ color: "red", fontSize: 30 }} /></span>,
+      renderCell: () => (
+        <span
+          style={{
+            display: "flex",
+            height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Circle sx={{ color: "red", fontSize: 30 }} />
+        </span>
+      ),
     },
     {
       field: "actions",
       headerName: "Ações",
       headerAlign: "center",
-      width: 160,   
+      width: 160,
       sortable: false,
       filterable: false,
       renderCell: (params) => (
-        <span style={{display: "flex", height: "100%", justifyContent: "center", padding: "6px"}}>
-          <ButtonBase 
+        <span
+          style={{
+            display: "flex",
+            height: "100%",
+            justifyContent: "center",
+            padding: "6px",
+          }}
+        >
+          <ButtonBase
             key={`view-${params.id}`}
             sx={{ marginRight: 0.5, borderRadius: 2 }}
             onClick={() => handleViewClick(params.id)}
           >
-            <Box display={"flex"} alignItems={"center"} justifyContent={"center"} width={39}>
-              <VisibilityIcon sx={{color: "#515151"}} />
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              width={39}
+            >
+              <VisibilityIcon sx={{ color: "#515151" }} />
             </Box>
           </ButtonBase>
-          <ButtonBase 
+          <ButtonBase
             key={`edit-${params.id}`}
             sx={{ borderRadius: 2 }}
             onClick={() => handleEditClick(params.id)}
           >
-            <Box display={"flex"} alignItems={"center"} justifyContent={"center"} width={39}>
-              <EditIcon sx={{color: "#515151"}} />
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              width={39}
+            >
+              <EditIcon sx={{ color: "#515151" }} />
             </Box>
           </ButtonBase>
         </span>

@@ -1,7 +1,7 @@
-import Layout from './layouts/Layout';
-import { UserProvider } from './context/UserContext';
+import Layout from "./layouts/Layout";
+import { UserProvider } from "./context/UserContext";
 import { BrowserRouter as Router } from "react-router-dom";
-import { CollapsedProvider } from './context/CollapsedContext';
+import { CollapsedProvider } from "./context/CollapsedContext";
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         </CollapsedProvider>
       </UserProvider>
     </div>
-  )
+  );
 }
 
 export default App;

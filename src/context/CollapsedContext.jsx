@@ -1,11 +1,11 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from "react";
 
 const CollapsedContext = createContext();
 
 export const CollapsedProvider = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
 
-  const toggleCollapsed = () => setCollapsed(prev => !prev);
+  const toggleCollapsed = () => setCollapsed((prev) => !prev);
 
   return (
     <CollapsedContext.Provider value={{ collapsed, toggleCollapsed }}>
@@ -14,12 +14,10 @@ export const CollapsedProvider = ({ children }) => {
   );
 };
 
-
 export const useCollapsed = () => {
-    const context = useContext(CollapsedContext);
-    if (context === undefined) {
-      throw new Error('useCollapsed must be used within a CollapsedProvider');
-    }
-    return context;
-  };
-  
+  const context = useContext(CollapsedContext);
+  if (context === undefined) {
+    throw new Error("useCollapsed must be used within a CollapsedProvider");
+  }
+  return context;
+};

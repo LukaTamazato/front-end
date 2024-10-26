@@ -1,16 +1,12 @@
 import React, { useEffect } from "react";
 
-const Home = ({setTitulo, setActions}) => {
+const Home = ({ setTitulo, setActions }) => {
+  useEffect(() => {
+    setTitulo("Home");
+    setActions(null);
+  });
 
-    useEffect(() => {
-        setTitulo('Home');
-        setActions(null);
-    });
-
-    return (
-        <>
-        </>
-    )
-}
+  return <></>;
+};
 
 export default Home;

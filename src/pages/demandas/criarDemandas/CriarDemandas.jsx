@@ -11,148 +11,188 @@ import TipoContrato from "./TipoContrato";
 import Finalizar from "./Finalizar";
 import { fetchData } from "../../../services/DataService";
 
-const CriarDemandas = ({setTitulo, setActions}) => {
+const CriarDemandas = ({ setTitulo, setActions }) => {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const eventId = queryParams.get("eventId");
 
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const eventId = queryParams.get('eventId');
+  const [step, setStep] = useState(0);
+  const labels = ["Demanda", "Escalas", "Contrato", "Finalizar"];
+  const qtdSteps = labels.length;
 
-    const [step, setStep] = useState(0);
-    const labels = ['Demanda', 'Escalas', 'Contrato', 'Finalizar'];
-    const qtdSteps = labels.length;
+  const handleProximo = () => {
+    if (step === qtdSteps - 1) handleConcluir();
 
-    const handleProximo = () => {
-        
-        if (step === qtdSteps-1) handleConcluir();
+    if (step > qtdSteps - 2) return;
 
-        if (step > (qtdSteps-2)) return;
+    setStep(step + 1);
+  };
 
-        setStep(step + 1);
-    }
+  const handleConcluir = () => {
+    navigate("/demandas-abertas");
 
-    const handleConcluir = () => {
-        navigate('/demandas-abertas');
+    console.log(dadosDemanda);
+  };
 
-        console.log(dadosDemanda);
-    }
-    
-    const handleAnterior = () => {
-        if (step <= 0) return;
+  const handleAnterior = () => {
+    if (step <= 0) return;
 
-        setStep(step - 1);
-    }
+    setStep(step - 1);
+  };
 
-    const [dadosDemanda, setDadosDemanda] = useState({
-        nome: "",
-        inicio: "",
-        fim: "",
-        custoTotal: 0,
-        responsavel: {
-            id: "",
-            nome: ""
-        },
-        tipoContrato: {
-            id: "",
-            value: "",
-            documentosObrigatorios: []
-        },
-        documentosAdicionados: [],
-        evento: {
-            id: "",
-            value: ""
-        },
-        escalas: []
-    });
+  const [dadosDemanda, setDadosDemanda] = useState({
+    nome: "",
+    inicio: "",
+    fim: "",
+    custoTotal: 0,
+    responsavel: {
+      id: "",
+      nome: "",
+    },
+    tipoContrato: {
+      id: "",
+      value: "",
+      documentosObrigatorios: [],
+    },
+    documentosAdicionados: [],
+    evento: {
+      id: "",
+      value: "",
+    },
+    escalas: [],
+  });
 
-    const adicionarEscala = (novaEscala) => {
-        setDadosDemanda((prevState) => ({
-            ...prevState,
-            escalas: [...prevState.escalas, novaEscala]
-        }));
+  const adicionarEscala = (novaEscala) => {
+    setDadosDemanda((prevState) => ({
+      ...prevState,
+      escalas: [...prevState.escalas, novaEscala],
+    }));
+  };
+
+  const handleDadosChange = (e, name) => {
+    setDadosDemanda({ ...dadosDemanda, [name]: e.target.value });
+  };
+
+  useEffect(() => {
+    setTitulo("");
+    setActions(null);
+  });
+
+  const [eventos, setEventos] = useState([]);
+  useEffect(() => {
+    const buscarEvento = async () => {
+      try {
+        const data = await fetchData(`eventos`);
+        setEventos(data);
+      } catch (err) {
+        console.log("Erro ao buscar evento: " + err);
+        // showToast("Erro ao buscar evento", "error", <BlockIcon/>)
+      }
     };
 
-    const handleDadosChange = (e, name) => {
-        setDadosDemanda({ ...dadosDemanda, [name]: e.target.value });
+    buscarEvento();
+  }, []);
+
+  const [responsaveis, setResponsaveis] = useState([]);
+  useEffect(() => {
+    const buscarResponsaveis = async () => {
+      try {
+        const data = await fetchData(`usuarios`);
+        setResponsaveis(
+          data
+            .filter((user) => user.contato !== null)
+            .map((user) => ({ ...user.contato, id: user.id }))
+        );
+      } catch (err) {
+        console.log("Erro ao buscar evento: " + err);
+        // showToast("Erro ao buscar evento", "error", <BlockIcon/>)
+      }
     };
 
-    useEffect(() => {
-        setTitulo("");
-        setActions(null);
-    })
+    buscarResponsaveis();
+  }, []);
 
-    const [eventos, setEventos] = useState([]);
-    useEffect(() => {
-        const buscarEvento = async () => {
-            try {
-                const data = await fetchData(`eventos`);
-                setEventos(data);
-            } catch (err) {
-                console.log("Erro ao buscar evento: " + err);
-                // showToast("Erro ao buscar evento", "error", <BlockIcon/>)
-            }
-        }
+  useEffect(() => {
+    if (!eventId) return;
 
-        buscarEvento();
-    }, [])
+    setDadosDemanda((prevState) => ({
+      ...prevState,
+      evento: eventos.find((evento) => evento.id === eventId),
+    }));
+  }, [eventId, eventos]);
 
-    const [responsaveis, setResponsaveis] = useState([]);
-    useEffect(() => {
-        const buscarEvento = async () => {
-            try {
-                const data = await fetchData(`usuarios`);
-                setResponsaveis(data.filter(user => user.contato !== null).map(user => ({...user.contato, id: user.id})));
-            } catch (err) {
-                console.log("Erro ao buscar evento: " + err);
-                // showToast("Erro ao buscar evento", "error", <BlockIcon/>)
-            }
-        }
+  return (
+    <>
+      <PageModal>
+        <Typography variant="h4" component="h4">
+          Criar Demanda
+        </Typography>
+        <Box sx={{ mt: 1 }}>
+          <Grid container width="80%" margin="auto" columnSpacing={10}>
+            <Grid display={"flex"} justifyContent={"center"} size={12}>
+              <Esteira setStep={setStep} step={step} labels={labels} />
+            </Grid>
+            {step === 0 && (
+              <DadosDemanda
+                responsaveis={responsaveis}
+                eventos={eventos}
+                hasParams={eventId != null}
+                handleDadosChange={handleDadosChange}
+                dadosDemanda={dadosDemanda}
+                setDadosDemanda={setDadosDemanda}
+              />
+            )}
 
-        buscarEvento();
-    }, [])
+            {step === 1 && (
+              <CadastrarEscalas
+                setDadosDemanda={setDadosDemanda}
+                dadosDemanda={dadosDemanda}
+                adicionarEscala={adicionarEscala}
+              />
+            )}
 
-    useEffect(() => {
-        if (!eventId) return;
-        
-        setDadosDemanda(prevState => ({ ...prevState, evento: eventos.find(evento => evento.id === eventId) }));
-      }, [eventId, eventos]);
+            {step === 2 && (
+              <TipoContrato
+                dadosDemanda={dadosDemanda}
+                handleDadosChange={handleDadosChange}
+              />
+            )}
 
-    return (
-        <>
-            <PageModal>
-                <Typography variant="h4" component="h4">
-                    Criar Demanda
-                </Typography>
-                <Box sx={{mt: 1}}>
-                    <Grid container width="80%" margin="auto" columnSpacing={10}>
-                        <Grid display={"flex"} justifyContent={"center"} size={12}>
-                            <Esteira setStep={setStep} step={step} labels={labels} />
-                        </Grid>
-                            {(step === 0 && (
-                                <DadosDemanda responsaveis={responsaveis} eventos={eventos} hasParams={eventId != null} handleDadosChange={handleDadosChange} dadosDemanda={dadosDemanda} setDadosDemanda={setDadosDemanda}/>
-                            ))}
-
-                            {(step === 1 && (
-                                <CadastrarEscalas setDadosDemanda={setDadosDemanda} dadosDemanda={dadosDemanda} adicionarEscala={adicionarEscala}/>
-                            ))}
-
-                            {(step === 2 && (
-                                <TipoContrato dadosDemanda={dadosDemanda} handleDadosChange={handleDadosChange}/>
-                            ))}
-
-                            {(step === 3 && (
-                                <Finalizar dadosDemanda={dadosDemanda} setDadosDemanda={setDadosDemanda}/>
-                            ))}
-                    </Grid>
-                </Box>
-                <Box sx={{mt: "auto", alignSelf: "center", display: "flex", gap: 1, width: "40%"}} >
-                    <Botao onClick={step > 0 ? handleAnterior : (() => navigate(-1))} sx={{width: "100%", minWidth: 100}} variant={step > 0 ? "outlined" : "contained"} color="primary" txt={step > 0 ? "Anterior" : "Cancelar"} />
-                    <Botao onClick={handleProximo} sx={{width: "100%", minWidth: 100}} txt={step < qtdSteps-1 ? "Próximo" : "Concluir"} />
-                </Box>
-            </PageModal>
-        </>
-    )
-}
+            {step === 3 && (
+              <Finalizar
+                dadosDemanda={dadosDemanda}
+                setDadosDemanda={setDadosDemanda}
+              />
+            )}
+          </Grid>
+        </Box>
+        <Box
+          sx={{
+            mt: "auto",
+            alignSelf: "center",
+            display: "flex",
+            gap: 1,
+            width: "40%",
+          }}
+        >
+          <Botao
+            onClick={step > 0 ? handleAnterior : () => navigate(-1)}
+            sx={{ width: "100%", minWidth: 100 }}
+            variant={step > 0 ? "outlined" : "contained"}
+            color="primary"
+            txt={step > 0 ? "Anterior" : "Cancelar"}
+          />
+          <Botao
+            onClick={handleProximo}
+            sx={{ width: "100%", minWidth: 100 }}
+            txt={step < qtdSteps - 1 ? "Próximo" : "Concluir"}
+          />
+        </Box>
+      </PageModal>
+    </>
+  );
+};
 
 export default CriarDemandas;

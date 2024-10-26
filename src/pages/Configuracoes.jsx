@@ -1,18 +1,13 @@
-import { useEffect } from "react"
+import { useEffect } from "react";
 import PageModal from "../components/pageModal/PageModal";
 
-const Configuracoes = ({setTitulo, setActions}) => {
+const Configuracoes = ({ setTitulo, setActions }) => {
+  useEffect(() => {
+    setTitulo("");
+    setActions(null);
+  }, []);
 
-    useEffect(() => {
-        setTitulo('');
-        setActions(null);
-    }, [])
-
-    return (
-        <PageModal>
-            
-        </PageModal>
-    )
-}
+  return <PageModal></PageModal>;
+};
 
 export default Configuracoes;

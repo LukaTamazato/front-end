@@ -1,16 +1,12 @@
 import React, { useEffect } from "react";
 
-const NotFound = ({setTitulo, setActions}) => {
+const NotFound = ({ setTitulo, setActions }) => {
+  useEffect(() => {
+    setTitulo("Página não encontrada.");
+    setActions(null);
+  });
 
-    useEffect(() => {
-        setTitulo('Página não encontrada.');
-        setActions(null);
-    });
-
-    return (
-        <>
-        </>
-    )
-}
+  return <></>;
+};
 
 export default NotFound;

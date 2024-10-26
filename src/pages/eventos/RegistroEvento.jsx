@@ -3,14 +3,14 @@ import PageModal from "../../components/pageModal/PageModal";
 import Imagem from "../../components/imagem/Imagem";
 import { fetchData } from "../../services/DataService";
 import { useNavigate, useParams } from "react-router-dom";
-import BlockIcon from '@mui/icons-material/Block';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import BlockIcon from "@mui/icons-material/Block";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Box, Button, ButtonBase, Divider, Typography } from "@mui/material";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Grid from "@mui/material/Grid2";
-import DeleteIcon from '@mui/icons-material/Delete';
-import img from "../../assets/evento-card-bg.png"
-import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from "@mui/icons-material/Delete";
+import img from "../../assets/evento-card-bg.png";
+import EditIcon from "@mui/icons-material/Edit";
 import { useTheme } from "@emotion/react";
 import { aplicarMascara } from "../../utils/formatarUtil";
 import dayjs from "dayjs";
@@ -25,20 +25,25 @@ import DataHora from "../../components/input/DataHora";
 import FloatingBotao from "../../components/btn/FloatingBotao";
 import Registro from "../../layouts/Registro";
 
-const RegistroEvento = ({setTitulo, setActions, showToast, toggleDialog, setDialogContent, setDialogAction}) => {
-    return (
-        // TODO: Deixar o componente genérico
-        <Registro
-            setTitulo={setTitulo}
-            setActions={setActions}
-            showToast={showToast}
-            toggleDialog={toggleDialog}
-            setDialogContent={setDialogContent}
-            setDialogAction={setDialogAction}
-        >
-
-        </Registro>
-    );
-}
+const RegistroEvento = ({
+  setTitulo,
+  setActions,
+  showToast,
+  toggleDialog,
+  setDialogContent,
+  setDialogAction,
+}) => {
+  return (
+    // TODO: Deixar o componente genérico
+    <Registro
+      setTitulo={setTitulo}
+      setActions={setActions}
+      showToast={showToast}
+      toggleDialog={toggleDialog}
+      setDialogContent={setDialogContent}
+      setDialogAction={setDialogAction}
+    ></Registro>
+  );
+};
 
 export default RegistroEvento;

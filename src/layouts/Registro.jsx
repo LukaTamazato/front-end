@@ -9,6 +9,7 @@ import {
   Box,
   Button,
   ButtonBase,
+  ButtonGroup,
   Chip,
   Divider,
   Typography,
@@ -30,6 +31,7 @@ import { deleteEvento, putEvento } from "../services/EventoService";
 import DataHora from "../components/input/DataHora";
 import FloatingBotao from "../components/btn/FloatingBotao";
 import { useAlerta } from "../context/AlertaContext";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 
 const Registro = ({
   setTitulo,
@@ -54,6 +56,17 @@ const Registro = ({
 
   const guias = ["Detalhes", "Demandas", "Escalas"];
   const [guia, setGuia] = useState(guias[0]);
+
+  const guiaActions = [
+    {
+      id: 1,
+      label: "Adicionar demanda",
+      icon: <AssignmentIcon />,
+      action: () => {
+        navigate("/demandas/criar?eventId=" + evento.id);
+      },
+    },
+  ];
 
   const columns = [
     {
@@ -92,6 +105,12 @@ const Registro = ({
       field: "custoTotal",
       headerName: "Custo Total",
       type: "text",
+      valueFormatter: (params) => {
+        return new Intl.NumberFormat("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }).format(params);
+      },
       flex: 1,
     },
     {
@@ -328,7 +347,12 @@ const Registro = ({
             <Imagem imagem={evento.imagem} placeholder={img} />
             <Box></Box>
           </Box>
-          <Guias guiaAtual={guia} guias={guias} setGuia={setGuia} />
+          <Guias
+            guiaAtual={guia}
+            guias={guias}
+            setGuia={setGuia}
+            guiaActions={guiaActions}
+          />
 
           <OutlinedBox sx={{ mt: 3 }}>
             {guia === guias[0] && (
@@ -466,9 +490,9 @@ const Registro = ({
               </Box>
             )}
             {guia === guias[1] && (
-              <>
+              <Box sx={{ bgcolor: "#fcfcfc" }}>
                 <Tabela columns={columns} rows={evento.demandas} />
-              </>
+              </Box>
             )}
             {guia === guias[2] && (
               <>
@@ -489,37 +513,57 @@ const Registro = ({
   );
 };
 
-const Guias = ({ guias, guiaAtual, setGuia }) => {
+const Guias = ({ guias, guiaAtual, setGuia, guiaActions }) => {
   const theme = useTheme();
 
   return (
-    <Box
-      mt={2}
-      sx={{
-        display: "grid",
-        gridTemplateColumns: `repeat(${guias.length}, 1fr)`,
-        width: "30%",
-      }}
-      gap={5}
-    >
-      {guias &&
-        guias.map((item, index) => {
-          return (
-            <ButtonBase
-              disableRipple
-              onClick={() => setGuia(item)}
-              sx={{
-                borderBottom: `2px solid ${
-                  guiaAtual === item ? theme.palette.secondary.main : null
-                }`,
-                pb: "4px",
-              }}
-              key={index}
-            >
-              <Typography>{item}</Typography>
-            </ButtonBase>
-          );
-        })}
+    <Box className="flexRowBetween">
+      <Box
+        mt={2}
+        sx={{
+          display: "grid",
+          gridTemplateColumns: `repeat(${guias.length}, 1fr)`,
+          width: "30%",
+        }}
+        gap={5}
+      >
+        {guias &&
+          guias.map((item, index) => {
+            return (
+              <ButtonBase
+                disableRipple
+                onClick={() => setGuia(item)}
+                sx={{
+                  borderBottom: `2px solid ${
+                    guiaAtual === item ? theme.palette.secondary.main : null
+                  }`,
+                  pb: "4px",
+                }}
+                key={index}
+              >
+                <Typography>{item}</Typography>
+              </ButtonBase>
+            );
+          })}
+      </Box>
+
+      {guiaActions && (
+        <ButtonGroup
+          variant="contained"
+          color="secondary"
+          sx={{ alignSelf: "flex-end", mr: 2 }}
+        >
+          {guiaActions.map((item, index) => {
+            return (
+              item.id === guias.indexOf(guiaAtual) && (
+                <Button startIcon={item.icon} key={index} onClick={item.action}>
+                  {item.label}
+                </Button>
+              )
+            );
+          })}
+        </ButtonGroup>
+      )}
     </Box>
   );
 };

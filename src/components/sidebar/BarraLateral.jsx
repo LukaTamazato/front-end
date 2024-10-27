@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Sidebar, Menu, sidebarClasses } from "react-pro-sidebar";
 import { useTheme } from "@mui/material/styles";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
@@ -19,18 +19,15 @@ import MailIcon from "@mui/icons-material/Mail";
 import SearchIcon from "@mui/icons-material/Search";
 import { useUser } from "../../context/UserContext";
 import { useCollapsed } from "../../context/CollapsedContext";
+import { useLocation } from "react-router-dom";
+import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 
 const BarraLateral = () => {
   const theme = useTheme();
   const { tipoUsuario } = useUser();
 
-  const [activeItem, setActiveItem] = useState(null);
-
-  const handleActivateItem = (item) => {
-    setActiveItem(item);
-  };
-
   const { collapsed } = useCollapsed();
+  const location = useLocation();
 
   return (
     <Sidebar
@@ -62,79 +59,69 @@ const BarraLateral = () => {
           },
         }}
       >
-        {/* TODO: Verificar se está ativo pela url e não pelo activeItem
-                        Motivo: Destacar itens de acordo com página atual ainda que não tenha sido por meio da barra lateral */}
         {tipoUsuario === "parceiro" && (
           <>
             <Item
               sx={{ mt: 2 }}
               smallText={false}
-              onClick={() => handleActivateItem("i0")}
-              active={activeItem === "i0"}
+              active={location.pathname === "/"}
               icon={<HomeIcon />}
               linkTo="/"
               text="Home"
             />
             <Item
               smallText={false}
-              onClick={() => handleActivateItem("i1")}
-              active={activeItem === "i1"}
+              active={location.pathname === "/dashboard"}
               icon={<DashboardIcon />}
               linkTo="/dashboard"
               text="Dashboard"
             />
-            <CustomSubMenu
+            {/* <CustomSubMenu
               label="Eventos"
               icon={<ConfirmationNumberOutlinedIcon />}
-            >
-              <Item
-                onClick={() => handleActivateItem("i2")}
-                active={activeItem === "i2"}
-                theme={theme.palette.primary.lighter}
-                linkTo="/eventos"
-                icon={<AddBoxOutlinedIcon />}
-                text="Eventos totais"
-              />
-              <Item
-                onClick={() => handleActivateItem("i3")}
-                active={activeItem === "i3"}
+            > */}
+            <Item
+              active={location.pathname === "/eventos"}
+              smallText={false}
+              linkTo="/eventos"
+              icon={<CelebrationOutlinedIcon />}
+              text="Eventos"
+            />
+            {/* <Item
+                active={location.pathname === "/eventos-abertos"}
                 theme={theme.palette.primary.lighter}
                 linkTo="/eventos-abertos"
                 icon={<CheckBoxOutlinedIcon />}
                 text="Eventos abertos"
-              />
-            </CustomSubMenu>
-            <CustomSubMenu label="Demandas" icon={<CelebrationOutlinedIcon />}>
-              <Item
-                onClick={() => handleActivateItem("i5")}
-                active={activeItem === "i5"}
-                theme={theme.palette.primary.lighter}
-                linkTo="/demandas"
-                icon={<AddBoxOutlinedIcon />}
-                text="Demandas totais"
-              />
-              <Item
-                onClick={() => handleActivateItem("i6")}
-                active={activeItem === "i6"}
+              /> */}
+            {/* </CustomSubMenu> */}
+            {/* <CustomSubMenu label="Demandas" icon={< />}> */}
+            <Item
+              active={location.pathname === "/demandas"}
+              smallText={false}
+              linkTo="/demandas"
+              icon={<AssignmentOutlinedIcon />}
+              text="Demandas"
+            />
+            {/* <Item
+                active={location.pathname === "/demandas-abertas"}
                 theme={theme.palette.primary.lighter}
                 linkTo="/demandas-abertas"
                 icon={<CheckBoxOutlinedIcon />}
                 text="Demandas abertas"
-              />
-            </CustomSubMenu>
+              /> */}
+            {/* </CustomSubMenu> */}
             <CustomSubMenu label="Equipe" icon={<GroupIcon />}>
               {/* <Item onClick={() => handleActivateItem('i8')} active={activeItem === 'i8'} theme={theme.palette.primary.lighter} linkTo="/escala" icon={<EditCalendarOutlinedIcon />} text="Escala" /> */}
               <Item
-                onClick={() => handleActivateItem("i9")}
-                active={activeItem === "i9"}
+                active={location.pathname === "/formularios"}
                 theme={theme.palette.primary.lighter}
                 linkTo="/formularios"
                 icon={<ArticleOutlinedIcon />}
                 text="Formulários"
               />
               <Item
-                onClick={() => handleActivateItem("i10")}
-                active={activeItem === "i10"}
+                active={location.pathname === "/parceiros"}
                 theme={theme.palette.primary.lighter}
                 linkTo="/parceiros"
                 icon={<ContactsOutlinedIcon />}
@@ -149,39 +136,34 @@ const BarraLateral = () => {
             <Item
               sx={{ mt: 2 }}
               smallText={false}
-              onClick={() => handleActivateItem("i0")}
-              active={activeItem === "i0"}
+              active={location.pathname === "/"}
               icon={<HomeIcon />}
               linkTo="/"
               text="Home"
             />
             <Item
-              onClick={() => handleActivateItem("i2")}
-              active={activeItem === "i2"}
+              active={location.pathname === "/eventos-confirmados"}
               theme={theme.palette.primary.lighter}
               linkTo="/eventos-confirmados"
               icon={<CheckBoxOutlinedIcon />}
               text="Eventos confirmados"
             />
             <Item
-              onClick={() => handleActivateItem("i3")}
-              active={activeItem === "i3"}
+              active={location.pathname === "/eventos-pendentes"}
               theme={theme.palette.primary.lighter}
               linkTo="/eventos-pendentes"
               icon={<AccessTimeIcon />}
               text="Eventos pendentes"
             />
             <Item
-              onClick={() => handleActivateItem("i4")}
-              active={activeItem === "i4"}
+              active={location.pathname === "/eventos/buscar"}
               theme={theme.palette.primary.lighter}
               linkTo="/eventos/buscar"
               icon={<SearchIcon />}
               text="Buscar"
             />
             <Item
-              onClick={() => handleActivateItem("i5")}
-              active={activeItem === "i5"}
+              active={location.pathname === "/convites"}
               theme={theme.palette.primary.lighter}
               linkTo="/convites"
               icon={<MailIcon />}

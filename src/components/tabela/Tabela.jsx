@@ -24,14 +24,6 @@ const Tabela = ({ columns, rows }) => {
         checkboxSelection
         disableRowSelectionOnClick
         disableColumnResize
-        sx={{
-          "& .MuiDataGrid-topContainer": {
-            backgroundColor: "#fafafa",
-          },
-          "& .MuiDataGrid-footerContainer, .MuiDataGrid-virtualScroller": {
-            backgroundColor: "#f2f2f2",
-          },
-        }}
       />
     </Box>
   );

@@ -49,7 +49,7 @@ const CriarDemandas = ({ setTitulo, setActions }) => {
     }
 
     showAlerta(`Demanda ${response.nome} criada com sucesso`);
-    navigate("/demandas");
+    navigate(-1);
   };
 
   const handleAnterior = () => {
@@ -208,7 +208,7 @@ const CriarDemandas = ({ setTitulo, setActions }) => {
           <Botao
             onClick={handleProximo}
             sx={{ width: "100%", minWidth: 100 }}
-            txt={step < qtdSteps - 1 ? "Próximo" : "Concluir"}
+            txt={step < qtdSteps - 1 ? "Próximo" : "Criar Demanda"}
           />
         </Box>
       </PageModal>

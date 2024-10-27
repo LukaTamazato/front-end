@@ -4,7 +4,7 @@ import CardEvento from "../../components/card/CardEvento";
 import { Box, ButtonBase } from "@mui/material";
 import Botao from "../../components/btn/Botao";
 import CreateIcon from "@mui/icons-material/Create";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { buscarEventos } from "../../services/EventoService";
 import { numToMes } from "../../utils/formatarUtil";
 import dayjs from "dayjs";
@@ -16,13 +16,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const Eventos = ({ setTitulo, setActions }) => {
-  const handleEditClick = (id) => {
-    console.log(id);
-  };
-
-  const handleViewClick = (id) => {
-    console.log(id);
-  };
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const status = queryParams.get("status");
 
   const columns = [
     {
@@ -115,13 +111,14 @@ const Eventos = ({ setTitulo, setActions }) => {
 
     setEventos(
       formatarCardEvento(
-        data.filter((evento) => evento.status.includes(filtroStatus))
+        data.filter((evento) => evento.status.includes(status || ""))
       )
     );
+    console.log(data.filter((evento) => evento.status.includes(status)));
 
     setDataEventos(
       data
-        .filter((evento) => evento.status.includes(filtroStatus))
+        .filter((evento) => evento.status.includes(status || ""))
         .map((evento) => ({
           ...evento,
           logradouro: evento.endereco.logradouro,
@@ -134,7 +131,7 @@ const Eventos = ({ setTitulo, setActions }) => {
 
   useEffect(() => {
     listarEventos();
-  }, [filtroStatus]);
+  }, [status]);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -176,7 +173,9 @@ const Eventos = ({ setTitulo, setActions }) => {
       )}
 
       {visualizacao === "lista" && (
-        <Tabela columns={columns} rows={dataEventos} />
+        <Box sx={{ bgcolor: "#fdfdfd" }}>
+          <Tabela columns={columns} rows={dataEventos} />
+        </Box>
       )}
     </Box>
   );

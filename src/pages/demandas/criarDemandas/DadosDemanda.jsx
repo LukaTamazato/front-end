@@ -1,11 +1,9 @@
-import { Typography, FormControl, Box } from "@mui/material";
+import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import CampoTexto from "../../../components/input/CampoTexto";
 import DataHora from "../../../components/input/DataHora";
-import axios from "axios";
 import Picklist from "../../../components/input/Picklist";
 import dayjs from "dayjs";
-import { useState, useEffect } from "react";
 
 const DadosDemanda = ({
   responsaveis,
@@ -73,16 +71,15 @@ const DadosDemanda = ({
           name="evento"
           label={"Evento"}
           handleChange={handleEventoChange}
-          value={dadosDemanda.evento.id}
+          value={dadosDemanda.evento?.id}
         />
         <Picklist
           itemParam="nome"
-          disabled={hasParams}
           items={responsaveis}
           name="responsavel"
           label={"Responsável"}
           handleChange={handleResponsavelChange}
-          value={dadosDemanda.responsavel.id}
+          value={dadosDemanda.responsavel?.id}
         />
       </Grid>
     </>

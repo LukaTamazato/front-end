@@ -51,7 +51,7 @@ const CriarEvento = ({ setTitulo, setActions }) => {
       }
 
       showAlerta("Evento criado com sucesso");
-      navigate("/eventos");
+      navigate(-1);
     } catch (err) {
       showAlerta("Não foi possível criar evento", "error");
       console.log("Erro ao criar evento: " + err);
@@ -250,7 +250,7 @@ const CriarEvento = ({ setTitulo, setActions }) => {
           <Botao
             onClick={handleProximo}
             sx={{ width: "100%", minWidth: 100 }}
-            txt={step < qtdSteps - 1 ? "Próximo" : "Concluir"}
+            txt={step < qtdSteps - 1 ? "Próximo" : "Criar Evento"}
           />
         </Box>
       </PageModal>

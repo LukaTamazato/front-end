@@ -12,6 +12,7 @@ import TableRowsIcon from "@mui/icons-material/TableRows";
 import BorderAllIcon from "@mui/icons-material/BorderAll";
 import { useState } from "react";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import { useNavigate } from "react-router-dom";
 
 const MudarVisualizacao = ({
   opcoesFiltro,
@@ -27,15 +28,17 @@ const MudarVisualizacao = ({
     setAnchorEl(e.currentTarget);
   };
 
+  const navigate = useNavigate();
   const handleClose = (filtro, index) => {
-    setFiltroStatus(index === opcoesFiltro.length - 1 ? "" : filtro);
+    // setFiltroStatus(index === opcoesFiltro.length - 1 ? "" : filtro);
+    navigate(`?status=${index === opcoesFiltro.length - 1 ? "" : filtro}`);
+
     setAnchorEl(null);
   };
 
   const handleSelecionar = (item) => {
     setSelecionado(item);
     setVisualizacao(item);
-    console.log(item);
   };
 
   return (

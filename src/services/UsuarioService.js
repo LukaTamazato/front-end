@@ -21,4 +21,21 @@ export const logar = async (dados) => {
   }
 };
 
+export const cadastrar = async (request) => {
+  try {
+    const response = await axios.post(urlData + 'usuarios', request, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.TOKEN}`,
+      },
+    });
 
+    return response;
+  } catch (err) {
+    return {
+      error: true,
+      message: err.response.data.message,
+      data: err.response.data,
+      status: err.response.status,
+    };
+  }
+};

@@ -39,6 +39,8 @@ import Convites from "../pages/colaborador/Convites";
 import BuscarEventos from "../pages/colaborador/BuscarEventos";
 import Configuracoes from "../pages/Configuracoes";
 import { useCollapsed } from "../context/CollapsedContext";
+import Cadastro from "../pages/Cadastro";
+
 
 const Layout = () => {
   // const [collapsed, setCollapsed] = useState(
@@ -76,17 +78,17 @@ const Layout = () => {
       />
       <Box sx={{ display: "flex", height: "100vh", flexDirection: "column" }}>
         <CssBaseline />
-        {location.pathname !== "/login" && <Navbar />}
+        {location.pathname !== "/login" && location.pathname !== "/cadastro" && <Navbar />}
         <div className="app">
-          {location.pathname !== "/login" && <BarraLateral />}
+          {location.pathname !== "/login" && location.pathname !== "/cadastro" && <BarraLateral />}
           <Box
             p={0}
             style={{
               left: `${
-                location.pathname !== "/login" ? (collapsed ? 80 : 260) : 0
+                location.pathname !== "/login" && location.pathname !== "/cadastro" ? (collapsed ? 80 : 260) : 0
               }px`,
               width: `calc(100% - ${
-                location.pathname !== "/login" ? (collapsed ? 80 : 260) : 0
+                location.pathname !== "/login" && location.pathname !== "/cadastro" ? (collapsed ? 80 : 260) : 0
               }px)`,
               bgcolor: "#f0f0f0",
             }}
@@ -127,14 +129,12 @@ const Layout = () => {
                   <Login setTitulo={setTitulo} setActions={setActions}/>
                 }
               />
-
               <Route
                 path="/cadastro"
                 element={
-                  <Login setTitulo={setTitulo} setActions={setActions}/>
+                  <Cadastro setTitulo={setTitulo} setActions={setActions}/>
                 }
               />
-
               <Route
                 element={
                   <ProtectedRoute allowedTypes={["parceiro", "colaborador"]} />

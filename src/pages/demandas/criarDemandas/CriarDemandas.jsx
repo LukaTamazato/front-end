@@ -36,7 +36,7 @@ const CriarDemandas = ({ setTitulo, setActions }) => {
     const request = {
       ...dadosDemanda,
       idEvento: dadosDemanda.evento.id,
-      idResponsavel: dadosDemanda.responsavel.id,
+      idResponsavel: dadosDemanda.responsavel?.id,
       tipoContrato: dadosDemanda.tipoContrato.id,
     };
 

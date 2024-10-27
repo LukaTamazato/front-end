@@ -13,7 +13,10 @@ const Finalizar = ({ dadosEvento, setDadosEvento }) => {
         </Typography>
       </Grid>
       <CampoRegistro size={12} label="Nome" value={dadosEvento.nome} />
-      <CampoRegistro label="Responsável" value={dadosEvento.responsavel.nome} />
+      <CampoRegistro
+        label="Responsável"
+        value={dadosEvento.responsavel?.nome}
+      />
       <CampoRegistro
         startAdornment={"R$"}
         label="Orçamento"
@@ -27,15 +30,15 @@ const Finalizar = ({ dadosEvento, setDadosEvento }) => {
         label="Fim"
         value={dayjs(dadosEvento.fim).format("DD/MM/YYYY HH:mm")}
       />
-      <CampoRegistro label="Formulário" value={dadosEvento.formulario.nome} />
+      <CampoRegistro label="Formulário" value={dadosEvento.formulario?.nome} />
       <CampoRegistro
         label="Logradouro"
-        value={dadosEvento.endereco.logradouro}
+        value={dadosEvento.endereco?.logradouro}
       />
-      <CampoRegistro label="CEP" value={dadosEvento.endereco.cep} />
-      <CampoRegistro label="Número" value={dadosEvento.endereco.numero} />
-      <CampoRegistro label="Estado" value={dadosEvento.endereco.uf} />
-      <CampoRegistro label="Cidade" value={dadosEvento.endereco.cidade} />
+      <CampoRegistro label="CEP" value={dadosEvento.endereco?.cep} />
+      <CampoRegistro label="Número" value={dadosEvento.endereco?.numero} />
+      <CampoRegistro label="Estado" value={dadosEvento.endereco?.uf} />
+      <CampoRegistro label="Cidade" value={dadosEvento.endereco?.cidade} />
     </Grid>
   );
 };

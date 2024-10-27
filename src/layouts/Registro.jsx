@@ -6,12 +6,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import BlockIcon from "@mui/icons-material/Block";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import {
+  Backdrop,
   Box,
   Button,
   ButtonBase,
   ButtonGroup,
   Chip,
+  CircularProgress,
   Divider,
+  Paper,
+  Skeleton,
+  Tab,
+  Tabs,
   Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
@@ -193,6 +199,9 @@ const Registro = ({
         const data = await fetchData(`eventos/${eventId}`);
         setEvento(data);
         setEventoEditado(data);
+        setTimeout(() => {
+          setLoading(false);
+        }, 0);
       } catch (err) {
         console.log("Erro ao buscar evento: " + err);
         showAlerta("Erro ao buscar evento", "error");
@@ -243,29 +252,37 @@ const Registro = ({
 
   return (
     <PageModal>
-      <Box mb={1} className="flexRowBetween">
-        <Box className="flexRowCenter" gap={1}>
-          <ButtonBase
-            onClick={() => {
-              editando ? handleConfirmarVoltar() : navigate(-1);
-            }}
-            disableRipple
-            sx={{ borderRadius: "50%", p: "8px" }}
-          >
-            <ArrowBackIosIcon fontSize="32px" />
-          </ButtonBase>
-          <Typography variant="h6">Evento</Typography>
+      <Backdrop
+        open={loading}
+        sx={(theme) => ({ zIndex: theme.zIndex.drawer + 2 })}
+      >
+        <CircularProgress />
+      </Backdrop>
+      {!loading && (
+        <Box mb={1} className="flexRowBetween">
+          <Box className="flexRowCenter" gap={1}>
+            <ButtonBase
+              onClick={() => {
+                editando ? handleConfirmarVoltar() : navigate(-1);
+              }}
+              disableRipple
+              sx={{ borderRadius: "50%", p: "8px" }}
+            >
+              <ArrowBackIosIcon fontSize="32px" />
+            </ButtonBase>
+            <Typography variant="h6">Evento</Typography>
+          </Box>
         </Box>
-      </Box>
-      {evento && (
+      )}
+      {!loading && evento && (
         <>
           <Box
-            sx={{
+            sx={(theme) => ({
               position: "sticky",
               top: -16,
-              zIndex: 1000,
+              zIndex: theme.zIndex.drawer + 1,
               bgcolor: "#ffffff",
-            }}
+            })}
           >
             <Box
               mb={3}
@@ -315,8 +332,8 @@ const Registro = ({
                 <Box className="flexColumnStart">
                   <Typography variant="subtitle1">Responsável</Typography>
                   <Typography variant="h6">
-                    {evento.responsavel.contato
-                      ? evento.responsavel.contato.nome
+                    {evento.responsavel?.contato
+                      ? evento.responsavel?.contato.nome
                       : "-"}
                   </Typography>
                 </Box>
@@ -425,15 +442,15 @@ const Registro = ({
                     editando={false}
                     name="formulario"
                     label="Formulário"
-                    value={eventoEditado.formulario.nome}
+                    value={eventoEditado.formulario?.nome}
                   />
                   <CampoRegistro
                     editando={false}
                     name="responsavel"
                     label="Responsável"
                     value={
-                      eventoEditado.responsavel.contato
-                        ? eventoEditado.responsavel.contato.nome
+                      eventoEditado.responsavel?.contato
+                        ? eventoEditado.responsavel?.contato.nome
                         : "-"
                     }
                   />
@@ -448,42 +465,42 @@ const Registro = ({
                     handleChange={handleEnderecoChange}
                     name="logradouro"
                     label="Logradouro"
-                    value={eventoEditado.endereco.logradouro}
+                    value={eventoEditado.endereco?.logradouro}
                   />
                   <CampoRegistro
                     editando={editando}
                     handleChange={handleEnderecoChange}
                     name="numero"
                     label="Número"
-                    value={eventoEditado.endereco.numero}
+                    value={eventoEditado.endereco?.numero}
                   />
                   <CampoRegistro
                     editando={editando}
                     handleChange={handleEnderecoChange}
                     name="cep"
                     label="CEP"
-                    value={eventoEditado.endereco.cep}
+                    value={eventoEditado.endereco?.cep}
                   />
                   <CampoRegistro
                     editando={editando}
                     handleChange={handleEnderecoChange}
                     name="cidade"
                     label="Cidade"
-                    value={eventoEditado.endereco.cidade}
+                    value={eventoEditado.endereco?.cidade}
                   />
                   <CampoRegistro
                     editando={editando}
                     handleChange={handleEnderecoChange}
                     name="estado"
                     label="Estado"
-                    value={eventoEditado.endereco.uf}
+                    value={eventoEditado.endereco?.uf}
                   />
                 </Grid>
                 <Box className="flexRowCenter" mt={3}>
                   <Mapa
-                    logradouro={eventoEditado.endereco.logradouro}
-                    cidade={eventoEditado.endereco.cidade}
-                    uf={eventoEditado.endereco.uf}
+                    logradouro={eventoEditado.endereco?.logradouro}
+                    cidade={eventoEditado.endereco?.cidade}
+                    uf={eventoEditado.endereco?.uf}
                     popup={eventoEditado.nome}
                   />
                 </Box>

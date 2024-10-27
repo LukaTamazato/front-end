@@ -12,7 +12,7 @@ import TableRowsIcon from "@mui/icons-material/TableRows";
 import BorderAllIcon from "@mui/icons-material/BorderAll";
 import { useState } from "react";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const MudarVisualizacao = ({
   opcoesFiltro,
@@ -23,22 +23,37 @@ const MudarVisualizacao = ({
   const [selecionado, setSelecionado] = useState(visualiacaoPadrao);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
   };
 
-  const navigate = useNavigate();
+  const updateParam = (key, value) => {
+    const params = new URLSearchParams(searchParams);
+
+    params.set(key, value);
+
+    setSearchParams(params);
+  };
+
+  const removeParam = (key) => {
+    const params = new URLSearchParams(searchParams);
+    params.delete(key);
+    setSearchParams(params);
+  };
+
   const handleClose = (filtro, index) => {
-    // setFiltroStatus(index === opcoesFiltro.length - 1 ? "" : filtro);
-    navigate(`?status=${index === opcoesFiltro.length - 1 ? "" : filtro}`);
+    index === opcoesFiltro.length - 1
+      ? removeParam("status")
+      : updateParam("status", filtro);
 
     setAnchorEl(null);
   };
 
   const handleSelecionar = (item) => {
+    item !== "cards" ? updateParam("view", item) : removeParam("view");
     setSelecionado(item);
-    setVisualizacao(item);
   };
 
   return (
@@ -61,10 +76,10 @@ const MudarVisualizacao = ({
       <ButtonGroup>
         <Tooltip title="Lista">
           <Button
-            onClick={() => handleSelecionar("lista")}
+            onClick={() => handleSelecionar("list")}
             className="flexRowCenter"
             sx={{
-              bgcolor: selecionado === "lista" ? "#d9d9d9" : "#ffffff",
+              bgcolor: selecionado === "list" ? "#d9d9d9" : "#ffffff",
               width: 40,
               height: 40,
               border: "1px solid #e2e2e2",
@@ -95,8 +110,11 @@ const MudarVisualizacao = ({
         {opcoesFiltro &&
           opcoesFiltro.map((filtro, index) => {
             return (
-              <MenuItem key={index} onClick={() => handleClose(filtro, index)}>
-                {filtro}
+              <MenuItem
+                key={index}
+                onClick={() => handleClose(filtro.id, index)}
+              >
+                {filtro.value}
               </MenuItem>
             );
           })}

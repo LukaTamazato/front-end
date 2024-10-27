@@ -35,8 +35,8 @@ const CriarEvento = ({ setTitulo, setActions }) => {
   const handleConcluir = async () => {
     const request = {
       ...dadosEvento,
-      idFormulario: dadosEvento.formulario.id,
-      idResponsavel: dadosEvento.responsavel.id,
+      idFormulario: dadosEvento.formulario?.id,
+      idResponsavel: dadosEvento.responsavel?.id,
     };
 
     const formData = new FormData();

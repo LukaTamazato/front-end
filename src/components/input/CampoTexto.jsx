@@ -15,7 +15,7 @@ const CampoTexto = ({
   errorMsg = "",
   required,
   type = "text",
-  startAdornment = "",
+  startAdornment = null,
 }) => {
   const [possuiErro, setErro] = useState(false);
 

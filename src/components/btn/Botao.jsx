@@ -6,7 +6,7 @@ const Botao = ({
   variant = "contained",
   txt,
   onClick,
-  sx,
+  sx
 }) => {
   return (
     <Button sx={sx} onClick={onClick} color={color} variant={variant}>

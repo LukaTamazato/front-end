@@ -20,3 +20,5 @@ export const logar = async (dados) => {
     console.log(err.response.status);
   }
 };
+
+

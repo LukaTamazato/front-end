@@ -80,8 +80,7 @@ const Layout = () => {
         <div className="app">
           {location.pathname !== "/login" && <BarraLateral />}
           <Box
-            overflow={"scroll"}
-            p={2}
+            p={0}
             style={{
               left: `${
                 location.pathname !== "/login" ? (collapsed ? 80 : 260) : 0
@@ -125,7 +124,14 @@ const Layout = () => {
               <Route
                 path="/login"
                 element={
-                  <Login setTitulo={setTitulo} setActions={setActions} />
+                  <Login setTitulo={setTitulo} setActions={setActions}/>
+                }
+              />
+
+              <Route
+                path="/cadastro"
+                element={
+                  <Login setTitulo={setTitulo} setActions={setActions}/>
                 }
               />
 

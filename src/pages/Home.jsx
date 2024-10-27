@@ -62,7 +62,7 @@ const Home = ({ setTitulo, setActions }) => {
     <Box height="100%" m={4}>
       <Box
         className="flexRowStart"
-        sx={{ bgcolor: "secondary.main", p: 4, gap: 3, borderRadius: 2 }}
+        sx={{ bgcolor: "primary.main", p: 4, gap: 3, borderRadius: 2 }}
       >
         <Avatar sx={{ width: 80, height: 80 }} />
         <Typography color="white" variant="h5">

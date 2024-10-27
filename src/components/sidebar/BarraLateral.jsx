@@ -7,6 +7,7 @@ import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
 import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefaultOutlined";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import GroupIcon from "@mui/icons-material/Group";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -38,7 +39,7 @@ const BarraLateral = () => {
           color: "white",
           width: collapsed ? "80px" : "260px",
           transition: "300ms",
-          zIndex: 9999,
+          zIndex: 1000,
         },
       }}
     >
@@ -72,7 +73,7 @@ const BarraLateral = () => {
             <Item
               smallText={false}
               active={location.pathname === "/dashboard"}
-              icon={<DashboardIcon />}
+              icon={<DashboardOutlinedIcon />}
               linkTo="/dashboard"
               text="Dashboard"
             />

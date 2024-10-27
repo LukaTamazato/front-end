@@ -76,13 +76,13 @@ const EventoEndereco = ({
         <CampoTexto
           size={12}
           handleChange={handleEnderecoChange}
-          value={dadosEvento.endereco.logradouro}
+          value={dadosEvento.endereco?.logradouro}
           name="logradouro"
           label="Logradouro"
         />
         <CampoTexto
           handleChange={handleViaCEP}
-          value={dadosEvento.endereco.cep}
+          value={dadosEvento.endereco?.cep}
           name="cep"
           mascara="cep"
           regex={/^\d{5}-\d{3}$/}
@@ -90,14 +90,14 @@ const EventoEndereco = ({
         />
         <CampoTexto
           handleChange={handleEnderecoChange}
-          value={dadosEvento.endereco.numero}
+          value={dadosEvento.endereco?.numero}
           mascara="numeroPositivo"
           name="numero"
           label="Número"
         />
         <CampoTexto
           handleChange={handleEnderecoChange}
-          value={dadosEvento.endereco.cidade}
+          value={dadosEvento.endereco?.cidade}
           name="cidade"
           label="Cidade"
         />
@@ -107,8 +107,9 @@ const EventoEndereco = ({
             options={estados}
             getOptionLabel={(option) => option.value}
             value={
-              estados.find((estado) => estado.id === dadosEvento.endereco.uf) ||
-              null
+              estados.find(
+                (estado) => estado.id === dadosEvento.endereco?.uf
+              ) || null
             }
             onChange={handleUfChange}
             renderInput={(params) => <TextField {...params} label="Estado" />}

@@ -8,7 +8,7 @@ const OutlinedBox = ({ children, sx }) => {
     <Box
       sx={{
         ...sx,
-        borderColor: theme.palette.paper.dark,
+        borderColor: theme.palette.paper.main,
         p: 3,
         borderRadius: 4,
       }}

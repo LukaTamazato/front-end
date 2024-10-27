@@ -15,13 +15,12 @@ export const fetchData = async (resource) => {
       error: true,
       message: err.response.data.message,
       data: err.response.data,
-      status: err.response.status
-    }
+      status: err.response.status,
+    };
   }
 };
 
 export const postData = async (resource, request) => {
-
   try {
     const response = await axios.post(urlData + resource, request, {
       headers: {
@@ -35,8 +34,8 @@ export const postData = async (resource, request) => {
       error: true,
       message: err.response.data.message,
       data: err.response.data,
-      status: err.response.status
-    }
+      status: err.response.status,
+    };
   }
 };
 
@@ -51,6 +50,34 @@ export const putData = async (resource, request, id) => {
     return response;
   } catch (err) {
     console.error(err.response.data);
+  }
+};
+
+export const exportData = async (resource, params) => {
+  try {
+    const response = await axios.post(`${urlData}${resource}/export`, null, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.TOKEN}`,
+      },
+      params: params,
+      responseType: "blob",
+    });
+
+    const blob = new Blob([response.data], { type: 'text/csv' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${resource}_${Date.now()}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+  } catch (err) {
+    return {
+      error: true,
+      message: err.response.data.message,
+      data: err.response.data,
+      status: err.response.status,
+    };
   }
 };
 

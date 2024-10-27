@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Dialogo from "../../components/dialogo/Dialogo";
 import CardEvento from "../../components/card/CardEvento";
-import { Box, ButtonBase } from "@mui/material";
+import { Box, ButtonBase, Chip, Typography } from "@mui/material";
 import Botao from "../../components/btn/Botao";
 import CreateIcon from "@mui/icons-material/Create";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -14,11 +14,14 @@ import Tabela from "../../components/tabela/Tabela";
 import { getEventos } from "../../utils/dataMockUtil";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import BorderAllOutlinedIcon from "@mui/icons-material/BorderAllOutlined";
+import { exportData } from "../../services/DataService";
 
 const Eventos = ({ setTitulo, setActions }) => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const status = queryParams.get("status");
+  const view = queryParams.get("view");
 
   const columns = [
     {
@@ -43,6 +46,21 @@ const Eventos = ({ setTitulo, setActions }) => {
         return dayjs(params.value).format("MM/DD/YYYY HH:mm");
       },
       flex: 1,
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      type: "text",
+      flex: 1,
+      renderCell: (params) => (
+        <Chip
+          sx={{ width: "90%" }}
+          title="Status do evento"
+          color={params.value !== "Em andamento" ? "secondary" : "primary"}
+          variant={params.value === "Não iniciado" ? "outlined" : "filled"}
+          label={params.value}
+        />
+      ),
     },
     {
       field: "logradouro",
@@ -109,23 +127,22 @@ const Eventos = ({ setTitulo, setActions }) => {
   const listarEventos = async () => {
     const data = await buscarEventos();
 
-    setEventos(
-      formatarCardEvento(
-        data.filter((evento) => evento.status.includes(status || ""))
+    const filteredData = data.filter((evento) =>
+      evento.status.includes(
+        filtros.find((filtro) => filtro.id === status)?.value || ""
       )
     );
-    console.log(data.filter((evento) => evento.status.includes(status)));
+
+    setEventos(formatarCardEvento(filteredData));
 
     setDataEventos(
-      data
-        .filter((evento) => evento.status.includes(status || ""))
-        .map((evento) => ({
-          ...evento,
-          logradouro: evento.endereco.logradouro,
-          numero: evento.endereco.numero,
-          cidade: evento.endereco.cidade,
-          uf: evento.endereco.uf,
-        }))
+      filteredData.map((evento) => ({
+        ...evento,
+        logradouro: evento.endereco?.logradouro,
+        numero: evento.endereco?.numero,
+        cidade: evento.endereco?.cidade,
+        uf: evento.endereco?.uf,
+      }))
     );
   };
 
@@ -141,19 +158,37 @@ const Eventos = ({ setTitulo, setActions }) => {
         handleClick: () => navigate("/eventos/criar"),
         icon: <CreateIcon />,
       },
+      {
+        label: "Exportar",
+        handleClick: async () => {
+          await exportData("eventos", {
+            inicio: "2022-11-11T00:00:00",
+            fim: "2026-12-03T00:00:00",
+            quantidade: 50,
+          });
+        },
+        icon: <BorderAllOutlinedIcon />,
+      },
     ];
 
     setActions(actions);
   }, [setActions, navigate]);
+
+  const filtros = [
+    { id: "nao-iniciado", value: "Não iniciado" },
+    { id: "em-andamento", value: "Em andamento" },
+    { id: "finalizado", value: "Finalizado" },
+    { id: "todos", value: "Todos" },
+  ];
 
   return (
     <Box>
       <MudarVisualizacao
         setVisualizacao={setVisualizacao}
         setFiltroStatus={setFiltroStatus}
-        opcoesFiltro={["Não iniciado", "Em andamento", "Finalizado", "Todos"]}
+        opcoesFiltro={filtros}
       />
-      {visualizacao === "cards" && (
+      {!view && (
         <Box display={"flex"} flexWrap={"wrap"} gap={2}>
           {eventos &&
             eventos.map((evento, index) => {
@@ -171,8 +206,7 @@ const Eventos = ({ setTitulo, setActions }) => {
           {eventos && eventos.length === 0 && <>Nenhum evento cadastrado</>}
         </Box>
       )}
-
-      {visualizacao === "lista" && (
+      {view === "list" && (
         <Box sx={{ bgcolor: "#fdfdfd" }}>
           <Tabela columns={columns} rows={dataEventos} />
         </Box>
@@ -193,7 +227,7 @@ const formatarCardEvento = (eventos) => {
         dia: date.date(),
         mes: numToMes(date.month()),
       },
-      endereco: `${e.endereco.logradouro}, ${e.endereco.numero}`,
+      endereco: `${e.endereco?.logradouro}, ${e.endereco?.numero}`,
       url: e.imagem != null ? e.imagem.url : defaultimg,
     });
   });

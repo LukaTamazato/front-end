@@ -95,7 +95,7 @@ const DadosEvento = ({
           itemParam="nome"
           items={responsaveis}
           handleChange={handleResponsavelChange}
-          value={dadosEvento.responsavel.id}
+          value={dadosEvento.responsavel?.id}
           name="formulario"
           label="Responsável"
         />
@@ -105,7 +105,7 @@ const DadosEvento = ({
           name="formulario"
           label={"Formulário"}
           handleChange={handleFormularioChange}
-          value={dadosEvento.formulario.id}
+          value={dadosEvento.formulario?.id}
         />
         <InputFile
           handleFileChange={handleFileChange}

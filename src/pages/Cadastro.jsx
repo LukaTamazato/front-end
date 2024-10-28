@@ -98,12 +98,12 @@ const Cadastro = ({ setTitulo, setActions }) => {
         sx={{
 
           width: "26%",
-          height: "69%",
+          height: "79%",
           p: 8,
           borderRadius: 10,
           display: "flex",
           flexDirection: "column",
-          marginLeft: "790px",
+          marginLeft: "710px",
           boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
         }}
       >
@@ -114,7 +114,7 @@ const Cadastro = ({ setTitulo, setActions }) => {
             mb: 12,
             fontSize: "41px",
             marginRight: "10px",
-            marginTop: "29px",
+            marginTop: "-2px",
             ml: 0,
           }}
         >
@@ -128,7 +128,7 @@ const Cadastro = ({ setTitulo, setActions }) => {
             mb: 1,
             color: "#182F4E",
             fontWeight: "bold",
-            marginBottom: "10px"
+            marginBottom: "5px"
           }}
         >
           Nome:
@@ -148,7 +148,7 @@ const Cadastro = ({ setTitulo, setActions }) => {
             mb: 1,
             color: "#182F4E",
             fontWeight: "bold",
-            marginBottom: "10px"
+            marginBottom: "5px"
           }}
         >
           E-mail:
@@ -169,8 +169,8 @@ const Cadastro = ({ setTitulo, setActions }) => {
             mb: 0,
             color: "#182F4E",
             fontWeight: "bold",
-            marginTop: "20px",
-            marginBottom: "10px" // Altere para a cor desejada
+            marginTop: "5px",
+            marginBottom: "5px" // Altere para a cor desejada
           }}
         >
           Senha:

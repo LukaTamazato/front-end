@@ -67,7 +67,7 @@ const Login = ({ setTitulo, setActions }) => {
         sx={{
 
           width: "26%",
-          height: "69%",
+          height: "79%",
           p: 8,
           borderRadius: 10,
           display: "flex",
@@ -81,9 +81,9 @@ const Login = ({ setTitulo, setActions }) => {
           sx={{
             fontWeight: "normal",
             mb: 12,
-            fontSize: "41px", // Altere para o tamanho desejado
+            fontSize: "38px", // Altere para o tamanho desejado
             marginRight: "10px",
-            marginTop: "39px", // Alinha o texto à esquerda
+            marginTop: "19px", // Alinha o texto à esquerda
             ml: 0, // Margem à esquerda, ajuste conforme necessário
           }}
         >
@@ -98,7 +98,7 @@ const Login = ({ setTitulo, setActions }) => {
             mb: 1,
             color: "#182F4E",
             fontWeight: "bold",
-            marginBottom: "19px"
+            marginBottom: "5px"
           }}
         >
           E-mail:
@@ -119,8 +119,8 @@ const Login = ({ setTitulo, setActions }) => {
             mb: 0,
             color: "#182F4E",
             fontWeight: "bold",
-            marginTop: "20px",
-            marginBottom: "19px" // Altere para a cor desejada
+            marginTop: "10px",
+            marginBottom: "5px" // Altere para a cor desejada
           }}
         >
           Senha:

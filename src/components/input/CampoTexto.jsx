@@ -4,17 +4,21 @@ import React, { useState } from "react";
 import { aplicarMascara } from "../../utils/formatarUtil";
 
 const CampoTexto = ({
-  handleChange,
+  handleChange = () => {},
   label,
   name,
+  sx,
   value,
   size = { sm: 12, md: 6 },
   regex,
   mascara,
   placeholder,
   errorMsg = "",
+  style,
   required,
+  onKeyUp = () => {},
   type = "text",
+  margin = "normal",
   startAdornment = null,
 }) => {
   const [possuiErro, setErro] = useState(false);
@@ -37,9 +41,10 @@ const CampoTexto = ({
     <Grid size={size}>
       <TextField
         type={type}
+        sx={sx}
         placeholder={placeholder}
         fullWidth
-        margin="normal"
+        margin={margin}
         label={label}
         name={name}
         value={value}
@@ -47,12 +52,14 @@ const CampoTexto = ({
         error={possuiErro}
         helperText={possuiErro ? errorMsg : ""}
         required={required}
+        onKeyUp={onKeyUp}
         variant="outlined"
         slotProps={{
           input: {
             startAdornment: startAdornment ? (
               <InputAdornment position="start">{startAdornment}</InputAdornment>
             ) : null,
+            style: style,
           },
         }}
       />

@@ -93,11 +93,11 @@ const MenuPerfil = () => {
         <MenuItem id="item1" onClick={handleClose}>
           <Avatar sx={{ width: 25, height: 25 }}>L</Avatar>{" "}
           <Typography ml={1} mr={2}>
-            Letícia P.{" "}
+            {sessionStorage.getItem("nome")}
           </Typography>
         </MenuItem>
         <Divider />
-        <MenuItem id="item2" onClick={handleClose}>
+        {/* <MenuItem id="item2" onClick={handleClose}>
           <Avatar sx={{ width: 25, height: 25 }}></Avatar>{" "}
           <Typography ml={1} mr={2}>
             Coisa 1
@@ -120,7 +120,7 @@ const MenuPerfil = () => {
           <Typography ml={1} mr={2}>
             Coisa 4
           </Typography>
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem
           id="item6"
           component={Link}

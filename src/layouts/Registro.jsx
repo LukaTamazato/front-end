@@ -38,6 +38,7 @@ import DataHora from "../components/input/DataHora";
 import FloatingBotao from "../components/btn/FloatingBotao";
 import { useAlerta } from "../context/AlertaContext";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import EventoSkeleton from "../pages/eventos/EventoSkeleton";
 
 const Registro = ({
   setTitulo,
@@ -201,7 +202,7 @@ const Registro = ({
         setEventoEditado(data);
         setTimeout(() => {
           setLoading(false);
-        }, 0);
+        }, 1000);
       } catch (err) {
         console.log("Erro ao buscar evento: " + err);
         showAlerta("Erro ao buscar evento", "error");
@@ -258,6 +259,7 @@ const Registro = ({
       >
         <CircularProgress />
       </Backdrop>
+      {/* {loading && <EventoSkeleton />} */}
       {!loading && (
         <Box mb={1} className="flexRowBetween">
           <Box className="flexRowCenter" gap={1}>

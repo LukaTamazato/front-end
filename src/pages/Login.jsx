@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
-import imagemFundo from '../assets/Login.png';
+import imagemFundo from "../assets/Login.png";
 import { Password } from "@mui/icons-material";
 
 const Login = ({ setTitulo, setActions }) => {
@@ -49,7 +49,6 @@ const Login = ({ setTitulo, setActions }) => {
     }, 1000);
   };
 
-
   return (
     <Box
       className="flexRowCenter"
@@ -65,7 +64,6 @@ const Login = ({ setTitulo, setActions }) => {
     >
       <Paper
         sx={{
-
           width: "26%",
           height: "79%",
           p: 8,
@@ -73,7 +71,7 @@ const Login = ({ setTitulo, setActions }) => {
           display: "flex",
           flexDirection: "column",
           marginLeft: "190px",
-          boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)", // Customize as needed
+          boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
         }}
       >
         <Typography
@@ -81,16 +79,14 @@ const Login = ({ setTitulo, setActions }) => {
           sx={{
             fontWeight: "normal",
             mb: 12,
-            fontSize: "38px", // Altere para o tamanho desejado
+            fontSize: "38px",
             marginRight: "10px",
-            marginTop: "19px", // Alinha o texto à esquerda
-            ml: 0, // Margem à esquerda, ajuste conforme necessário
+            marginTop: "19px",
+            ml: 0,
           }}
         >
           <b>Entrar</b> em Seren<span style={{ color: "#f27a0c" }}>it</span>y
         </Typography>
-
-
 
         <Typography
           variant="subtitle1"
@@ -98,20 +94,19 @@ const Login = ({ setTitulo, setActions }) => {
             mb: 1,
             color: "#182F4E",
             fontWeight: "bold",
-            marginBottom: "5px"
+            marginBottom: "5px",
           }}
         >
           E-mail:
         </Typography>
         <CampoTexto
-          placeholder={"Email address"}
+          placeholder={"Endereço de e-mail"}
           name="email"
           value={dados.email}
           handleChange={handleChange}
           startAdornment={<EmailIcon />}
           borderRadius={"9px"}
         />
-
 
         <Typography
           variant="subtitle1"
@@ -120,14 +115,14 @@ const Login = ({ setTitulo, setActions }) => {
             color: "#182F4E",
             fontWeight: "bold",
             marginTop: "10px",
-            marginBottom: "5px" // Altere para a cor desejada
+            marginBottom: "5px",
           }}
         >
           Senha:
         </Typography>
         <CampoTexto
           borderRadius="6px"
-          placeholder={"Password"}
+          placeholder={"Senha"}
           name="senha"
           value={dados.senha}
           handleChange={handleChange}
@@ -143,7 +138,7 @@ const Login = ({ setTitulo, setActions }) => {
                 height: "60px",
                 textTransform: "none",
                 borderRadius: "12px",
-                marginTop: "70px"
+                marginTop: "70px",
               }}
               txt="Login"
               color="primary"
@@ -157,6 +152,5 @@ const Login = ({ setTitulo, setActions }) => {
     </Box>
   );
 };
-
 
 export default Login;

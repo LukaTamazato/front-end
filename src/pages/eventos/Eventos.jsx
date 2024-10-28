@@ -15,7 +15,11 @@ import { getEventos } from "../../utils/dataMockUtil";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import BorderAllOutlinedIcon from "@mui/icons-material/BorderAllOutlined";
-import { exportData } from "../../services/DataService";
+import {
+  exportData,
+  fetchData,
+  fetchParamsData,
+} from "../../services/DataService";
 
 const Eventos = ({ setTitulo, setActions }) => {
   const location = useLocation();
@@ -115,7 +119,6 @@ const Eventos = ({ setTitulo, setActions }) => {
     },
   ];
 
-  const [visualizacao, setVisualizacao] = useState("cards");
   const [filtroStatus, setFiltroStatus] = useState("");
   const [eventos, setEventos] = useState([]);
   const [dataEventos, setDataEventos] = useState([]);
@@ -125,7 +128,11 @@ const Eventos = ({ setTitulo, setActions }) => {
   }, [setTitulo]);
 
   const listarEventos = async () => {
-    const data = await buscarEventos();
+    // const data = await buscarEventos();
+
+    const data = await fetchParamsData("eventos/search", {
+      nome: filtroStatus,
+    });
 
     const filteredData = data.filter((evento) =>
       evento.status.includes(
@@ -148,7 +155,7 @@ const Eventos = ({ setTitulo, setActions }) => {
 
   useEffect(() => {
     listarEventos();
-  }, [status]);
+  }, [status, filtroStatus]);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -181,12 +188,22 @@ const Eventos = ({ setTitulo, setActions }) => {
     { id: "todos", value: "Todos" },
   ];
 
+  const handleSearchChange = (e) => {
+    if (e.key !== "Enter") return;
+
+    setFiltroStatus(e.target.value);
+
+    e.target.value = "";
+  };
+
   return (
     <Box>
       <MudarVisualizacao
-        setVisualizacao={setVisualizacao}
         setFiltroStatus={setFiltroStatus}
+        handleSearchChange={handleSearchChange}
         opcoesFiltro={filtros}
+        nomePesquisado={filtroStatus}
+        setNomePesquisado={setFiltroStatus}
       />
       {!view && (
         <Box display={"flex"} flexWrap={"wrap"} gap={2}>

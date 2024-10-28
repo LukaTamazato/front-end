@@ -77,3 +77,5 @@ const EventoSkeleton = () => {
     </Box>
   );
 };
+
+export default EventoSkeleton;

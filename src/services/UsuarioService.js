@@ -1,4 +1,5 @@
 import axios from "axios";
+import { urlData } from "./DataService";
 
 export const logar = async (dados) => {
   try {
@@ -9,13 +10,14 @@ export const logar = async (dados) => {
 
     if (response.status !== 200) return;
 
-    const { token, id, tipoUsuario } = response.data;
+    const { token, id, tipoUsuario, contato } = response.data;
 
     sessionStorage.setItem("TOKEN", token);
     sessionStorage.setItem("ID", id);
     sessionStorage.setItem("tipoUsuario", tipoUsuario);
+    sessionStorage.setItem("nome", contato.nome);
 
-    return response.data;
+    return response.data; 
   } catch (err) {
     console.log(err.response.status);
   }
@@ -23,11 +25,7 @@ export const logar = async (dados) => {
 
 export const cadastrar = async (request) => {
   try {
-    const response = await axios.post(urlData + 'usuarios', request, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.TOKEN}`,
-      },
-    });
+    const response = await axios.post(urlData + 'usuarios/cadastro', request);
 
     return response;
   } catch (err) {

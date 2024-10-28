@@ -11,6 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import MudarVisualizacao from "../components/mudarVisualizacao/MudarVisualizacao";
 
 const Parceiros = ({ setTitulo, setActions }) => {
   useEffect(() => {
@@ -19,26 +20,44 @@ const Parceiros = ({ setTitulo, setActions }) => {
   }, []);
 
   const [usuarios, setUsuarios] = useState([]);
+  const [nomePesquisado, setNomePesquisado] = useState("");
+
+  const handleSearchChange = (e) => {
+    setNomePesquisado(e.target.value);
+  };
 
   useEffect(() => {
-    setUsuarios(getUsuarios);
-  }, [setUsuarios]);
+    setUsuarios(
+      getUsuarios.filter((user) =>
+        user.nome.toLowerCase().includes(nomePesquisado.toLowerCase())
+      )
+    );
+  }, [setUsuarios, nomePesquisado]);
 
   return (
-    <Grid container spacing={3}>
-      {usuarios &&
-        usuarios.map((usuario, index) => {
-          return (
-            <Grid
-              item
-              size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}
-              key={index}
-            >
-              <CardUsuario usuario={usuario} />
-            </Grid>
-          );
-        })}
-    </Grid>
+    <>
+      <MudarVisualizacao
+        setFiltroStatus={() => {}}
+        handleSearchChange={handleSearchChange}
+        opcoesFiltro={""}
+        nomePesquisado={""}
+        setNomePesquisado={setNomePesquisado}
+      />
+      <Grid container spacing={3}>
+        {usuarios &&
+          usuarios.map((usuario, index) => {
+            return (
+              <Grid
+                item
+                size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}
+                key={index}
+              >
+                <CardUsuario usuario={usuario} />
+              </Grid>
+            );
+          })}
+      </Grid>
+    </>
   );
 };
 
@@ -48,24 +67,28 @@ const CardUsuario = (usuario) => {
   return (
     <Card>
       <CardActionArea>
-        <CardMedia
-          component="img"
-          height={140}
-          image="https://img.odcdn.com.br/cdn-cgi/image/width=1200,height=1200,fit=cover/wp-content/uploads/2022/12/avatar3.jpg"
-        />
+        <CardMedia component="img" height={140} image={user.imagem} />
         <CardContent>
-          <Typography gutterBottom variant="h6" component="div">
-            {user.nome}
-          </Typography>
-          <Typography variant="body2" sx={{ color: "text.secondary" }}>
-            {user.idade} anos
-          </Typography>
-          <Typography variant="body2" sx={{ color: "text.secondary" }}>
-            {user.local}
-          </Typography>
-          <Stack mt={2}>
-            <Rating defaultValue={user.avaliacao} precision={0.5} readOnly />
-          </Stack>
+          <Box
+            className="flexColumn"
+            sx={{ alignItems: "center", justifyContent: "center" }}
+          >
+            <Typography gutterBottom variant="h6" component="div">
+              {user.nome}
+            </Typography>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              {user.idade} anos
+            </Typography>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              {user.local}
+            </Typography>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              {user.cidade}
+            </Typography>
+            <Stack mt={2}>
+              <Rating defaultValue={user.avaliacao} precision={0.5} readOnly />
+            </Stack>
+          </Box>
         </CardContent>
       </CardActionArea>
     </Card>

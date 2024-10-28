@@ -66,7 +66,7 @@ const Home = ({ setTitulo, setActions }) => {
       >
         <Avatar sx={{ width: 80, height: 80 }} />
         <Typography color="white" variant="h5">
-          Bem vindo, Usuário
+          Bem vindo(a), {sessionStorage.getItem("nome")}
         </Typography>
       </Box>
       <Box

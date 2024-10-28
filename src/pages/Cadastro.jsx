@@ -12,16 +12,16 @@ import {
   CircularProgress,
   Paper,
   Typography,
-  FormControl, 
-  FormLabel, 
-  RadioGroup, 
-  FormControlLabel, 
-  Radio 
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import PersonIcon from "@mui/icons-material/Person";
-import imagemFundo from '../assets/Cadastro.png';
+import imagemFundo from "../assets/Cadastro.png";
 import { Password } from "@mui/icons-material";
 
 const Cadastro = ({ setTitulo, setActions }) => {
@@ -38,12 +38,12 @@ const Cadastro = ({ setTitulo, setActions }) => {
   const [loading, setLoading] = useState(false);
 
   const [dados, setDados] = useState({
-    email: '',
-    senha: '',
-    tipoUsuario: null,
+    email: "",
+    senha: "",
+    tipoUsuario: 0,
     contato: {
-      nome: ''
-    }
+      nome: "",
+    },
   });
 
   const handleChange = (e) => {
@@ -61,7 +61,6 @@ const Cadastro = ({ setTitulo, setActions }) => {
 
     setTimeout(async () => {
       try {
-
         const response = await cadastrar(dados);
 
         if (response.error) {
@@ -70,16 +69,15 @@ const Cadastro = ({ setTitulo, setActions }) => {
         }
 
         showAlerta("Cadastro realizado com sucesso");
-
+        navigate("/login");
       } catch (err) {
-          showAlerta("Não foi possivel realizar o cadastro", "error");
+        showAlerta("Não foi possivel realizar o cadastro", "error");
         console.log(err);
       } finally {
         setLoading(false);
       }
     }, 1000);
   };
-
 
   return (
     <Box
@@ -96,7 +94,6 @@ const Cadastro = ({ setTitulo, setActions }) => {
     >
       <Paper
         sx={{
-
           width: "26%",
           height: "79%",
           p: 8,
@@ -118,9 +115,8 @@ const Cadastro = ({ setTitulo, setActions }) => {
             ml: 0,
           }}
         >
-          <b>Cadastrar</b> 
+          <b>Cadastrar</b>
         </Typography>
-
 
         <Typography
           variant="subtitle1"
@@ -128,19 +124,19 @@ const Cadastro = ({ setTitulo, setActions }) => {
             mb: 1,
             color: "#182F4E",
             fontWeight: "bold",
-            marginBottom: "5px"
+            marginBottom: "5px",
           }}
         >
           Nome:
         </Typography>
         <CampoTexto
-          placeholder={"Name"}
+          placeholder={"Nome"}
           name="nome"
           value={dados.contato.nome}
           handleChange={handleContatoChange}
           startAdornment={<PersonIcon />}
           borderRadius={"9px"}
-        /> 
+        />
 
         <Typography
           variant="subtitle1"
@@ -148,20 +144,19 @@ const Cadastro = ({ setTitulo, setActions }) => {
             mb: 1,
             color: "#182F4E",
             fontWeight: "bold",
-            marginBottom: "5px"
+            marginBottom: "5px",
           }}
         >
           E-mail:
         </Typography>
         <CampoTexto
-          placeholder={"Email address"}
+          placeholder={"Endereço de e-mail"}
           name="email"
           value={dados.email}
           handleChange={handleChange}
           startAdornment={<EmailIcon />}
           borderRadius={"9px"}
         />
-
 
         <Typography
           variant="subtitle1"
@@ -170,33 +165,41 @@ const Cadastro = ({ setTitulo, setActions }) => {
             color: "#182F4E",
             fontWeight: "bold",
             marginTop: "5px",
-            marginBottom: "5px" // Altere para a cor desejada
+            marginBottom: "5px",
           }}
         >
           Senha:
         </Typography>
         <CampoTexto
           borderRadius="6px"
-          placeholder={"Password"}
+          placeholder={"Senha"}
           name="senha"
           value={dados.senha}
           handleChange={handleChange}
           type="password"
           startAdornment={<LockIcon />}
         />
-        
-        <FormControl  sx={{ display: 'flex', alignItems: 'center' }}>
-        <FormLabel id="demo-radio-buttons-group-label"></FormLabel>
-        <RadioGroup
+
+        <FormControl sx={{ display: "flex", alignItems: "center" }}>
+          <FormLabel id="demo-radio-buttons-group-label"></FormLabel>
+          <RadioGroup
             row
             aria-labelledby="demo-radio-buttons-group-label"
             defaultValue={0}
             name="tipoUsuario"
             onChange={handleChange}
-        >
-            <FormControlLabel value={0} control={<Radio />} label="CNPJ" />
-            <FormControlLabel value={1} control={<Radio />} label="CPF" />
-        </RadioGroup>
+          >
+            <FormControlLabel
+              value={0}
+              control={<Radio color="secondary" />}
+              label="CNPJ"
+            />
+            <FormControlLabel
+              value={1}
+              control={<Radio color="secondary" />}
+              label="CPF"
+            />
+          </RadioGroup>
         </FormControl>
 
         <Box sx={{ height: "17%" }} mt={4} className="flexRowCenter">
@@ -207,7 +210,7 @@ const Cadastro = ({ setTitulo, setActions }) => {
                 height: "60px",
                 textTransform: "none",
                 borderRadius: "12px",
-                marginTop: "0px"
+                marginTop: "0px",
               }}
               txt="Cadastrar"
               color="primary"
@@ -221,6 +224,5 @@ const Cadastro = ({ setTitulo, setActions }) => {
     </Box>
   );
 };
-
 
 export default Cadastro;

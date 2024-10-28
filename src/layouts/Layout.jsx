@@ -41,7 +41,6 @@ import Configuracoes from "../pages/Configuracoes";
 import { useCollapsed } from "../context/CollapsedContext";
 import Cadastro from "../pages/Cadastro";
 
-
 const Layout = () => {
   // const [collapsed, setCollapsed] = useState(
   //     JSON.parse(localStorage.getItem('sidebarCollapsed')) || false
@@ -78,17 +77,41 @@ const Layout = () => {
       />
       <Box sx={{ display: "flex", height: "100vh", flexDirection: "column" }}>
         <CssBaseline />
-        {location.pathname !== "/login" && location.pathname !== "/cadastro" && <Navbar />}
+        {location.pathname !== "/login" &&
+          location.pathname !== "/cadastro" && <Navbar />}
         <div className="app">
-          {location.pathname !== "/login" && location.pathname !== "/cadastro" && <BarraLateral />}
+          {location.pathname !== "/login" &&
+            location.pathname !== "/cadastro" && <BarraLateral />}
           <Box
-            p={0}
+            sx={{
+              overflow:
+                location.pathname !== "/login" &&
+                location.pathname !== "/cadastro"
+                  ? "scroll"
+                  : "hidden",
+            }}
+            p={
+              location.pathname !== "/login" &&
+              location.pathname !== "/cadastro"
+                ? 2
+                : 0
+            }
             style={{
               left: `${
-                location.pathname !== "/login" && location.pathname !== "/cadastro" ? (collapsed ? 80 : 260) : 0
+                location.pathname !== "/login" &&
+                location.pathname !== "/cadastro"
+                  ? collapsed
+                    ? 80
+                    : 260
+                  : 0
               }px`,
               width: `calc(100% - ${
-                location.pathname !== "/login" && location.pathname !== "/cadastro" ? (collapsed ? 80 : 260) : 0
+                location.pathname !== "/login" &&
+                location.pathname !== "/cadastro"
+                  ? collapsed
+                    ? 80
+                    : 260
+                  : 0
               }px)`,
               bgcolor: "#f0f0f0",
             }}
@@ -126,13 +149,13 @@ const Layout = () => {
               <Route
                 path="/login"
                 element={
-                  <Login setTitulo={setTitulo} setActions={setActions}/>
+                  <Login setTitulo={setTitulo} setActions={setActions} />
                 }
               />
               <Route
                 path="/cadastro"
                 element={
-                  <Cadastro setTitulo={setTitulo} setActions={setActions}/>
+                  <Cadastro setTitulo={setTitulo} setActions={setActions} />
                 }
               />
               <Route

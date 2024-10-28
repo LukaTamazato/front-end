@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Esteira from "../../../components/esteira/Esteira";
 import Grid from "@mui/material/Grid2";
 import PageModal from "../../../components/pageModal/PageModal";
-import { Box, Typography } from "@mui/material";
+import { Backdrop, Box, CircularProgress, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Botao from "../../../components/btn/Botao";
 import DadosEvento from "./DadosEvento";
@@ -24,6 +24,8 @@ const CriarEvento = ({ setTitulo, setActions }) => {
   const labels = ["Evento", "Endereço", "Finalizar"];
   const qtdSteps = labels.length;
 
+  const [loading, setLoading] = useState(false);
+
   const handleProximo = () => {
     if (step === qtdSteps - 1) handleConcluir();
 
@@ -33,6 +35,8 @@ const CriarEvento = ({ setTitulo, setActions }) => {
   };
 
   const handleConcluir = async () => {
+    setLoading(true);
+
     const request = {
       ...dadosEvento,
       idFormulario: dadosEvento.formulario?.id,
@@ -55,6 +59,8 @@ const CriarEvento = ({ setTitulo, setActions }) => {
     } catch (err) {
       showAlerta("Não foi possível criar evento", "error");
       console.log("Erro ao criar evento: " + err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -143,6 +149,7 @@ const CriarEvento = ({ setTitulo, setActions }) => {
     const buscarResponsaveis = async () => {
       try {
         const data = await fetchData(`usuarios`);
+        console.log(data);
         setResponsaveis(
           data
             .filter((user) => user.contato !== null)
@@ -195,6 +202,12 @@ const CriarEvento = ({ setTitulo, setActions }) => {
   return (
     <>
       <PageModal>
+        <Backdrop
+          open={loading}
+          sx={(theme) => ({ zIndex: theme.zIndex.drawer + 2 })}
+        >
+          <CircularProgress />
+        </Backdrop>
         <Typography variant="h4" component="h4">
           Criar Evento
         </Typography>

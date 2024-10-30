@@ -1,0 +1,73 @@
+:root {
+  font-family: "Montserrat", Arial, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#root,
+.app,
+.content {
+  height: 100%;
+  width: 100%;
+}
+
+.content {
+  position: absolute;
+  transition: 0.3s;
+}
+
+.app {
+  display: flex;
+  position: relative;
+}
+
+.flexRowCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexRowStart {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.flexRowEnd {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.flexRowBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.flexColumnCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: "center";
+  justify-content: "center";
+}
+
+.flexColumnStart {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.flexRowWrap {
+  display: flex;
+  flex-wrap: wrap;
+}
